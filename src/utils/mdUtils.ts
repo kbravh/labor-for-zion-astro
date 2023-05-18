@@ -130,7 +130,7 @@ export const addLinks = (
           embed +
           // TODO - add hoverunderline back in once I get marked renderers working
           // `\n\n<span className="text-sm">From note <HoverUnderline><a href="/${slug}">${title}</a></HoverUnderline></span>\n\n---\n\n`;
-          `\n\n<span className="text-sm">From note <a href="${slug}">${title}</a></span>\n\n---\n\n`;
+          `\n\n<span className="text-sm">From note <a href="/notes/${slug}">${title}</a></span>\n\n---\n\n`;
       }
       source = source.replace(link, embed);
       firstEmbed = false;
@@ -149,7 +149,7 @@ export const addLinks = (
     }
     source = source.replace(
       link,
-      slug ? `<a href="${slug}">${alias ?? title}</a>` : alias ?? title
+      slug ? `<a href="/notes/${slug}">${alias ?? title}</a>` : alias ?? title
     );
   }
   return source;

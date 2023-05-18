@@ -17,7 +17,7 @@ const {backlinks} = Astro.props;
         <li>
           <article>
             <HoverUnderline>
-              <a href={`${slug}`}>
+              <a href={`/notes/${slug}`}>
                 <span>
                   <span class="text-lg font-semibold">{title}: </span>
                   {excerpt ? `"...${excerpt}..."` : ''}

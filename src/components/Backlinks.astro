@@ -1,0 +1,32 @@
+---
+import type {Backlink} from '../utils/mdUtils';
+import HoverUnderline from './HoverUnderline.astro';
+
+interface Props {
+  backlinks: Backlink[];
+}
+
+const {backlinks} = Astro.props;
+---
+
+<div>
+  <h2>Pages that reference this note</h2>
+  <ul class="flex flex-col gap-2">
+    {
+      backlinks.map(({title, slug, excerpt}) => (
+        <li>
+          <article>
+            <HoverUnderline>
+              <a href={`${slug}`}>
+                <span>
+                  <span class="text-lg font-semibold">{title}: </span>
+                  {excerpt ? `"...${excerpt}..."` : ''}
+                </span>
+              </a>
+            </HoverUnderline>
+          </article>
+        </li>
+      ))
+    }
+  </ul>
+</div>

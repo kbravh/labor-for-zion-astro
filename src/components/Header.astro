@@ -1,0 +1,33 @@
+---
+import HoverUnderline from './HoverUnderline.astro';
+import Logo from './Logo.astro';
+---
+
+<div
+  class="flex justify-between py-4 px-8 items-center max-w-6xl mx-auto mt-8 mb-5 w-full"
+>
+  <a href="/">
+    <div
+      class="text-slate-700 text-6xl cursor-pointer select-none flex items-center gap-3"
+    >
+      <Logo className="h-12 w-12 bg-emerald-900 rounded-full" />
+    </div>
+  </a>
+  <nav class="flex text-slate-700 list-none gap-6 text-lg">
+    <li>
+      <HoverUnderline>
+        <a href="/">Home</a>
+      </HoverUnderline>
+    </li>
+    <li>
+      <HoverUnderline>
+        <a href="/notes">Notes</a>
+      </HoverUnderline>
+    </li>
+    <li>
+      <HoverUnderline>
+        <a href="/about">About</a>
+      </HoverUnderline>
+    </li>
+  </nav>
+</div>

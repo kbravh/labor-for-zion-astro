@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import {readFileSync} from 'fs';
+import {getSlugFromFilepath, notePaths} from '../../utils/mdUtils';
+import {Frontmatter} from '../../validation/md';
+import {marked} from 'marked';
+// @ts-ignore - untyped dependency
+import {gfmHeadingId} from 'marked-gfm-heading-id';
+// @ts-ignore - untyped dependency
+import {mangle} from 'marked-mangle';
+// @ts-ignore - untyped dependency
+import matter from 'gray-matter';
+
+marked.use(gfmHeadingId(), mangle());
+
+interface PostListing {
+  slug: string;
+  frontmatter: Frontmatter;
+}
+
+const posts: PostListing[] = [];
+
+// Loop through all articles and extract slug and frontmatter
+for (const articlePath of notePaths) {
+  const source = readFileSync(articlePath, 'utf-8');
+  const frontmatter = matter(source).data;
+  posts.push({
+    frontmatter: Frontmatter.parse(frontmatter),
+    slug: getSlugFromFilepath(articlePath),
+  });
+}
+
+// sort posts by written at date, recent to old
+posts.sort(
+  (a, b) =>
+    new Date(b.frontmatter.date).getTime() -
+    new Date(a.frontmatter.date).getTime()
+);
+---
+
+<Layout title="Notes">
+  <div class="flex flex-col items-center flex-grow mb-10">
+    <div class="max-w-5xl w-full px-8">
+      <h1 class="text-5xl text-slate-800 font-extrabold font-sans">Notes</h1>
+    </div>
+    <main class="flex flex-col items-center mt-8 flex-grow max-w-5xl">
+      <div class="max-w-2xl sm:mx-20 mx-8 flex flex-col gap-8">
+        {
+          posts.map(post => (
+            <a href={`notes/${post.slug}`}>
+              <article
+                class:list={[
+                  'rounded-sm border border-emerald-100 shadow-sm shadow-emerald-800',
+                  'relative px-6 py-5 flex flex-col justify-between space-y-3',
+                  'hover:border-emerald-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500',
+                  'cursor-pointer select-none',
+                ]}
+              >
+                <div>
+                  <h2 class="text-slate-700 font-semibold text-lg">
+                    {post.frontmatter.title}
+                  </h2>
+                  <p class="text-slate-700 text-md">
+                    {post.frontmatter.description}
+                  </p>
+                </div>
+                <span class="text-slate-600 self-end mt-2">
+                  {post.frontmatter.date.toLocaleDateString('en-US', {
+                    dateStyle: 'medium',
+                  })}
+                </span>
+              </article>
+            </a>
+          ))
+        }
+      </div>
+    </main>
+  </div>
+</Layout>

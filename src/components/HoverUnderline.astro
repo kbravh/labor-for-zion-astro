@@ -1,0 +1,17 @@
+---
+interface Props {
+  className?: string;
+}
+
+const {className} = Astro.props;
+---
+
+<span
+  class:list={[
+    'cursor-pointer transition-all motion-reduce:transition-none duration-300',
+    'bg-left-bottom bg-gradient-to-br from-emerald-700 to-emerald-900 bg-hidden-link hover:bg-shown-link bg-no-repeat',
+    className,
+  ]}
+>
+  <slot />
+</span>

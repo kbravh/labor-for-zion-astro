@@ -5,6 +5,7 @@ date: 2022-10-30T21:48:07.541Z
 language: en_US
 tags:
   - Temptation
+  - New Testament
 ---
 
 In [Matthew 4:1-11](https://www.churchofjesuschrist.org/study/scriptures/nt/matt/4?id=p1-p11#p1), Christ fasts for forty days and forty nights. After his fast, He is tempted by Satan.

@@ -4,6 +4,10 @@ description: Explore the deep-rooted faith of biblical prophets through the lens
 date: 2023-03-29T14:35:41.689Z
 updated: 2023-03-29T14:35:41.689Z
 language: en_US
+tags:
+  - Hebrew language
+  - Old Testament
+  - Book of Mormom
 ---
 
 The Hebrew prophetic perfect is a remarkable grammatical feature found in Hebrew scripture. It involves a speaker using the past tense (the "perfect" aspect) to describe a future event (thus, "prophetic"). This conveys such certainty in the event's occurrence that it's as if it has already happened. While this might appear to be a mere linguistic detail, it can significantly enhance our understanding of the immense faith held by the prophets in the scriptures.

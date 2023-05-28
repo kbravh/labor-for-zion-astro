@@ -4,6 +4,9 @@ description: Shewbread was an important symbol of Christ in the Tabernacle of Mo
 date: 2022-09-19T14:29:18.607Z
 language: en_US
 aliases: ['Shewbread', 'shewbread']
+tags:
+  - Sacrament
+  - Old Testament
 ---
 
 There are many elements of the [[Tabernacle of Moses]] that have rich symbolic meaning that teach of the plan of salvation.

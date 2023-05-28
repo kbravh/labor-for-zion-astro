@@ -4,6 +4,10 @@ description: Why was Christ crucified and not executed another way?
 date: 2022-11-19T14:27:50.383Z
 language: en_US
 aliases: ["Why Christ was crucified"]
+tags:
+  - Atonement
+  - New Testament
+  - Law of Moses
 ---
 
 Historically, it seems that the Romans would use crucifixion for the worst criminals and especially for non-Romans. Since Christ had angered the religious leaders at the time by His preaching, saying that the temple would be destroyed ([[Mark 13.2]]), and also throwing the moneychangers out of the temple ([[Mark 11.15-18]]), they appealed to Pilate and petitioned for Christ to be treated as a criminal. There was also a huge crowd clamoring for Christ to be crucified when Pilate presented him, so Pilate agreed to do so but washed his hands of it.

@@ -4,6 +4,10 @@ description: Are vicarious ordinances important if, according to Ecclesiastes, "
 date: 2023-01-27T05:15:04.734Z
 updated: 2023-01-27T05:15:04.734Z
 language: en_US
+tags:
+  - Vicarious ordinances
+  - New Testament
+  - Book of Mormon
 ---
 
 > 4. For to him that is joined to all the living there is hope: for a living dog is better than a dead lion.

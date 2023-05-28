@@ -4,6 +4,10 @@ description: A look into the parable of the good Samaritan as a symbol of Christ
 date: 2023-04-22T02:34:47.361Z
 updated:
 language: en_US
+tags:
+  - Parable
+  - New Testament
+  - Sacrifice
 ---
 
 ## Christ as the Good Samaritan

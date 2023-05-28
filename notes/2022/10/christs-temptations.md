@@ -3,6 +3,8 @@ title: Christ's Temptations
 description: What was the motive behind Satan's temptations of Christ after his forty-day fast?
 date: 2022-10-30T21:48:07.541Z
 language: en_US
+tags:
+  - Temptation
 ---
 
 In [Matthew 4:1-11](https://www.churchofjesuschrist.org/study/scriptures/nt/matt/4?id=p1-p11#p1), Christ fasts for forty days and forty nights. After his fast, He is tempted by Satan.

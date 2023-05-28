@@ -4,6 +4,10 @@ description: The story of the stripling warriors in the Book of Mormon teaches u
 date: 2023-02-01T03:00:14.025Z
 updated: 2023-02-01T03:00:14.025Z
 language: en_US
+tags:
+  - Book of Mormon
+  - Repentance
+  - New Testament
 ---
 
 You might be familiar with the story in the Book of Mormon of the stripling warriors. 2,000 young men form a small army in order to protect their land and defend their parents, who had covenanted with God to never pick up arms again. Did you know, though, that there were actually 2,060 warriors? Let's take a look at these extra warriors and what we can learn from them.

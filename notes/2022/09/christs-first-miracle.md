@@ -3,6 +3,12 @@ title: Christ's First Miracle
 description: What was the purpose of Christ's first miracle, turning water into wine?
 date: 2022-09-20T14:29:18.607Z
 language: en_US
+tags:
+  - Old Testament
+  - New Testament
+  - Miracles
+  - Sacrament
+  - Law of Moses
 ---
 
 ![Christ instructing the servants at the wedding feast. The First Miracle, painting by James Seward](https://res.cloudinary.com/drn1fmjus/image/upload/c_scale,w_700/v1663683943/laborforzion/jamesseward-thefirstmiracle_jyt07a.jpg)

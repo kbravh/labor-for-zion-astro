@@ -3,15 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import {readFileSync} from 'fs';
 import {getSlugFromFilepath, notePaths} from '../../utils/mdUtils';
 import {Frontmatter} from '../../validation/md';
-import {marked} from 'marked';
-// @ts-ignore - untyped dependency
-import {gfmHeadingId} from 'marked-gfm-heading-id';
-// @ts-ignore - untyped dependency
-import {mangle} from 'marked-mangle';
 // @ts-ignore - untyped dependency
 import matter from 'gray-matter';
-
-marked.use(gfmHeadingId(), mangle());
 
 interface PostListing {
   slug: string;

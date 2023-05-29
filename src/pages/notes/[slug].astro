@@ -7,19 +7,20 @@ import {
   getSlugToPathMap,
   getTitleAndSlugMaps,
 } from '../../utils/mdUtils';
-import {marked} from 'marked';
-// @ts-ignore - untyped dependency
-import {gfmHeadingId} from 'marked-gfm-heading-id';
-// @ts-ignore - untyped dependency
-import {mangle} from 'marked-mangle';
 // @ts-ignore - untyped dependency
 import matter from 'gray-matter';
+import MarkdownIt from 'markdown-it';
+import MarkdownItFootnote from 'markdown-it-footnote';
 import {Frontmatter} from '../../validation/md';
 import {dedupeArray} from '../../utils/array';
 import NoteLayout from '../../layouts/NoteLayout.astro';
 import EmptyNoteLayout from '../../layouts/EmptyNoteLayout.astro';
 
-marked.use(gfmHeadingId(), mangle());
+const md = new MarkdownIt({
+  html: true,
+  linkify: true,
+  typographer: true,
+}).use(MarkdownItFootnote);
 
 const {slug} = Astro.params;
 if (!slug) {
@@ -47,7 +48,7 @@ if (filePath) {
   const source = readFileSync(filePath, 'utf-8');
   const document = matter(source);
   const text = addLinks(titleToSlug, document.content);
-  const content = marked(text);
+  const content = md.render(text);
   const frontmatter = document.data;
   const parsedFrontmatter = Frontmatter.parse(frontmatter);
 

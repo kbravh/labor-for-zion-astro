@@ -11,6 +11,7 @@ import {
 import matter from 'gray-matter';
 import MarkdownIt from 'markdown-it';
 import MarkdownItFootnote from 'markdown-it-footnote';
+import MarkdownItAnchor from 'markdown-it-anchor';
 import {Frontmatter} from '../../validation/md';
 import {dedupeArray} from '../../utils/array';
 import NoteLayout from '../../layouts/NoteLayout.astro';
@@ -20,7 +21,9 @@ const md = new MarkdownIt({
   html: true,
   linkify: true,
   typographer: true,
-}).use(MarkdownItFootnote);
+})
+  .use(MarkdownItFootnote)
+  .use(MarkdownItAnchor);
 
 const {slug} = Astro.params;
 if (!slug) {

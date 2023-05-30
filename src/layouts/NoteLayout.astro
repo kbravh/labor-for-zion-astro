@@ -30,9 +30,9 @@ const {frontmatter, backlinks, content} = Astro.props;
         }
       </div>
       <div class="flex justify-end p-4">
-        <div>
+        <time datetime={frontmatter.date.toISOString()}>
           {frontmatter.date.toLocaleDateString('en-US', {dateStyle: 'medium'})}
-        </div>
+        </time>
       </div>
       <div set:html={content} />
       {!!backlinks.length && <Backlinks backlinks={backlinks} />}

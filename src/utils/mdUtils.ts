@@ -120,9 +120,9 @@ export const addLinks = (
       if (!filePath) {
         throw new Error(`File path not found for the slug ${slug}`);
       }
-      let embed = readFileSync(filePath, 'utf-8');
+      let rawEmbed = readFileSync(filePath, 'utf-8');
+      let embed = matter(rawEmbed).content;
       // remove frontmatter
-      embed = embed.replace(/^---.*---\n/gs, '');
       if (firstEmbed) {
         // provide an indication that this is an embed and provide a link to the original note
         embed =

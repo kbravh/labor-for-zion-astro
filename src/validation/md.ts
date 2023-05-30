@@ -6,6 +6,7 @@ export const Frontmatter = z.object({
   date: z.coerce.date(),
   language: z.enum(['en_US']),
   aliases: z.string().array().optional(),
+  tags: z.string().array().optional(),
 });
 
 export type Frontmatter = z.infer<typeof Frontmatter>;
@@ -18,7 +19,7 @@ export const BracketLink = z.object({
   // just the alias, if present
   alias: z.string().optional(),
   // an excerpt of text surrounding the link
-  excerpt: z.string()
+  excerpt: z.string(),
 });
 
 export type BracketLink = z.infer<typeof BracketLink>;

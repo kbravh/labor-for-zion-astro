@@ -9,17 +9,17 @@ interface Props {
 const {backlinks} = Astro.props;
 ---
 
-<div>
-  <h2>Pages that reference this note</h2>
-  <ul class="flex flex-col gap-2">
+<div class="p-4">
+  <h2 class="font-heading font-bold text-lg">Pages that reference this note:</h2>
+  <ul class="flex flex-col gap-2 px-4 py-2">
     {
       backlinks.map(({title, slug, excerpt}) => (
-        <li>
+        <li class="list-disc">
           <article>
             <HoverUnderline>
               <a href={`/notes/${slug}`}>
                 <span>
-                  <span class="text-lg font-semibold">{title}: </span>
+                  <span class="font-semibold">{title}: </span>
                   {excerpt ? `"...${excerpt}..."` : ''}
                 </span>
               </a>

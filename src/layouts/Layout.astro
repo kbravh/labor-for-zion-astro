@@ -11,7 +11,10 @@ const {title, description} = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html
+  lang="en"
+  class="h-full"
+>
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -40,8 +43,63 @@ const {title, description} = Astro.props;
     </title>
   </head>
   <Header />
-  <body class="h-full flex flex-col items-center selection:bg-emerald-900 selection:text-emerald-50">
+  <body
+    class="h-full flex flex-col items-center selection:bg-emerald-900 selection:text-emerald-50"
+  >
     <slot />
   </body>
   <Footer />
+
+  <style is:global>
+    @font-face {
+      font-family: 'Atkinson Hyperlegible';
+      src: url('/fonts/AtkinsonRegular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Atkinson Hyperlegible';
+      src: url('/fonts/AtkinsonBold.woff2') format('woff2');
+      font-weight: bold;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Atkinson Hyperlegible';
+      src: url('/fonts/AtkinsonItalic.woff2') format('woff2');
+      font-weight: normal;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Atkinson Hyperlegible';
+      src: url('/fonts/AtkinsonBoldItalic.woff2') format('woff2');
+      font-weight: bold;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Munken';
+      src: url('/fonts/MunkenSansRegular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Munken';
+      src: url('/fonts/MunkenSansBold.woff2') format('woff2');
+      font-weight: bold;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Munken';
+      src: url('/fonts/MunkenSansItalic.woff2') format('woff2');
+      font-weight: normal;
+      font-style: italic;
+      font-display: swap;
+    }
+  </style>
 </html>

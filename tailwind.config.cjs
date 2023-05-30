@@ -6,6 +6,10 @@ module.exports = {
       backgroundSize: {
         'hidden-link': '0 3px',
         'shown-link': '100% 3px'
+      },
+      fontFamily: {
+        heading: ['Munken Sans', 'sans-serif'],
+        body: ['Atkinson Hyperlegible', 'sans-serif']
       }
     },
   },

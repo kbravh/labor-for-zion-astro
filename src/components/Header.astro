@@ -13,7 +13,8 @@ import Logo from './Logo.astro';
       <Logo className="h-12 w-12 bg-emerald-900 rounded-full" />
     </div>
   </a>
-  <nav class="flex text-slate-700 list-none gap-6 text-lg">
+  <!-- large menu -->
+  <nav class="hidden sm:flex text-slate-700 list-none gap-6 text-lg">
     <li>
       <HoverUnderline>
         <a href="/">Home</a>
@@ -26,8 +27,53 @@ import Logo from './Logo.astro';
     </li>
     <li>
       <HoverUnderline>
+        <a href="/projects">Projects</a>
+      </HoverUnderline>
+    </li>
+    <li>
+      <HoverUnderline>
         <a href="/about">About</a>
       </HoverUnderline>
     </li>
   </nav>
+
+  <!-- mobile menu -->
+  <div class="sm:hidden block">
+    <details
+      class:list={[
+        'flex items-center px-3 py-2 rounded',
+        'text-slate-700 hover:text-slate-900 border border-slate-700 hover:border-slate-900',
+        'select-none',
+      ]}
+    >
+      <summary>Menu</summary>
+      <nav
+        class:list={[
+          'flex flex-col items-center gap-6 absolute w-48 right-8 mt-6 p-4 z-[1]',
+          'text-slate-700 border border-slate-700 list-none text-lg bg-white',
+        ]}
+      >
+        <li>
+          <HoverUnderline>
+            <a href="/">Home</a>
+          </HoverUnderline>
+        </li>
+        <li>
+          <HoverUnderline>
+            <a href="/notes">Notes</a>
+          </HoverUnderline>
+        </li>
+        <li>
+          <HoverUnderline>
+            <a href="/projects">Projects</a>
+          </HoverUnderline>
+        </li>
+        <li>
+          <HoverUnderline>
+            <a href="/about">About</a>
+          </HoverUnderline>
+        </li>
+      </nav>
+    </details>
+  </div>
 </div>

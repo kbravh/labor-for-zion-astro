@@ -1,4 +1,7 @@
 ---
+import ArticleCard from '../../components/ArticleCard.astro';
+import Grid from '../../components/Grid.astro';
+import MainWrapper from '../../components/MainWrapper.astro';
 import Layout from '../../layouts/Layout.astro';
 ---
 
@@ -7,17 +10,10 @@ import Layout from '../../layouts/Layout.astro';
     <div class="max-w-5xl w-full px-8">
       <h1 class="text-5xl text-slate-800 font-extrabold font-sans">Projects</h1>
     </div>
-    <main class="flex flex-col items-center mt-8 flex-grow max-w-5xl">
-      <div class="max-w-4xl sm:mx-20 mx-8 grid grid-cols-2 gap-8">
+    <MainWrapper>
+      <Grid>
         <a href="https://scripture.page">
-          <article
-            class:list={[
-              'rounded-sm border border-emerald-100 shadow-sm shadow-emerald-800',
-              'relative px-6 py-5 flex flex-col h-full justify-between space-y-5',
-              'hover:border-emerald-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500',
-              'cursor-pointer select-none',
-            ]}
-          >
+          <ArticleCard>
             <div>
               <h2 class="text-slate-700 font-semibold text-lg">Scriptly</h2>
               <p class="text-slate-700 text-md">
@@ -25,17 +21,10 @@ import Layout from '../../layouts/Layout.astro';
                 the scriptures.
               </p>
             </div>
-          </article>
+          </ArticleCard>
         </a>
         <a href="/projects/obsidian-scripture-vault">
-          <article
-            class:list={[
-              'rounded-sm border border-emerald-100 shadow-sm shadow-emerald-800',
-              'relative px-6 py-5 flex flex-col justify-between space-y-3',
-              'hover:border-emerald-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500',
-              'cursor-pointer select-none',
-            ]}
-          >
+          <ArticleCard>
             <div>
               <h2 class="text-slate-700 font-semibold text-lg">
                 LDS scriptures Obsidian vault
@@ -46,9 +35,9 @@ import Layout from '../../layouts/Layout.astro';
                 scriptures.
               </p>
             </div>
-          </article>
+          </ArticleCard>
         </a>
-      </div>
-    </main>
+      </Grid>
+    </MainWrapper>
   </div>
 </Layout>

@@ -2,14 +2,13 @@
 import ArticleCard from '../../components/ArticleCard.astro';
 import Grid from '../../components/Grid.astro';
 import MainWrapper from '../../components/MainWrapper.astro';
+import PageTitle from '../../components/PageTitle.astro';
 import Layout from '../../layouts/Layout.astro';
 ---
 
 <Layout title="Projects">
   <div class="flex flex-col items-center flex-grow mb-10">
-    <div class="max-w-5xl w-full px-8">
-      <h1 class="text-5xl text-slate-800 font-extrabold font-sans">Projects</h1>
-    </div>
+    <PageTitle title="Projects" />
     <MainWrapper>
       <Grid>
         <a href="https://scripture.page">

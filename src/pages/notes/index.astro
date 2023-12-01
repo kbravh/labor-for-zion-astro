@@ -8,6 +8,7 @@ import matter from 'gray-matter';
 import Grid from '../../components/Grid.astro';
 import MainWrapper from '../../components/MainWrapper.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
+import PageTitle from '../../components/PageTitle.astro';
 
 interface PostListing {
   slug: string;
@@ -36,9 +37,7 @@ posts.sort(
 
 <Layout title="Notes">
   <div class="flex flex-col items-center flex-grow mb-10">
-    <div class="max-w-5xl w-full px-8">
-      <h1 class="text-5xl text-slate-800 font-extrabold font-sans">Notes</h1>
-    </div>
+    <PageTitle title="Notes" />
     <MainWrapper>
       <Grid>
         {

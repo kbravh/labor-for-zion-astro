@@ -23,3 +23,14 @@ export const BracketLink = z.object({
 });
 
 export type BracketLink = z.infer<typeof BracketLink>;
+
+export const Heading = z.object({
+  // the slugified id
+  id: z.string(),
+  // the text of the heading
+  text: z.string(),
+  // the level of the heading
+  level: z.number(),
+});
+
+export type Heading = z.infer<typeof Heading>;

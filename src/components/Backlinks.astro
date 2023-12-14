@@ -10,7 +10,7 @@ const {backlinks} = Astro.props;
 ---
 
 <div>
-  <h2 class="font-heading font-bold text-lg">Pages that reference this note:</h2>
+  <h3 class="font-heading font-bold text-lg">Pages that reference this note:</h3>
   <ul class="flex flex-col gap-2 px-4 py-2">
     {
       backlinks.map(({title, slug, excerpt}) => (

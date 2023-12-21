@@ -1,35 +1,5 @@
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const tocLinks = document.querySelectorAll(
-      '#table-of-contents a[href^="#"]'
-    );
-    const headings = document.querySelectorAll(
-      '#article-body h2, #article-body h3, #article-body h4, #article-body h5, #article-body h6'
-    );
+  import {headingObserver} from '../utils/headingObserver.ts';
 
-    function updateActiveLink() {
-      let closestHeading = null;
-      let closestHeadingDistance = Number.MAX_VALUE;
-
-      headings.forEach(heading => {
-        const boundingRect = heading.getBoundingClientRect();
-        const distance = Math.abs(boundingRect.top);
-        if (distance < closestHeadingDistance && boundingRect.top <= 300) {
-          closestHeading = heading;
-          closestHeadingDistance = distance;
-        }
-      });
-
-      if (closestHeading) {
-        tocLinks.forEach(link => {
-          link.classList.remove('!text-emerald-500', 'font-bold');
-          if (link.getAttribute('href') === `#${closestHeading.id}`) {
-            link.classList.add('!text-emerald-500', 'font-bold');
-          }
-        });
-      }
-    }
-
-    document.addEventListener('scroll', updateActiveLink, {passive: true});
-  });
+  document.addEventListener('DOMContentLoaded', headingObserver);
 </script>

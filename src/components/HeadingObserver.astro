@@ -12,14 +12,14 @@
         intersectingEntries.forEach(entry => {
           if (entry.isIntersecting) {
             tocLinks.forEach(link => {
-              link.classList.remove('text-emerald-500');
+              link.classList.remove('!text-emerald-500');
               link.classList.remove('font-bold');
             });
             const activeLink = document.querySelector(
               `nav a[href='#${entry.target.id}']`
             );
             if (activeLink) {
-              activeLink.classList.add('text-emerald-500');
+              activeLink.classList.add('!text-emerald-500');
               activeLink.classList.add('font-bold');
             }
           }

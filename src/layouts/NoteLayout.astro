@@ -3,6 +3,7 @@ import type {Backlink} from '../utils/mdUtils';
 import Backlinks from '../components/Backlinks.astro';
 import Layout from './Layout.astro';
 import type {Frontmatter, Heading} from '../validation/md';
+import TableOfContents from '../components/TableOfContents.astro';
 
 interface Props {
   content: string;
@@ -60,32 +61,7 @@ const {frontmatter, backlinks, content, headings} = Astro.props;
     <div class="pr-4">
       <div class="sticky top-4 flex flex-col gap-5">
         <aside>
-          <nav>
-            <h2 class="font-heading font-bold text-lg">Table of Contents</h2>
-            <ul>
-              {
-                headings.map(heading => (
-                  <li
-                    class:list={[
-                      heading.level === 2 && 'ml-2',
-                      heading.level === 3 && 'ml-4',
-                      heading.level === 4 && 'ml-6',
-                      heading.level === 5 && 'ml-8',
-                      heading.level === 6 && 'ml-10',
-                      'mt-2',
-                    ]}
-                  >
-                    <a
-                      href={`#${heading.id}`}
-                      class="text-slate-800 dark:text-slate-100 hover:text-emerald-800 dark:hover:text-emerald-300"
-                    >
-                      {heading.text}
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
-          </nav>
+          <TableOfContents headings={headings} />
         </aside>
         {
           !!backlinks.length && (

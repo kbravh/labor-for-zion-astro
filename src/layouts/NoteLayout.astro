@@ -4,6 +4,7 @@ import Backlinks from '../components/Backlinks.astro';
 import Layout from './Layout.astro';
 import type {Frontmatter, Heading} from '../validation/md';
 import TableOfContents from '../components/TableOfContents.astro';
+import HeadingObserver from '../components/HeadingObserver.astro';
 
 interface Props {
   content: string;
@@ -19,7 +20,7 @@ const {frontmatter, backlinks, content, headings} = Astro.props;
   title={frontmatter.title}
   description={frontmatter.description}
 >
-  <main class="grid grid-cols-1 md:grid-cols-[1fr,_300px] gap-14">
+  <main class="grid grid-cols-1 md:grid-cols-[1fr,_300px] gap-14 mb-10">
     <article class="max-w-3xl">
       <div class="border-slate-800 border-solid border-b-2 text-slate-800 p-4">
         <h1 class="text-[clamp(2rem,_10vw,_3rem)] font-body font-bold">
@@ -54,6 +55,7 @@ const {frontmatter, backlinks, content, headings} = Astro.props;
       </div>
 
       <div
+        id="article-body"
         class="prose prose-lg prose-slate dark:prose-invert min-w-full px-4 prose-hr:border-emerald-800"
         set:html={content}
       />
@@ -73,4 +75,5 @@ const {frontmatter, backlinks, content, headings} = Astro.props;
       </div>
     </div>
   </main>
+  <HeadingObserver />
 </Layout>

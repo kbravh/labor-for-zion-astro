@@ -1,5 +1,6 @@
 ---
-import type { Heading } from '../validation/md';
+import type {Heading} from '../validation/md';
+import Link from './Link.astro';
 
 interface Props {
   headings: Heading[];
@@ -23,12 +24,12 @@ const {headings} = Astro.props;
             'mt-2',
           ]}
         >
-          <a
+          <Link
             href={`#${heading.id}`}
-            class="text-slate-800 dark:text-slate-100 hover:text-emerald-800 dark:hover:text-emerald-300"
+            className="text-slate-800 dark:text-slate-100 hover:text-emerald-800 dark:hover:text-emerald-300"
           >
             {heading.text}
-          </a>
+          </Link>
         </li>
       ))
     }

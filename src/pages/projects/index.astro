@@ -4,6 +4,7 @@ import Grid from '../../components/Grid.astro';
 import MainWrapper from '../../components/MainWrapper.astro';
 import PageTitle from '../../components/PageTitle.astro';
 import Layout from '../../layouts/Layout.astro';
+import Link from '../../components/Link.astro';
 ---
 
 <Layout title="Projects">
@@ -11,7 +12,7 @@ import Layout from '../../layouts/Layout.astro';
     <PageTitle title="Projects" />
     <MainWrapper>
       <Grid>
-        <a href="https://scripture.page">
+        <Link href="https://scripture.page">
           <ArticleCard>
             <div>
               <h2 class="text-slate-700 font-semibold text-lg">Scriptly</h2>
@@ -21,8 +22,8 @@ import Layout from '../../layouts/Layout.astro';
               </p>
             </div>
           </ArticleCard>
-        </a>
-        <a href="/projects/obsidian-scripture-vault">
+        </Link>
+        <Link href="/projects/obsidian-scripture-vault">
           <ArticleCard>
             <div>
               <h2 class="text-slate-700 font-semibold text-lg">
@@ -35,7 +36,7 @@ import Layout from '../../layouts/Layout.astro';
               </p>
             </div>
           </ArticleCard>
-        </a>
+        </Link>
       </Grid>
     </MainWrapper>
   </div>

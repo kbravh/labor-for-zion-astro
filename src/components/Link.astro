@@ -1,0 +1,22 @@
+---
+interface Props {
+  href: string;
+  target?: '_blank' | '_self' | '_parent' | '_top';
+  rel?: string;
+  className?: string;
+}
+
+const {href, target, rel, className} = Astro.props;
+---
+
+<a
+  href={href}
+  target={target}
+  rel={rel}
+  class:list={[
+    'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500',
+    className,
+  ]}
+>
+  <slot />
+</a>

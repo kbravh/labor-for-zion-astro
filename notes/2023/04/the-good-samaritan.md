@@ -16,6 +16,6 @@ This parable can be interpreted to be a symbol of Christ. The Samaritans were lo
 
 ## The Innkeeper
 
-We can look at the innkeeper as a representation of those in leadership positions in the Church, especially those at local levels who have stewardship over other members. The Samaritan pays the innkeeper and charges him with caring for the wounded man and promises to pay any overage when he returns.
+We can look at the innkeeper as a representation of any of us who have a stewardship or ministering responsibility. The Samaritan pays the innkeeper and charges him with caring for the wounded man and promises to pay any overage when he returns.
 
-We have been given talents and blessings in order to carry out our charge of caring for other members. Sometimes these responsibilities will require us to make sacrifices, but the Lord will reward those sacrifices at his Second Coming.
+We have been given talents and blessings in order to carry out our charge of caring for our brothers and sisters. Sometimes these responsibilities will require us to make sacrifices, but the Lord will reward those sacrifices at his Second Coming.

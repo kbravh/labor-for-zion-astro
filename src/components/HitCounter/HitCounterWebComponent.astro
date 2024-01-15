@@ -1,0 +1,28 @@
+<script>
+  class HitCounter extends HTMLElement {
+    // This gets called when the element is inserted into the DOM.
+    connectedCallback() {
+      this.fetchAndDisplayCount();
+    }
+
+    async fetchAndDisplayCount() {
+      const slug = this.getAttribute('data-slug');
+      try {
+        const response = await fetch(`https://laborforzion.com/posts/${slug}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        this.displayCount(data.count);
+      } catch (error) {
+        console.error('Fetch error:', error);
+      }
+    }
+
+    displayCount(count) {
+      this.textContent = `Page views: ${count}`;
+    }
+  }
+
+  customElements.define('hit-counter', HitCounter);
+</script>

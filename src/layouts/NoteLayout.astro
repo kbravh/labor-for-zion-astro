@@ -7,13 +7,14 @@ import TableOfContents from '../components/TableOfContents.astro';
 import HeadingObserver from '../components/HeadingObserver.astro';
 
 interface Props {
+  slug: string;
   content: string;
   frontmatter: Frontmatter;
   backlinks: Backlink[];
   headings: Heading[];
 }
 
-const {frontmatter, backlinks, content, headings} = Astro.props;
+const {slug, frontmatter, backlinks, content, headings} = Astro.props;
 ---
 
 <Layout
@@ -72,6 +73,7 @@ const {frontmatter, backlinks, content, headings} = Astro.props;
             </aside>
           )
         }
+        <hit-counter data-slug={slug} />
       </div>
     </div>
   </main>

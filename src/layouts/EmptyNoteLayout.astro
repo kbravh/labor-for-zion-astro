@@ -4,11 +4,12 @@ import Backlinks from '../components/Backlinks.astro';
 import Layout from './Layout.astro';
 
 interface Props {
+  slug: string;
   title: string;
   backlinks: Backlink[];
 }
 
-const {title, backlinks} = Astro.props;
+const {title, backlinks, slug} = Astro.props;
 ---
 
 <Layout
@@ -27,6 +28,7 @@ const {title, backlinks} = Astro.props;
         else, you can see those references below.
       </p>
       {!!backlinks.length && <Backlinks backlinks={backlinks} />}
+      <hit-counter data-slug={slug} />
     </article>
   </main>
 </Layout>

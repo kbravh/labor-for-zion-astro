@@ -2,6 +2,7 @@
 import {ViewTransitions} from 'astro:transitions';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import HitCounterWebComponent from '../components/HitCounter/HitCounterWebComponent.astro';
 
 export interface Props {
   title: string;
@@ -107,5 +108,6 @@ const {title, description} = Astro.props;
         @apply bg-emerald-900 text-emerald-50;
       }
     </style>
+    <HitCounterWebComponent />
   </body>
 </html>

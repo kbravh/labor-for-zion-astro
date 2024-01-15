@@ -28,7 +28,7 @@ export default async (_: Request, context: Context) => {
     await client.connect();
     const database = client.db('LaborForZion');
     const collection = database.collection('hits');
-    
+
     // increment the hits by 1
     await collection.updateOne(
       {slug},
@@ -38,12 +38,12 @@ export default async (_: Request, context: Context) => {
 
     // Read the updated hits
     const updatedDoc = await collection.findOne({ slug });
-    const totalHits = updatedDoc ? updatedDoc.hits : 0;
+    const count = updatedDoc ? updatedDoc.hits : 0;
 
     // Return total hits
     return {
       statusCode: 200,
-      body: JSON.stringify({ totalHits }),
+      body: JSON.stringify({ count }),
     };
 
   } catch (err) {

@@ -1,8 +1,9 @@
-import rss from '@astrojs/rss';
+import rss, {type RSSFeedItem} from '@astrojs/rss';
 import MarkdownIt from 'markdown-it';
 import MarkdownItAnchor from 'markdown-it-anchor';
 import MarkdownItFootnote from 'markdown-it-footnote';
 import sanitizeHtml from 'sanitize-html';
+import type {APIRoute} from 'astro';
 
 import {
   addLinks,
@@ -22,13 +23,14 @@ const md = new MarkdownIt({
   .use(MarkdownItAnchor)
   .use(MarkdownItFootnote);
 
-export function get(context: any) {
+export const GET: APIRoute = ({site}) => {
   const {titleToSlug} = getTitleAndSlugMaps();
   return rss({
     title: 'Labor for Zion',
-    description: 'A collection of notes and talks centered around gospel topics.',
-    site: context.site,
-    items: notePaths.map(notePath => {
+    description:
+      'A collection of notes and talks centered around gospel topics.',
+    site: site ?? 'https://laborforzion.com',
+    items: notePaths.toReversed().map((notePath): RSSFeedItem => {
       const source = readFileSync(notePath, 'utf-8');
       const document = matter(source);
       const text = addLinks(titleToSlug, document.content);
@@ -46,4 +48,4 @@ export function get(context: any) {
     customData: `<language>en-US</language>`,
     stylesheet: '/pretty-feed-v3.xsl',
   });
-}
+};

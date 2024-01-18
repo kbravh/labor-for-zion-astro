@@ -77,7 +77,7 @@ if (filePath) {
 } else {
   const title = slugToTitle[slug];
   if (!title) {
-    // This page doesn't exist at all!
+    // This page doesn't exist as a note.
     return Astro.redirect('/404');
   }
   noteData = {

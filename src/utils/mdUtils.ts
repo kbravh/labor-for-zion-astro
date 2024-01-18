@@ -28,6 +28,42 @@ export const getSlugFromTitle = (title: string): string =>
   slugify(title, {lower: true});
 export const notePaths = walkPath(NOTES_PATH);
 
+let slugToTopic: Record<string, string> | undefined;
+let articleTopics: Set<string> | undefined;
+
+/**
+ * Finds all tags that are included in the frontmatter of the articles.
+ * Returns a map of tag slugs to tag names, and a set of unique tags.
+ */
+export const getNoteTopics = async (): Promise<{
+  slugToTopic: Record<string, string>;
+  articleTopics: Set<string>;
+}> => {
+  if (slugToTopic && articleTopics) {
+    return {
+      slugToTopic,
+      articleTopics,
+    };
+  }
+  const newSlugToTopic: Record<string, string> = {};
+  const newArticleTopics = new Set<string>();
+  // Loop through all articles and extract topic and frontmatter
+  for (const notePath of notePaths) {
+    const source = readFileSync(notePath, 'utf-8');
+    const frontmatter = Frontmatter.parse(matter(source).data);
+    for (const tag of frontmatter.tags ?? []) {
+      newArticleTopics.add(tag);
+      newSlugToTopic[slugify(tag, {lower: true})] = tag;
+    }
+  }
+  slugToTopic = newSlugToTopic;
+  articleTopics = newArticleTopics;
+  return {
+    slugToTopic,
+    articleTopics,
+  };
+};
+
 //TODO - experiment with replacing these with Maps
 let titleToSlug: Record<string, string>;
 let slugToTitle: Record<string, string>;

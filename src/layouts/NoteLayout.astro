@@ -60,6 +60,9 @@ const {slug, frontmatter, backlinks, content, headings} = Astro.props;
         class="prose prose-lg prose-slate dark:prose-invert min-w-full px-4 prose-hr:border-emerald-800"
         set:html={content}
       />
+      <div class="p-4">
+        <hit-counter data-slug={slug} />
+      </div>
     </article>
     <div class="pr-4">
       <div class="sticky top-4 flex flex-col gap-5">
@@ -73,7 +76,6 @@ const {slug, frontmatter, backlinks, content, headings} = Astro.props;
             </aside>
           )
         }
-        <hit-counter data-slug={slug} />
       </div>
     </div>
   </main>

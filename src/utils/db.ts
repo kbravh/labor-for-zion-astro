@@ -1,7 +1,6 @@
-import type {Config, Context} from '@netlify/functions';
 import {MongoClient, ServerApiVersion} from 'mongodb';
 
-const {MONGODB_URI} = process.env;
+const MONGODB_URI = import.meta.env.MONGODB_URI;
 if (!MONGODB_URI) {
   throw new Error('Define the MONGODB_URI environment variable');
 }
@@ -14,16 +13,7 @@ const client = new MongoClient(MONGODB_URI, {
   },
 });
 
-export default async (_: Request, context: Context) => {
-  const {slug} = context.params;
-
-  if (!slug) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({message: 'Missing slug'}),
-    };
-  }
-
+export const logPageView = async (slug: string): Promise<number> => {
   try {
     await client.connect();
     const database = client.db('LaborForZion');
@@ -38,28 +28,17 @@ export default async (_: Request, context: Context) => {
 
     // Read the updated hits
     const updatedDoc = await collection.findOne({ slug });
-    const count = updatedDoc ? updatedDoc.hits : 0;
+    const count = updatedDoc?.hits || 0;
 
     // Return total hits
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ count }),
-    };
+    return count;
 
   } catch (err) {
     if (err instanceof Error) {
       console.log(err.stack);
     }
-    return {
-      statusCode: 500,
-      body: JSON.stringify({message: 'Internal server error'}),
-    };
+    throw err;
   } finally {
     await client.close();
   }
-
-};
-
-export const config: Config = {
-  path: '/posts/:slug',
-};
+}

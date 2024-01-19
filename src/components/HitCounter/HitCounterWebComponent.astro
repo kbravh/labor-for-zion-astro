@@ -8,7 +8,9 @@
     async fetchAndDisplayCount() {
       const slug = this.getAttribute('data-slug');
       try {
-        const response = await fetch(`https://laborforzion.com/posts/${slug}`);
+        const response = await fetch(`/notes/${slug}`, {
+          method: 'POST'
+        });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

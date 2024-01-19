@@ -1,22 +1,33 @@
 ---
 import {readFileSync} from 'fs';
 import {
-  type Backlink,
   addLinks,
   getBacklinks,
   getSlugToPathMap,
   getTitleAndSlugMaps,
+  type Backlink,
 } from '../../utils/mdUtils';
 // @ts-ignore - untyped dependency
 import matter from 'gray-matter';
 import MarkdownIt from 'markdown-it';
-import MarkdownItFootnote from 'markdown-it-footnote';
 import MarkdownItAnchor from 'markdown-it-anchor';
-import {Frontmatter, type Heading} from '../../validation/md';
-import {dedupeArray} from '../../utils/array';
-import NoteLayout from '../../layouts/NoteLayout.astro';
+import MarkdownItFootnote from 'markdown-it-footnote';
 import EmptyNoteLayout from '../../layouts/EmptyNoteLayout.astro';
-import { getHeadings } from '../../utils/htmlUtils';
+import NoteLayout from '../../layouts/NoteLayout.astro';
+import {dedupeArray} from '../../utils/array';
+import {logPageView} from '../../utils/db';
+import {getHeadings} from '../../utils/htmlUtils';
+import {Frontmatter, type Heading} from '../../validation/md';
+
+const {slug} = Astro.params;
+if (!slug) {
+  throw new Error('No slug provided');
+}
+
+if (Astro.request.method === 'POST') {
+  const count = await logPageView(slug);
+  return new Response(JSON.stringify({count}))
+}
 
 const md = new MarkdownIt({
   html: true,
@@ -25,11 +36,6 @@ const md = new MarkdownIt({
 })
   .use(MarkdownItFootnote)
   .use(MarkdownItAnchor);
-
-const {slug} = Astro.params;
-if (!slug) {
-  throw new Error('No slug provided');
-}
 
 const slugToPathMap = getSlugToPathMap();
 const {titleToSlug, slugToTitle} = getTitleAndSlugMaps();
@@ -57,7 +63,6 @@ if (filePath) {
   const frontmatter = markdown.data;
   const parsedFrontmatter = Frontmatter.parse(frontmatter);
   const headings = getHeadings(content);
-
 
   // Fill an array with all backlinks that reference this title or its aliases
   let backlinks = [...(titlesWithBacklinks[parsedFrontmatter.title] ?? [])];

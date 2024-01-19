@@ -8,11 +8,10 @@
     async fetchAndDisplayCount() {
       const slug = this.getAttribute('data-slug');
       try {
-        const response = await fetch(`/notes/${slug}`, {
-          method: 'POST'
-        });
+        const response = await fetch(`/data/${slug}.json`);
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          console.error('Network response was not ok');
+          return;
         }
         const data = await response.json();
         this.displayCount(data.count);

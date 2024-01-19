@@ -15,18 +15,12 @@ import MarkdownItFootnote from 'markdown-it-footnote';
 import EmptyNoteLayout from '../../layouts/EmptyNoteLayout.astro';
 import NoteLayout from '../../layouts/NoteLayout.astro';
 import {dedupeArray} from '../../utils/array';
-import {logPageView} from '../../utils/db';
 import {getHeadings} from '../../utils/htmlUtils';
 import {Frontmatter, type Heading} from '../../validation/md';
 
 const {slug} = Astro.params;
 if (!slug) {
   throw new Error('No slug provided');
-}
-
-if (Astro.request.method === 'POST') {
-  const count = await logPageView(slug);
-  return new Response(JSON.stringify({count}))
 }
 
 const md = new MarkdownIt({

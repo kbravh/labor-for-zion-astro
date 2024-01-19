@@ -2,7 +2,7 @@
 title: And My Father Dwelt in a Tent
 description: Why did Nephi feel it important to include this small detail about his father in his historical record?
 date: 2024-01-12T10:40:16.967392700-05:00
-updated:
+updated: 2024-01-18T21:46:02.850159800-05:00
 language: en_US
 tags:
   - Book of Mormon
@@ -39,7 +39,7 @@ One of the most important events was (and still is) the [[Feast of Tabernacles]]
 
 While Lehi may not have erected his tent in the wilderness with the express purpose of celebrating the Feast of Tabernacles, the purpose fits nicely with his experience.[^timing] God led Lehi and his family out of Jerusalem and away from the captivity that awaited the Jews when Babylon arrived to destroy Jerusalem.
 
-Lehi is able to rejoice in the Lord despite his hardships because he is so sure of the future blessings that await him. We see Lehi manifest this attitude multiple times: after seeing the destruction that will befall Jerusalem when he has his first vision, he praises God for his goodness and mercy ([[1 Nephi 1.14]]). He also tells his wife Sariah, "I have obtained a land of promise" ([[1 Nephi 5.5]]), even when they were still in the wilderness, barely beginning their journey.
+Lehi is able to rejoice in the Lord despite his hardships because he is so sure of the future blessings that await him. We see Lehi manifest this attitude multiple times: after seeing the destruction that will befall Jerusalem when he has his first vision, he praises God for his goodness and mercy ([[1 Nephi 1.14]]). He also tells his wife Sariah, "I have obtained a land of promise" ([[1 Nephi 5.5]]), even when they were still in the wilderness, barely beginning their journey (take a look at the [Hebrew prophetic perfect tense](/notes/hebrew-prophetic-perfect) for a deeper dive here!).
 
 ## Conclusion
 

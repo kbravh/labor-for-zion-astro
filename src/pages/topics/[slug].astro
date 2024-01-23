@@ -1,55 +1,24 @@
 ---
-import {readFileSync} from 'fs';
-import {
-  getSlugFromFilepath,
-  notePaths,
-  getNoteTopics,
-} from '../../utils/mdUtils';
-import {Frontmatter} from '../../validation/md';
-import matter from 'gray-matter';
-import Layout from '../../layouts/Layout.astro';
-import PageTitle from '../../components/PageTitle.astro';
-import Grid from '../../components/Grid.astro';
-import MainWrapper from '../../components/MainWrapper.astro';
-import Link from '../../components/Link.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
+import Grid from '../../components/Grid.astro';
+import Link from '../../components/Link.astro';
+import MainWrapper from '../../components/MainWrapper.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import Layout from '../../layouts/Layout.astro';
+import { getArticles, getNoteTopics } from '../../utils/mdUtils';
 
 const {slug} = Astro.params;
 if (!slug) {
   throw new Error('No slug provided');
 }
 
-interface PostListing {
-  slug: string;
-  frontmatter: Frontmatter;
-}
-
-const posts: PostListing[] = [];
 const {slugToTopic} = await getNoteTopics();
 const topic = slugToTopic[slug];
 if (!topic) {
   Astro.redirect('/404');
 }
 
-// Loop through all articles and extract slug and frontmatter
-for (const articlePath of notePaths) {
-  const source = readFileSync(articlePath, 'utf-8');
-  const frontmatter = matter(source).data;
-  const parsedFrontmatter = Frontmatter.parse(frontmatter);
-  if (parsedFrontmatter.tags?.includes(topic)) {
-    posts.push({
-      frontmatter: parsedFrontmatter,
-      slug: getSlugFromFilepath(articlePath),
-    });
-  }
-}
-
-// sort posts by written at date, recent to old
-posts.sort(
-  (a, b) =>
-    new Date(b.frontmatter.date).getTime() -
-    new Date(a.frontmatter.date).getTime()
-);
+const posts = await getArticles({topic});
 
 export const getStaticPaths = async () => {
   const {slugToTopic} = await getNoteTopics();

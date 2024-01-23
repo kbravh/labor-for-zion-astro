@@ -1,8 +1,9 @@
-import {readdirSync, readFileSync, statSync} from 'fs';
-import path, {basename} from 'path';
-import {BracketLink, Frontmatter} from '../validation/md';
+import { readdirSync, readFileSync, statSync } from 'fs';
+import { readFile } from 'fs/promises';
 import matter from 'gray-matter';
+import path, { basename } from 'path';
 import slugify from 'slugify';
+import { BracketLink, Frontmatter } from '../validation/md';
 
 export const NOTES_PATH = path.join(process.cwd(), 'notes');
 
@@ -280,4 +281,41 @@ export const getBacklinks = (): Record<string, Backlink[]> => {
 
   titlesWithBacklinks = map;
   return titlesWithBacklinks;
+};
+
+interface PostListing {
+  slug: string;
+  frontmatter: Frontmatter;
+}
+
+interface Filter {
+  topic?: string;
+}
+
+/**
+ * Returns an array of all articles sorted by date (most recent first).
+ */
+export const getArticles = async (filter?: Filter): Promise<PostListing[]> => {
+  let posts: PostListing[] = [];
+  // Loop through all articles and extract slug and frontmatter
+  for (const articlePath of notePaths) {
+    const source = await readFile(articlePath, 'utf-8');
+    const frontmatter = matter(source).data;
+    const parsedFrontmatter = Frontmatter.parse(frontmatter);
+    if (!filter?.topic || (filter.topic && parsedFrontmatter.tags?.includes(filter.topic))){
+      posts.push({
+        frontmatter: parsedFrontmatter,
+        slug: getSlugFromFilepath(articlePath),
+      });
+    }
+  }
+
+  // sort posts by written at date, recent to old
+  posts = posts.toSorted(
+    (a, b) =>
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime()
+  );
+
+  return posts;
 };

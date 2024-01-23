@@ -1,39 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import {readFileSync} from 'fs';
-import {getSlugFromFilepath, notePaths} from '../../utils/mdUtils';
-import {Frontmatter} from '../../validation/md';
-// @ts-ignore - untyped dependency
-import matter from 'gray-matter';
+import {getArticles} from '../../utils/mdUtils';
 import Grid from '../../components/Grid.astro';
 import MainWrapper from '../../components/MainWrapper.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import PageTitle from '../../components/PageTitle.astro';
 import Link from '../../components/Link.astro';
 
-interface PostListing {
-  slug: string;
-  frontmatter: Frontmatter;
-}
+const posts = await getArticles();
 
-const posts: PostListing[] = [];
-
-// Loop through all articles and extract slug and frontmatter
-for (const articlePath of notePaths) {
-  const source = readFileSync(articlePath, 'utf-8');
-  const frontmatter = matter(source).data;
-  posts.push({
-    frontmatter: Frontmatter.parse(frontmatter),
-    slug: getSlugFromFilepath(articlePath),
-  });
-}
-
-// sort posts by written at date, recent to old
-posts.sort(
-  (a, b) =>
-    new Date(b.frontmatter.date).getTime() -
-    new Date(a.frontmatter.date).getTime()
-);
 ---
 
 <Layout title="Notes">

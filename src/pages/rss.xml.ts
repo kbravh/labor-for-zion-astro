@@ -23,28 +23,30 @@ const md = new MarkdownIt({
   .use(MarkdownItAnchor)
   .use(MarkdownItFootnote);
 
-export const GET: APIRoute = ({site}) => {
-  const {titleToSlug} = getTitleAndSlugMaps();
+export const GET: APIRoute = async ({site}) => {
+  const {titleToSlug} = await getTitleAndSlugMaps();
   return rss({
     title: 'Labor for Zion',
     description:
       'A collection of notes and talks centered around gospel topics.',
     site: site ?? 'https://laborforzion.com',
-    items: notePaths.toReversed().map((notePath): RSSFeedItem => {
-      const source = readFileSync(notePath, 'utf-8');
-      const document = matter(source);
-      const text = addLinks(titleToSlug, document.content);
-      const content = md.render(text);
-      const frontmatter = document.data;
-      const parsedFrontmatter = Frontmatter.parse(frontmatter);
-      return {
-        content: sanitizeHtml(content),
-        link: `/notes/${getSlugFromFilepath(notePath)}`,
-        title: parsedFrontmatter.title,
-        pubDate: parsedFrontmatter.date,
-        description: parsedFrontmatter.description,
-      };
-    }),
+    items: await Promise.all(
+      notePaths.toReversed().map(async (notePath): Promise<RSSFeedItem> => {
+        const source = readFileSync(notePath, 'utf-8');
+        const document = matter(source);
+        const text = await addLinks(titleToSlug, document.content);
+        const content = md.render(text);
+        const frontmatter = document.data;
+        const parsedFrontmatter = Frontmatter.parse(frontmatter);
+        return {
+          content: sanitizeHtml(content),
+          link: `/notes/${getSlugFromFilepath(notePath)}`,
+          title: parsedFrontmatter.title,
+          pubDate: parsedFrontmatter.date,
+          description: parsedFrontmatter.description,
+        };
+      })
+    ),
     customData: `<language>en-US</language>`,
     stylesheet: '/pretty-feed-v3.xsl',
   });

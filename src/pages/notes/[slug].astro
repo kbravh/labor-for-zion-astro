@@ -32,8 +32,8 @@ const md = new MarkdownIt({
   .use(MarkdownItAnchor);
 
 const slugToPathMap = getSlugToPathMap();
-const {titleToSlug, slugToTitle} = getTitleAndSlugMaps();
-const titlesWithBacklinks = getBacklinks();
+const {titleToSlug, slugToTitle} = await getTitleAndSlugMaps();
+const titlesWithBacklinks = await getBacklinks();
 
 const filePath = slugToPathMap[slug];
 
@@ -52,7 +52,7 @@ let noteData:
 if (filePath) {
   const source = readFileSync(filePath, 'utf-8');
   const markdown = matter(source);
-  const text = addLinks(titleToSlug, markdown.content);
+  const text = await addLinks(titleToSlug, markdown.content);
   const content = md.render(text);
   const frontmatter = markdown.data;
   const parsedFrontmatter = Frontmatter.parse(frontmatter);
@@ -87,8 +87,8 @@ if (filePath) {
   };
 }
 
-export function getStaticPaths() {
-  const {slugToTitle} = getTitleAndSlugMaps();
+export async function getStaticPaths() {
+  const {slugToTitle} = await getTitleAndSlugMaps();
   const paths = Object.keys(slugToTitle).map(slug => ({
     params: {slug},
   }));

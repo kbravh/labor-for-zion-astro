@@ -1,25 +1,29 @@
-import { readdirSync, readFileSync, statSync } from 'fs';
-import { readFile } from 'fs/promises';
+import {readFile, readdir, stat} from 'fs/promises';
 import matter from 'gray-matter';
-import path, { basename } from 'path';
+import path, {basename} from 'path';
 import slugify from 'slugify';
-import { BracketLink, Frontmatter } from '../validation/md';
+import {BracketLink, Frontmatter} from '../validation/md';
 
 export const NOTES_PATH = path.join(process.cwd(), 'notes');
 
 export const removeMdxExtension = (path: string) => path.replace(/\.mdx?$/, '');
 
-const walkPath = (dir: string): string[] => {
-  const files = readdirSync(dir);
-  return files.flatMap(file => {
+/**
+ * Walks down a path and recursively collects all of the filepaths
+ */
+const walkPath = async (dir: string): Promise<string[]> => {
+  const files = await readdir(dir);
+  const promises = files.map(async file => {
     const filepath = path.join(dir, file);
-    const stats = statSync(filepath);
+    const stats = await stat(filepath);
     if (stats.isDirectory()) {
       return walkPath(filepath);
     } else {
       return [filepath];
     }
   });
+  const results = await Promise.all(promises);
+  return results.flat();
 };
 
 export const getSlugFromFilepath = (path: string): string =>
@@ -27,7 +31,7 @@ export const getSlugFromFilepath = (path: string): string =>
 
 export const getSlugFromTitle = (title: string): string =>
   slugify(title, {lower: true});
-export const notePaths = walkPath(NOTES_PATH);
+export const notePaths = await walkPath(NOTES_PATH);
 
 let slugToTopic: Record<string, string> | undefined;
 let articleTopics: Set<string> | undefined;
@@ -50,7 +54,7 @@ export const getNoteTopics = async (): Promise<{
   const newArticleTopics = new Set<string>();
   // Loop through all articles and extract topic and frontmatter
   for (const notePath of notePaths) {
-    const source = readFileSync(notePath, 'utf-8');
+    const source = await readFile(notePath, 'utf-8');
     const frontmatter = Frontmatter.parse(matter(source).data);
     for (const tag of frontmatter.tags ?? []) {
       newArticleTopics.add(tag);
@@ -75,10 +79,10 @@ let slugToTitle: Record<string, string>;
  * "Interactive Teaching MOC", the slug can be found through either.
  * Includes links that are mentioned but don't exist yet.
  */
-export const getTitleAndSlugMaps = (): {
+export const getTitleAndSlugMaps = async (): Promise<{
   titleToSlug: Record<string, string>;
   slugToTitle: Record<string, string>;
-} => {
+}> => {
   if (titleToSlug && slugToTitle) {
     return {titleToSlug, slugToTitle};
   }
@@ -86,7 +90,7 @@ export const getTitleAndSlugMaps = (): {
   const slugMap: Record<string, string> = {};
   // this creates a map of all titles and aliases to their corresponding slug
   for (const article of notePaths) {
-    const source = readFileSync(article, 'utf-8');
+    const source = await readFile(article, 'utf-8');
     const frontmatter = Frontmatter.parse(matter(source).data);
     titleMap[frontmatter.title] = getSlugFromFilepath(article);
     slugMap[getSlugFromFilepath(article)] = frontmatter.title;
@@ -138,10 +142,10 @@ export const getSlugToPathMap = (): Record<string, string> => {
  * @param source - the fresh, raw text of the mdx file
  * @returns the mdx file with Link components added in
  */
-export const addLinks = (
+export const addLinks = async (
   titleToSlug: Record<string, string>,
   source: string
-): string => {
+): Promise<string> => {
   // Replace embed links with content first
   let embedLinks = getEmbedLinks(source);
   let firstEmbed = true;
@@ -157,7 +161,7 @@ export const addLinks = (
       if (!filePath) {
         throw new Error(`File path not found for the slug ${slug}`);
       }
-      let rawEmbed = readFileSync(filePath, 'utf-8');
+      let rawEmbed = await readFile(filePath, 'utf-8');
       let embed = matter(rawEmbed).content;
       // remove frontmatter
       if (firstEmbed) {
@@ -254,15 +258,15 @@ let titlesWithBacklinks: Record<string, Backlink[]>;
 /**
  * Provides a map of titles and aliases to all backlinks from other files.
  */
-export const getBacklinks = (): Record<string, Backlink[]> => {
+export const getBacklinks = async (): Promise<Record<string, Backlink[]>> => {
   if (titlesWithBacklinks) {
     return titlesWithBacklinks;
   }
   const map: Record<string, Backlink[]> = {};
-  const {titleToSlug} = getTitleAndSlugMaps();
+  const {titleToSlug} = await getTitleAndSlugMaps();
 
   for (const articlePath of notePaths) {
-    const source = readFileSync(articlePath, 'utf-8');
+    const source = await readFile(articlePath, 'utf-8');
     const frontmatter = Frontmatter.parse(matter(source).data);
     const title = frontmatter.title;
     const slug = titleToSlug[title];
@@ -302,7 +306,10 @@ export const getArticles = async (filter?: Filter): Promise<PostListing[]> => {
     const source = await readFile(articlePath, 'utf-8');
     const frontmatter = matter(source).data;
     const parsedFrontmatter = Frontmatter.parse(frontmatter);
-    if (!filter?.topic || (filter.topic && parsedFrontmatter.tags?.includes(filter.topic))){
+    if (
+      !filter?.topic ||
+      (filter.topic && parsedFrontmatter.tags?.includes(filter.topic))
+    ) {
       posts.push({
         frontmatter: parsedFrontmatter,
         slug: getSlugFromFilepath(articlePath),

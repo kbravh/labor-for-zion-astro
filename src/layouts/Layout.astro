@@ -82,14 +82,14 @@ const {title, description} = Astro.props;
       }
 
       @font-face {
-        font-family: 'Munken';
+        font-family: 'Munken Sans';
         src: url('/fonts/MunkenSansRegular.woff2') format('woff2');
         font-weight: normal;
         font-style: normal;
         font-display: swap;
       }
       @font-face {
-        font-family: 'Munken';
+        font-family: 'Munken Sans';
         src: url('/fonts/MunkenSansBold.woff2') format('woff2');
         font-weight: bold;
         font-style: normal;
@@ -99,6 +99,21 @@ const {title, description} = Astro.props;
       /* https://developer.mozilla.org/en-US/docs/Web/CSS/::target-text */
       ::target-text {
         @apply bg-emerald-900 text-emerald-50;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: 'Munken Sans', 'Lucida Sans', 'Lucida Sans Regular',
+          'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      }
+
+      p {
+        font-family: 'Atkinson Hyperlegible', Georgia, 'Times New Roman', Times,
+          serif;
       }
     </style>
     <HitCounterWebComponent />

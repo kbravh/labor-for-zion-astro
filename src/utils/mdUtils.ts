@@ -287,7 +287,7 @@ export const getBacklinks = async (): Promise<Record<string, Backlink[]>> => {
   return titlesWithBacklinks;
 };
 
-interface PostListing {
+export interface PostListing {
   slug: string;
   frontmatter: Frontmatter;
 }

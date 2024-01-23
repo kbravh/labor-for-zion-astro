@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import {getArticles} from '../utils/mdUtils';
+import ArticleCard from '../components/ArticleCard.astro';
 
 let posts = await getArticles();
 posts = posts.slice(0, 3);
@@ -24,33 +25,7 @@ posts = posts.slice(0, 3);
     <section class="max-w-2xl">
       <h2 class="text-slate-600 font-bold text-3xl">Recent articles</h2>
       <div class="flex flex-col gap-4 mt-2">
-        {
-          posts.map(post => (
-            <a
-              href={`/notes/${post.slug}`}
-              class="group"
-            >
-              <article class="text-balance flex flex-col">
-                <div>
-                  <h3 class="group-hover:text-emerald-500 font-semibold text-lg decoration-emerald-500 group-hover:underline text-emerald-700">
-                    {post.frontmatter.title}
-                  </h3>
-                  <p class="text-slate-700 text-md group-hover:text-slate-500">
-                    {post.frontmatter.description}
-                  </p>
-                </div>
-                <time
-                  class="text-slate-600 group-hover:text-slate-500"
-                  datetime={post.frontmatter.date.toISOString()}
-                >
-                  {post.frontmatter.date.toLocaleDateString('en-US', {
-                    dateStyle: 'medium',
-                  })}
-                </time>
-              </article>
-            </a>
-          ))
-        }
+        {posts.map(post => <ArticleCard post={post} />)}
       </div>
     </section>
   </main>

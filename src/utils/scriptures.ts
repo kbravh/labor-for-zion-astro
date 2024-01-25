@@ -1,13 +1,15 @@
-const works = [
-  'Old Testament',
-  'New Testament',
-  'Book of Mormon',
-  'Doctrine and Covenants',
-  'Official Declarations',
-  'Pearl of Great Price',
-] as const;
+enum works {
+  'Old Testament' = 'Old Testament',
+  'New Testament' = 'New Testament',
+  'Book of Mormon' = 'Book of Mormon',
+  'Doctrine and Covenants' = 'Doctrine and Covenants',
+  'Official Declarations' = 'Official Declarations',
+  'Pearl of Great Price' = 'Pearl of Great Price',
+}
 
-const books = {
+type Work = keyof typeof works;
+
+const books: Record<string, Work> = {
   Genesis: 'Old Testament',
   Exodus: 'Old Testament',
   Leviticus: 'Old Testament',
@@ -130,4 +132,33 @@ export type ScriptureReference = {
 
 export const processScriptureReference = (
   reference: RawScriptureReference
-): ScriptureReference | null => {};
+): ScriptureReference | null => {
+  const {book} = reference;
+  const work = books[book];
+  if (!work) {
+    return null;
+  }
+  const chapter = parseInt(reference.chapter);
+  const verses = reference.verses.split(',');
+
+  const expandedVerses = verses.reduce((result: number[], verse) => {
+    if (verse.includes('-')) {
+      const [start, end] = verse.split('-').map(Number); // Convert to numbers
+
+      for (let i = start; i <= end; i++) {
+        result.push(i);
+      }
+    } else {
+      result.push(Number(verse));
+    }
+
+    return result;
+  }, []);
+
+  return {
+    book,
+    work,
+    chapter,
+    verses: expandedVerses,
+  };
+};

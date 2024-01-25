@@ -1,6 +1,7 @@
 import {
   isScriptureReference,
   parseScriptureReference,
+  processScriptureReference,
   type RawScriptureReference,
   type ScriptureReference,
 } from '../../utils/scriptures';
@@ -55,6 +56,51 @@ describe('parseScriptureReference', () => {
       book: 'Alma',
       chapter: '7',
       verses: '11-13,15,17-19',
+    });
+  });
+});
+
+describe('processScriptureReference', () => {
+  it('processes a single verse', () => {
+    expect(
+      processScriptureReference({
+        book: '2 Nephi',
+        chapter: '25',
+        verses: '26',
+      })
+    ).toStrictEqual<ScriptureReference>({
+      book: '2 Nephi',
+      work: 'Book of Mormon',
+      chapter: 25,
+      verses: [26],
+    });
+  });
+  it('processes a verse range', () => {
+    expect(
+      processScriptureReference({
+        book: 'Alma',
+        chapter: '7',
+        verses: '11-13',
+      })
+    ).toStrictEqual<ScriptureReference>({
+      book: 'Alma',
+      work: 'Book of Mormon',
+      chapter: 7,
+      verses: [11, 12, 13],
+    });
+  });
+  it('processes multiple verse ranges', () => {
+    expect(
+      processScriptureReference({
+        book: 'Alma',
+        chapter: '7',
+        verses: '11-13,15,17-19',
+      })
+    ).toStrictEqual<ScriptureReference>({
+      book: 'Alma',
+      work: 'Book of Mormon',
+      chapter: 7,
+      verses: [11, 12, 13, 15, 17, 18, 19],
     });
   });
 });

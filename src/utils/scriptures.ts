@@ -1,79 +1,133 @@
-const works = ['Old Testament', 'New Testament', 'Book of Mormon', 'Doctrine and Covenants', 'Official Declarations', 'Pearl of Great Price'] as const;
+const works = [
+  'Old Testament',
+  'New Testament',
+  'Book of Mormon',
+  'Doctrine and Covenants',
+  'Official Declarations',
+  'Pearl of Great Price',
+] as const;
 
 const books = {
-  'Old Testament': [
-    'Genesis',
-    'Exodus',
-    'Leviticus',
-    'Numbers',
-    'Deuteronomy',
-    'Joshua',
-    'Judges',
-    'Ruth',
-    '1 Samuel',
-    '2 Samuel',
-    '1 Kings',
-    '2 Kings',
-    '1 Chronicles',
-    '2 Chronicles',
-    'Ezra',
-    'Nehemiah',
-    'Esther',
-    'Job',
-    'Psalms',
-    'Proverbs',
-    'Ecclesiastes',
-    'Song of Solomon',
-    'Isaiah',
-    'Jeremiah',
-    'Lamentations',
-    'Ezekiel',
-    'Daniel',
-    'Hosea',
-    'Joel',
-    'Amos',
-    'Obadiah',
-    'Jonah',
-    'Micah',
-    'Nahum',
-    'Habakkuk',
-    'Zephaniah',
-    'Haggai',
-    'Zechariah',
-    'Malachi',
-  ],
-  'New Testament': [
-    'Matthew',
-    'Mark',
-    'Luke',
-    'John',
-    'Acts',
-    'Romans',
-    '1 Corinthians',
-    '2 Corinthians',
-    'Galatians',
-    'Ephesians',
-    'Philippians',
-    'Colossians',
-    '1 Thessalonians',
-    '2 Thessalonians',
-    '1 Timothy',
-    '2 Timothy',
-    'Titus',
-    'Philemon',
-    'Hebrews',
-    'James',
-    '1 Peter',
-    '2 Peter',
-    '1 John',
-    '2 John',
-    '3 John',
-    'Jude',
-    'Revelation',
-  ],
-  'Book of Mormon': ['1 Nephi', '2 Nephi', 'Jacob', 'Enos', 'Jarom', 'Omni', 'Words of Mormon', 'Mosiah', 'Alma', 'Helaman', '3 Nephi', '4 Nephi', 'Mormon', 'Ether', 'Moroni'],
-  // Doctrine and Covenants and Official Declarations are special cases, as they don't have books
-  'Pearl of Great Price': ['Moses', 'Abraham', 'Joseph Smith—Matthew', 'Joseph Smith—History', 'Articles of Faith'],
+  Genesis: 'Old Testament',
+  Exodus: 'Old Testament',
+  Leviticus: 'Old Testament',
+  Numbers: 'Old Testament',
+  Deuteronomy: 'Old Testament',
+  Joshua: 'Old Testament',
+  Judges: 'Old Testament',
+  Ruth: 'Old Testament',
+  '1 Samuel': 'Old Testament',
+  '2 Samuel': 'Old Testament',
+  '1 Kings': 'Old Testament',
+  '2 Kings': 'Old Testament',
+  '1 Chronicles': 'Old Testament',
+  '2 Chronicles': 'Old Testament',
+  Ezra: 'Old Testament',
+  Nehemiah: 'Old Testament',
+  Esther: 'Old Testament',
+  Job: 'Old Testament',
+  Psalms: 'Old Testament',
+  Psalm: 'Old Testament',
+  Proverbs: 'Old Testament',
+  Ecclesiastes: 'Old Testament',
+  'Song of Solomon': 'Old Testament',
+  Isaiah: 'Old Testament',
+  Jeremiah: 'Old Testament',
+  Lamentations: 'Old Testament',
+  Ezekiel: 'Old Testament',
+  Daniel: 'Old Testament',
+  Hosea: 'Old Testament',
+  Joel: 'Old Testament',
+  Amos: 'Old Testament',
+  Obadiah: 'Old Testament',
+  Jonah: 'Old Testament',
+  Micah: 'Old Testament',
+  Nahum: 'Old Testament',
+  Habakkuk: 'Old Testament',
+  Zephaniah: 'Old Testament',
+  Haggai: 'Old Testament',
+  Zechariah: 'Old Testament',
+  Malachi: 'Old Testament',
+  Matthew: 'New Testament',
+  Mark: 'New Testament',
+  Luke: 'New Testament',
+  John: 'New Testament',
+  Acts: 'New Testament',
+  Romans: 'New Testament',
+  '1 Corinthians': 'New Testament',
+  '2 Corinthians': 'New Testament',
+  Galatians: 'New Testament',
+  Ephesians: 'New Testament',
+  Philippians: 'New Testament',
+  Colossians: 'New Testament',
+  '1 Thessalonians': 'New Testament',
+  '2 Thessalonians': 'New Testament',
+  '1 Timothy': 'New Testament',
+  '2 Timothy': 'New Testament',
+  Titus: 'New Testament',
+  Philemon: 'New Testament',
+  Hebrews: 'New Testament',
+  James: 'New Testament',
+  '1 Peter': 'New Testament',
+  '2 Peter': 'New Testament',
+  '1 John': 'New Testament',
+  '2 John': 'New Testament',
+  '3 John': 'New Testament',
+  Jude: 'New Testament',
+  Revelation: 'New Testament',
+  '1 Nephi': 'Book of Mormon',
+  '2 Nephi': 'Book of Mormon',
+  Jacob: 'Book of Mormon',
+  Enos: 'Book of Mormon',
+  Jarom: 'Book of Mormon',
+  Omni: 'Book of Mormon',
+  'Words of Mormon': 'Book of Mormon',
+  Mosiah: 'Book of Mormon',
+  Alma: 'Book of Mormon',
+  Helaman: 'Book of Mormon',
+  '3 Nephi': 'Book of Mormon',
+  '4 Nephi': 'Book of Mormon',
+  Mormon: 'Book of Mormon',
+  Ether: 'Book of Mormon',
+  Moroni: 'Book of Mormon',
+  Moses: 'Pearl of Great Price',
+  Abraham: 'Pearl of Great Price',
+  'Joseph Smith—Matthew': 'Pearl of Great Price',
+  'Joseph Smith—History': 'Pearl of Great Price',
+  'Articles of Faith': 'Pearl of Great Price',
+  'Doctrine and Covenants': 'Doctrine and Covenants',
+  'Official Declaration': 'Official Declarations',
 } as const;
 
-export const isScriptureReference = (title: string): boolean => /[\w\s]+\d{1,3}[.:][\d.\-]+/.test(title);
+const SCRIPTURE_REGEX =
+  /(?<book>[\w\s]+)\s(?<chapter>\d{1,3})[.:](?<verses>[\d,\-]+)/;
+export const isScriptureReference = (title: string): boolean =>
+  SCRIPTURE_REGEX.test(title);
+
+export type RawScriptureReference = {
+  book: string;
+  chapter: string;
+  verses: string;
+};
+export const parseScriptureReference = (
+  title: string
+): RawScriptureReference => {
+  const matches = title.match(SCRIPTURE_REGEX);
+  const {book, chapter, verses} = matches?.groups || {};
+  return {
+    book,
+    chapter,
+    verses,
+  };
+};
+
+export type ScriptureReference = {
+  work: string;
+  book: string;
+  chapter: number;
+  verses: number[];
+};
+
+export const processScriptureReference = (
+  reference: RawScriptureReference
+): ScriptureReference | null => {};

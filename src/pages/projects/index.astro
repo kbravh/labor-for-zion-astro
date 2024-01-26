@@ -12,30 +12,37 @@ import Link from '../../components/Link.astro';
     <PageTitle title="Projects" />
     <MainWrapper>
       <Grid>
-        <Link href="https://scripture.page">
-          <ArticleCard>
-            <div>
-              <h2 class="text-slate-700 font-semibold text-lg">Scriptly</h2>
-              <p class="text-slate-700 text-md">
-                Style your patriarchal blessing to look like a page right out of
-                the scriptures.
-              </p>
-            </div>
-          </ArticleCard>
-        </Link>
         <Link href="/projects/obsidian-scripture-vault">
-          <ArticleCard>
+          <article class="text-balance flex flex-col">
             <div>
-              <h2 class="text-slate-700 font-semibold text-lg">
+              <h3
+                class="group-hover:text-emerald-500 font-semibold text-lg decoration-emerald-500 group-hover:underline text-emerald-700"
+              >
                 LDS scriptures Obsidian vault
-              </h2>
-              <p class="text-slate-700 text-md">
+              </h3>
+              <p class="text-slate-700 text-md group-hover:text-slate-500">
                 Take notes on the scriptures using Obsidian, a note-taking tool
                 that will help you connect ideas and think more deeply about the
                 scriptures.
               </p>
             </div>
-          </ArticleCard>
+          </article>
+        </Link>
+
+        <Link href="https://scripture.page">
+          <article class="text-balance flex flex-col">
+            <div>
+              <h3
+                class="group-hover:text-emerald-500 font-semibold text-lg decoration-emerald-500 group-hover:underline text-emerald-700"
+              >
+                Scriptly
+              </h3>
+              <p class="text-slate-700 text-md group-hover:text-slate-500">
+                Style your patriarchal blessing to look like a page right out of
+                the scriptures.
+              </p>
+            </div>
+          </article>
         </Link>
       </Grid>
     </MainWrapper>

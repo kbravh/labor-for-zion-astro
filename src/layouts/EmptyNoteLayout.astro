@@ -23,6 +23,9 @@ const {title, backlinks, slug} = Astro.props;
       <div class="border-slate-800 border-solid border-b-2">
         <h1 class="mb-0">{title}</h1>
       </div>
+
+      <slot />
+      
       <p>
         This page hasn't been created yet! But if it has been mentioned somewhere
         else, you can see those references below.

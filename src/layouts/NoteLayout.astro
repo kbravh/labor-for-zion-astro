@@ -55,6 +55,8 @@ const {slug, frontmatter, backlinks, content, headings} = Astro.props;
         }
       </div>
 
+      <slot />
+
       <div
         id="article-body"
         class="prose prose-lg prose-slate dark:prose-invert min-w-full px-4 prose-hr:border-emerald-800 mt-8"

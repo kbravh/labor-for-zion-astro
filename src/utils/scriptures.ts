@@ -1,3 +1,9 @@
+import OldTestament from '../data/Old Testament.json';
+import NewTestament from '../data/New Testament.json';
+import BookOfMormon from '../data/Book of Mormon.json';
+import DoctrineAndCovenants from '../data/Doctrine and Covenants.json';
+import PearlOfGreatPrice from '../data/Pearl of Great Price.json';
+
 enum works {
   'Old Testament' = 'Old Testament',
   'New Testament' = 'New Testament',
@@ -161,4 +167,62 @@ export const processScriptureReference = (
     chapter,
     verses: expandedVerses,
   };
+};
+
+type Verse = {
+  number: number;
+  text: string;
+};
+
+type Chapter = {
+  number: number;
+  summary: string;
+  verses: Verse[];
+};
+
+type Book = {
+  name: string;
+  chapters: Chapter[];
+};
+
+type Scripture = {
+  name: string;
+  link: string;
+  books: Book[];
+};
+
+export const expandScriptureReference = (
+  reference: ScriptureReference
+): string[] => {
+  let work: Scripture | null;
+
+  switch (reference.work) {
+    case works['Old Testament']:
+      work = OldTestament as Scripture;
+      break;
+    case works['New Testament']:
+      work = NewTestament as Scripture;
+      break;
+    case works['Book of Mormon']:
+      work = BookOfMormon as Scripture;
+      break;
+    case works['Doctrine and Covenants']:
+      work = DoctrineAndCovenants as Scripture;
+      break;
+    case works['Pearl of Great Price']:
+      work = PearlOfGreatPrice as Scripture;
+      break;
+    default:
+      work = null;
+  }
+
+  if (!work) {
+    return [];
+  }
+
+  const book = work.books.find(book => book.name === reference.book);
+  return reference.verses.flatMap(verse => {
+    const text = book?.chapters[reference.chapter - 1].verses[verse - 1].text;
+    return !!text ? [`${verse}. ${text}`] : [];
+  });
 };

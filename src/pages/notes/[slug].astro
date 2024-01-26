@@ -17,10 +17,16 @@ import NoteLayout from '../../layouts/NoteLayout.astro';
 import {dedupeArray} from '../../utils/array';
 import {getHeadings} from '../../utils/htmlUtils';
 import {Frontmatter, type Heading} from '../../validation/md';
+import { isScriptureReference } from '../../utils/scriptures';
 
 const {slug} = Astro.params;
 if (!slug) {
   throw new Error('No slug provided');
+}
+
+let scripture: string;
+if (isScriptureReference(slug)) {
+  
 }
 
 const md = new MarkdownIt({

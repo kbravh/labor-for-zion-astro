@@ -2,6 +2,7 @@
 title: Christ's Temptations
 description: What was the motive behind Satan's temptations of Christ after his forty-day fast?
 date: 2022-10-30T21:48:07.541Z
+updated: 2024-02-12T09:04:11.036145100-05:00
 language: en_US
 tags:
   - Temptation
@@ -24,3 +25,6 @@ We know that Christ did not have all knowledge of his role when He was born, but
 Finally, the Spirit carries Christ to a mountain to look upon all the kingdoms of the world. Satan tempts him and promises to immediately deliver all of these kingdoms and their glory to Christ if He worships him. Christ, of course, denies Satan's offer.
 
 Again, what would make this an effective temptation, and why would the Spirit show this to Christ? If Christ were presumably learning about His ministry and His calling, the Spirit could be showing Him the people of the world that He would affect with His ministry. Satan's temptation was an offer to gain influence and power over all of these people immediately instead of only helping them through His ministry. We also know that Christ offered all glory to His Father and didn't take any on Himself during His ministry, so this was an offer of glory and power from Satan.
+
+## Sin is tempting
+If there's a lesson we can take from Christ's temptations, it's that the temptations we are presented with won't be baseless. They won't be _easy_ to avoid, because they'll be rooted in some need or want or pain that we have. However, by following Christ's example, we can overcome those temptations by focusing on God and the promises He has made.

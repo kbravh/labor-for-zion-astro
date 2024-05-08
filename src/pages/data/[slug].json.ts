@@ -33,7 +33,15 @@ export const GET: APIRoute = async ({params}) => {
     });
   }
 
-  const count = await logPageView(slug);
+  let count: number;
+  try {
+    count = await logPageView(slug);
+  } catch (error) {
+    return new Response(JSON.stringify(error), {
+      status: 500,
+      headers: {'Content-Type': 'application/json'},
+    });
+  }
   return new Response(
     JSON.stringify({
       count,

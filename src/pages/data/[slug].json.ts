@@ -23,7 +23,7 @@ export const GET: APIRoute = async ({params}) => {
     });
   }
 
-  const {slugToTitle} = getTitleAndSlugMaps();
+  const {slugToTitle} = await getTitleAndSlugMaps();
   const set = new Set([...Object.keys(slugToTitle)]);
 
   if (!set.has(slug)) {

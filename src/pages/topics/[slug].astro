@@ -20,8 +20,6 @@ if (!topic) {
 
 const posts = await getArticles({topic});
 
-console.log(posts);
-
 export const getStaticPaths = async () => {
   const {slugToTopic} = await getNoteTopics();
   return Object.keys(slugToTopic).map(slug => ({params: {slug}}));

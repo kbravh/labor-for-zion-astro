@@ -35,7 +35,7 @@ const client = new MongoClient(MONGODB_URI, {
 
   } catch (err) {
     if (err instanceof Error) {
-      console.log(err.stack);
+      console.error(err.stack);
     }
     throw err;
   } finally {

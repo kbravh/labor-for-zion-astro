@@ -1,10 +1,12 @@
 import {MongoClient, ServerApiVersion} from 'mongodb';
 
 const MONGODB_URI = import.meta.env.MONGODB_URI;
-if (!MONGODB_URI) {
-  throw new Error('Define the MONGODB_URI environment variable');
-}
+// if (!MONGODB_URI) {
+//   throw new Error('Define the MONGODB_URI environment variable');
+// }
 
+
+export const logPageView = async (slug: string): Promise<number> => {
 const client = new MongoClient(MONGODB_URI, {
   serverApi: {
     strict: true,
@@ -12,8 +14,6 @@ const client = new MongoClient(MONGODB_URI, {
     version: ServerApiVersion.v1,
   },
 });
-
-export const logPageView = async (slug: string): Promise<number> => {
   try {
     await client.connect();
     const database = client.db('LaborForZion');

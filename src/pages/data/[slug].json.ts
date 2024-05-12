@@ -1,5 +1,5 @@
 import type {APIRoute} from 'astro';
-import {logPageView} from '../../utils/db';
+// import {logPageView} from '../../utils/db';
 import {getTitleAndSlugMaps} from '../../utils/mdUtils';
 
 export const prerender = false;
@@ -35,7 +35,8 @@ export const GET: APIRoute = async ({params}) => {
 
   let count: number;
   try {
-    count = await logPageView(slug);
+    // count = await logPageView(slug);
+    count = 1123
   } catch (error) {
     return new Response(JSON.stringify(error), {
       status: 500,

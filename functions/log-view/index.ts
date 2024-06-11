@@ -2,6 +2,10 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { logPageView } from './utils/db';
 import { getTitleAndSlugMaps } from './utils/md';
 
+// defining this outside the handler to abuse the cold start
+const { slugToTitle } = getTitleAndSlugMaps();
+const set = new Set(Object.keys(slugToTitle));
+
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (process.env.NODE_ENV === 'development') {
     return {
@@ -21,9 +25,6 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       body: JSON.stringify({ message: 'No slug' }),
     };
   }
-
-  const { slugToTitle } = getTitleAndSlugMaps();
-  const set = new Set([...Object.keys(slugToTitle)]);
 
   if (!set.has(slug)) {
     return {

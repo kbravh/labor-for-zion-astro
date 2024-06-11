@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
@@ -30,7 +30,7 @@ jobs:
 
       - run: cp -r data functions/log-view
       - run: npm run build-function
-      - uses: bcomnes/deploy-to-neocities@v1
+      - uses: bcomnes/deploy-to-neocities@v2
         with:
           api_token: ${{ secrets.NEOCITIES_TOKEN }}
           dist_dir: "dist/"

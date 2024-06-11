@@ -28,14 +28,15 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - run: cp -r data functions/log-view
-      - run: npm run build-function
       - uses: bcomnes/deploy-to-neocities@v2
         with:
           api_token: ${{ secrets.NEOCITIES_TOKEN }}
           dist_dir: "dist/"
           cleanup: true # delete anything on neocities that's not in my dist_dir
 
+      - run: npm run build-function
+      # copy md data into function build folder
+      - run: cp -r data functions/log-view/dist
       - name: Zip Lambda function
         run: |
           cd functions/log-view/dist

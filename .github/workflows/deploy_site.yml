@@ -28,7 +28,7 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - run: cp data functions/log-view
+      - run: cp -r data functions/log-view
       - run: npm run build-function
       - uses: bcomnes/deploy-to-neocities@v1
         with:

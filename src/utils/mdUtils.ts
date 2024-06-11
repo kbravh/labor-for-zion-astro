@@ -10,7 +10,6 @@ export const NOTES_PATH = path.join(process.cwd(), 'notes');
 export const removeMdxExtension = (path: string) => path.replace(/\.mdx?$/, '');
 
 const writeFile = (key: string | symbol, data: unknown) => {
-  console.debug("I'm in writeFile now!");
   // Handle serialization of Sets
   const replacer = (_: string, value: any) => {
     if (value instanceof Set) {
@@ -22,21 +21,17 @@ const writeFile = (key: string | symbol, data: unknown) => {
   // filepath is relative to where npm run build is run from
 
   const filename = `data/${key.toString()}.json`;
-  console.debug('hey the filename is gonna be', filename);
 
   // create the path if it doesn't exist
   if (!existsSync('data')) {
-    console.debug('gonna create the data/ dir');
     mkdirSync('data');
   }
 
   // erase the old file and create a new one
   if (existsSync(filename)) {
-    console.debug('alright gonna blow away the previous');
     rmSync(filename);
   }
 
-  console.debug('creating the new one!');
   writeFileSync(filename, JSON.stringify(data, replacer));
 };
 

@@ -1,4 +1,5 @@
 import {readFile, readdir, stat} from 'fs/promises';
+import {existsSync, mkdirSync, rmSync, writeFileSync} from 'fs';
 import matter from 'gray-matter';
 import path, {basename} from 'path';
 import slugify from 'slugify';
@@ -7,6 +8,65 @@ import {BracketLink, Frontmatter} from '../validation/md';
 export const NOTES_PATH = path.join(process.cwd(), 'notes');
 
 export const removeMdxExtension = (path: string) => path.replace(/\.mdx?$/, '');
+
+const writeFile = (key: string | symbol, data: unknown) => {
+  console.debug("I'm in writeFile now!");
+  // Handle serialization of Sets
+  const replacer = (_: string, value: any) => {
+    if (value instanceof Set) {
+      return [...value];
+    }
+    return value;
+  };
+
+  // filepath is relative to where npm run build is run from
+
+  const filename = `data/${key.toString()}.json`;
+  console.debug('hey the filename is gonna be', filename);
+
+  // create the path if it doesn't exist
+  if (!existsSync('data')) {
+    console.debug('gonna create the data/ dir');
+    mkdirSync('data');
+  }
+
+  // erase the old file and create a new one
+  if (existsSync(filename)) {
+    console.debug('alright gonna blow away the previous');
+    rmSync(filename);
+  }
+
+  console.debug('creating the new one!');
+  writeFileSync(filename, JSON.stringify(data, replacer));
+};
+
+export type Backlink = {title: string; slug: string; excerpt: string | null};
+
+type RawData = {
+  slugToTopic: Record<string, string> | undefined;
+  articleTopics: Set<string> | undefined;
+  titleToSlug: Record<string, string> | undefined;
+  slugToTitle: Record<string, string> | undefined;
+  slugToPath: Record<string, string> | undefined;
+  titlesWithBacklinks: Record<string, Backlink[]> | undefined;
+};
+
+const rawData: RawData = {
+  slugToTopic: undefined,
+  articleTopics: undefined,
+  titleToSlug: undefined,
+  slugToTitle: undefined,
+  slugToPath: undefined,
+  titlesWithBacklinks: undefined,
+};
+
+const dataStore = new Proxy(rawData, {
+  set: (raw, key, value) => {
+    writeFile(key, value);
+    raw[key as keyof RawData] = value;
+    return true;
+  },
+});
 
 /**
  * Walks down a path and recursively collects all of the filepaths
@@ -33,9 +93,6 @@ export const getSlugFromTitle = (title: string): string =>
   slugify(title, {lower: true});
 export const notePaths = await walkPath(NOTES_PATH);
 
-let slugToTopic: Record<string, string> | undefined;
-let articleTopics: Set<string> | undefined;
-
 /**
  * Finds all tags that are included in the frontmatter of the articles.
  * Returns a map of tag slugs to tag names, and a set of unique tags.
@@ -44,6 +101,7 @@ export const getNoteTopics = async (): Promise<{
   slugToTopic: Record<string, string>;
   articleTopics: Set<string>;
 }> => {
+  let {slugToTopic, articleTopics} = dataStore;
   if (slugToTopic && articleTopics) {
     return {
       slugToTopic,
@@ -61,17 +119,14 @@ export const getNoteTopics = async (): Promise<{
       newSlugToTopic[slugify(tag, {lower: true})] = tag;
     }
   }
-  slugToTopic = newSlugToTopic;
-  articleTopics = newArticleTopics;
+  dataStore.slugToTopic = newSlugToTopic;
+  dataStore.articleTopics = newArticleTopics;
   return {
-    slugToTopic,
-    articleTopics,
+    slugToTopic: dataStore.slugToTopic,
+    articleTopics: dataStore.articleTopics,
   };
 };
 
-//TODO - experiment with replacing these with Maps
-let titleToSlug: Record<string, string>;
-let slugToTitle: Record<string, string>;
 /**
  * Creates a map of article titles to their corresonding slugs.
  * Also includes frontmatter aliases for lookup. For example,
@@ -83,6 +138,8 @@ export const getTitleAndSlugMaps = async (): Promise<{
   titleToSlug: Record<string, string>;
   slugToTitle: Record<string, string>;
 }> => {
+  const {titleToSlug, slugToTitle} = dataStore;
+
   if (titleToSlug && slugToTitle) {
     return {titleToSlug, slugToTitle};
   }
@@ -107,17 +164,20 @@ export const getTitleAndSlugMaps = async (): Promise<{
     }
   }
 
-  titleToSlug = titleMap;
-  slugToTitle = slugMap;
-  return {titleToSlug, slugToTitle};
+  dataStore.titleToSlug = titleMap;
+  dataStore.slugToTitle = slugMap;
+  return {
+    titleToSlug: dataStore.titleToSlug,
+    slugToTitle: dataStore.slugToTitle,
+  };
 };
 
-let slugToPath: Record<string, string>;
 /**
  * Creates a map of slugs to their respective filepaths. This is necessary to
  * support nested filepaths.
  */
 export const getSlugToPathMap = (): Record<string, string> => {
+  const {slugToPath} = dataStore;
   if (slugToPath) {
     return slugToPath;
   }
@@ -130,8 +190,8 @@ export const getSlugToPathMap = (): Record<string, string> => {
     return accumulator;
   }, map);
 
-  slugToPath = map;
-  return slugToPath;
+  dataStore.slugToPath = map;
+  return dataStore.slugToPath;
 };
 
 /**
@@ -252,13 +312,12 @@ export const cleanupExcerpt = ({
     .replace(link, alias ?? title)
     .trim();
 
-export type Backlink = {title: string; slug: string; excerpt: string | null};
-
-let titlesWithBacklinks: Record<string, Backlink[]>;
 /**
  * Provides a map of titles and aliases to all backlinks from other files.
  */
 export const getBacklinks = async (): Promise<Record<string, Backlink[]>> => {
+  const {titlesWithBacklinks} = dataStore;
+
   if (titlesWithBacklinks) {
     return titlesWithBacklinks;
   }
@@ -283,8 +342,8 @@ export const getBacklinks = async (): Promise<Record<string, Backlink[]>> => {
     }
   }
 
-  titlesWithBacklinks = map;
-  return titlesWithBacklinks;
+  dataStore.titlesWithBacklinks = map;
+  return dataStore.titlesWithBacklinks;
 };
 
 export interface PostListing {

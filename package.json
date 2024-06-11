@@ -9,10 +9,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "vitest"
+    "test": "vitest",
+    "build-function": "rollup -c"
   },
   "dependencies": {
-    "@astrojs/netlify": "^4.1.1",
     "@astrojs/rss": "^4.0.1",
     "@astrojs/sitemap": "^3.0.3",
     "@astrojs/tailwind": "^5.0.3",
@@ -29,7 +29,11 @@
     "vitest": "^1.2.1"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@tailwindcss/typography": "^0.5.4",
+    "@types/aws-lambda": "^8.10.138",
     "@types/markdown-it": "^12.2.3",
     "@types/markdown-it-footnote": "^3.0.0",
     "@types/node": "18.0.0",
@@ -39,6 +43,7 @@
     "eslint": "^8.40.0",
     "eslint-plugin-astro": "^0.27.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
-    "typescript": "^5.0.4"
+    "rollup": "^4.18.0",
+    "typescript": "^5.4.5"
   }
 }

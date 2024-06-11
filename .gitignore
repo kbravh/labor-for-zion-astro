@@ -1,5 +1,6 @@
 # build output
 dist/
+data/
 
 # generated types
 .astro/
@@ -20,8 +21,8 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# Local Netlify folder
-.netlify
-
 # VS Code settings
 .vscode
+
+# Lambda function builds
+functions/**/dist/

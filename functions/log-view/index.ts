@@ -1,16 +1,63 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { logPageView } from './utils/db';
+import { getTitleAndSlugMaps } from './utils/md';
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  if (event.httpMethod === 'POST') {
-    // Log view logic here
+  if (process.env.NODE_ENV === 'development') {
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: 'View logged' }),
+      body: JSON.stringify({ count: 1123 }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
-  } else {
+  }
+
+  const { slug } = event.queryStringParameters || {};
+
+  if (!slug) {
     return {
-      statusCode: 405,
-      body: JSON.stringify({ message: 'Method not allowed' }),
+      statusCode: 400,
+      body: JSON.stringify({ message: 'No slug' }),
     };
+  }
+
+  const { slugToTitle } = getTitleAndSlugMaps();
+  const set = new Set([...Object.keys(slugToTitle)]);
+
+  if (!set.has(slug)) {
+    return {
+      statusCode: 404,
+      body: JSON.stringify({ message: 'Slug not found' }),
+    };
+  }
+
+  try {
+    const count = await logPageView(slug);
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ count }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+  } catch (error) {
+    if (error instanceof Error) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: error.message }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+    } else {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({error: 'Unknown error ocurred'}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    }
   }
 };

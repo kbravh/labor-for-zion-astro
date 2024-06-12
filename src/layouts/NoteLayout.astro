@@ -24,16 +24,13 @@ const {slug, frontmatter, backlinks, content, headings} = Astro.props;
   <main class="grid grid-cols-1 md:grid-cols-[1fr,_300px] gap-14 mb-10">
     <article class="max-w-3xl">
       <div class="border-slate-800 border-solid border-b-2 text-slate-700 p-4">
-        <h1 id="article-title" class="text-[clamp(2rem,_10vw,_3rem)] font-bold">
+        <h1
+          id="article-title"
+          class="text-[clamp(2rem,_10vw,_3rem)] font-bold"
+        >
           {frontmatter.title}
         </h1>
-        {
-          frontmatter.description && (
-            <p class="text-[clamp(1rem,_5vw,_1.5rem)] font-body">
-              {frontmatter.description}
-            </p>
-          )
-        }
+        {frontmatter.description && <p class="text-[clamp(1rem,_5vw,_1.5rem)] font-body">{frontmatter.description}</p>}
       </div>
       <div class="flex justify-between gap-4 p-4 flex-wrap">
         <time datetime={frontmatter.date.toISOString()}>
@@ -45,9 +42,7 @@ const {slug, frontmatter, backlinks, content, headings} = Astro.props;
               Tags:
               <ul>
                 {frontmatter.tags.map(tag => (
-                  <li class="inline-block bg-slate-300 dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md px-2 py-1 text-xs font-bold mr-2">
-                    {tag}
-                  </li>
+                  <li class="inline-block bg-slate-300 dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md px-2 py-1 text-xs font-bold mr-2">{tag}</li>
                 ))}
               </ul>
             </div>
@@ -55,18 +50,18 @@ const {slug, frontmatter, backlinks, content, headings} = Astro.props;
         }
       </div>
 
+      <aside class="p-4 block md:hidden">
+        <TableOfContents headings={headings} />
+      </aside>
+
+      <!-- used for scripture verses -->
       <slot />
 
-        <aside class="p-4 block md:hidden">
-          <TableOfContents headings={headings} />
-        </aside>
       <div
         id="article-body"
         class="prose prose-lg prose-slate dark:prose-invert min-w-full px-4 prose-hr:border-emerald-800 mt-8"
         set:html={content}
       />
-
-      <hit-counter data-slug={slug} />
     </article>
     <div class="pr-4">
       <div class="sticky top-4 flex flex-col gap-5">
@@ -83,5 +78,6 @@ const {slug, frontmatter, backlinks, content, headings} = Astro.props;
       </div>
     </div>
   </main>
+  <hit-counter data-slug={slug}></hit-counter>
   <HeadingObserver />
 </Layout>

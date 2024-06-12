@@ -7,8 +7,13 @@
 
     async fetchAndDisplayCount() {
       const slug = this.getAttribute('data-slug');
+      if (process.env.NODE_ENV === 'development') {
+        this.displayCount(1123)
+        return;
+      }
+
       try {
-        const response = await fetch(`https://api.laborforzion.com/log-view?slug=${slug}${process.env.NODE_ENV === 'development' ? '&dev=true' : ''}`);
+        const response = await fetch(`https://api.laborforzion.com/log-view?slug=${slug}`);
         if (!response.ok) {
           console.error('Network response was not ok');
           return;

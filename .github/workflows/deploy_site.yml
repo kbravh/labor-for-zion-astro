@@ -49,5 +49,6 @@ jobs:
 
       - name: Update Lambda function
         run: |
+          pwd
           aws lambda update-function-code --function-name LFZ-logview --zip-file fileb://function.zip
 

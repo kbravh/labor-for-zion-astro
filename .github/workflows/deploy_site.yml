@@ -38,6 +38,7 @@ jobs:
         run: |
           cp -r data functions/log-view
           cd functions/log-view
+          npm i
           npm run build
           cp -r data dist/
 

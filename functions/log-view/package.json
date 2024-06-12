@@ -1,0 +1,21 @@
+{
+  "name": "log-view",
+  "version": "1.0.0",
+  "description": "Logs a page-view to MongoDB",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^6.7.0"
+  },
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "esbuild index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.138",
+    "@types/node": "18.0.0",
+    "esbuild": "^0.21.5",
+    "typescript": "^5.4.5"
+  }
+}

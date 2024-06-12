@@ -1,35 +1,42 @@
-import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { logPageView } from './utils/db';
-import { getTitleAndSlugMaps } from './utils/md';
+import type {APIGatewayProxyEvent, APIGatewayProxyResult} from 'aws-lambda';
+import {logPageView} from './utils/db';
+import {getTitleAndSlugMaps} from './utils/md';
 
 // defining this outside the handler to abuse the cold start
-const { slugToTitle } = getTitleAndSlugMaps();
+const {slugToTitle} = getTitleAndSlugMaps();
 const set = new Set(Object.keys(slugToTitle));
 
-export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  if (process.env.NODE_ENV === 'development') {
+const headers = {
+  'Access-Control-Allow-Origin': 'https://laborforzion.com',
+  'Content-Type': 'application/json',
+};
+
+export const handler = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  const {slug, dev} = event.queryStringParameters || {};
+
+  if (dev === 'true') {
     return {
       statusCode: 200,
-      body: JSON.stringify({ count: 1123 }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      body: JSON.stringify({count: 1123}),
+      headers,
     };
   }
-
-  const { slug } = event.queryStringParameters || {};
 
   if (!slug) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ message: 'No slug' }),
+      body: JSON.stringify({message: 'No slug'}),
+      headers,
     };
   }
 
   if (!set.has(slug)) {
     return {
       statusCode: 404,
-      body: JSON.stringify({ message: 'Slug not found' }),
+      body: JSON.stringify({message: 'Slug not found'}),
+      headers,
     };
   }
 
@@ -37,28 +44,22 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     const count = await logPageView(slug);
     return {
       statusCode: 200,
-      body: JSON.stringify({ count }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      body: JSON.stringify({count}),
+      headers,
     };
   } catch (error) {
     if (error instanceof Error) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: error.message }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        body: JSON.stringify({error: error.message}),
+        headers,
       };
     } else {
       return {
         statusCode: 500,
         body: JSON.stringify({error: 'Unknown error ocurred'}),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
+        headers,
+      };
     }
   }
 };

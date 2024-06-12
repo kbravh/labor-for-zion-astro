@@ -34,9 +34,10 @@ jobs:
           dist_dir: "dist/"
           cleanup: true # delete anything on neocities that's not in my dist_dir
 
-      - run: npm run build-function
+      - run: cd functions/log-view
+      - run: npm run build
       # copy md data into function build folder
-      - run: cp -r data functions/log-view/dist
+      - run: cp -r ../../data dist/
       - name: Zip Lambda function
         run: |
           cd functions/log-view/dist

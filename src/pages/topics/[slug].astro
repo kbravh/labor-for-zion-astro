@@ -1,38 +1,45 @@
 ---
 import ArticleCard from '../../components/ArticleCard.astro';
-import Grid from '../../components/Grid.astro';
-import Link from '../../components/Link.astro';
 import MainWrapper from '../../components/MainWrapper.astro';
 import PageTitle from '../../components/PageTitle.astro';
 import Layout from '../../layouts/Layout.astro';
 import {getArticles, getNoteTopics} from '../../utils/mdUtils';
-
-const {slug} = Astro.params;
-if (!slug) {
-  throw new Error('No slug provided');
-}
+import type {GetStaticPaths} from 'astro';
+import slugify from 'slugify';
+import Pagination from '../../components/Pagination.astro';
 
 const {slugToTopic} = await getNoteTopics();
-const topic = slugToTopic[slug];
-if (!topic) {
-  Astro.redirect('/404');
-}
 
-const posts = await getArticles({topic});
+export const getStaticPaths = (async ({paginate}) => {
+  const {articleTopics} = await getNoteTopics();
+  const posts = await getArticles();
+  return [...articleTopics].flatMap(topic => {
+    const matchingPosts = posts.filter(post => post.frontmatter.tags?.includes(topic));
+    return paginate(matchingPosts, {
+      params: {topic: slugify(topic, {lower: true})},
+      pageSize: 5,
+    });
+  });
+}) satisfies GetStaticPaths;
 
-export const getStaticPaths = async () => {
-  const {slugToTopic} = await getNoteTopics();
-  return Object.keys(slugToTopic).map(slug => ({params: {slug}}));
-};
+const {page} = Astro.props;
+const params = Astro.params;
+
+const topic = slugToTopic[params.topic];
 ---
 
 <Layout title="Notes">
   <div class="flex flex-col items-center flex-grow mb-10">
     <PageTitle title={`Notes about: ${topic}`} />
     <MainWrapper>
-      <Grid>
-        {posts.map(post => <ArticleCard post={post} />)}
-      </Grid>
+      <div class="flex flex-col gap-4 mt-4">
+        {page.data.map(post => <ArticleCard post={post} />)}
+        <Pagination
+          current={page.currentPage}
+          prevUrl={page.url.prev}
+          nextUrl={page.url.next}
+        />
+      </div>
     </MainWrapper>
   </div>
 </Layout>

@@ -1,0 +1,15 @@
+---
+export interface Props {
+  current: number;
+  prevUrl?: string;
+  nextUrl?: string;
+}
+
+const {current, prevUrl, nextUrl} = Astro.props
+---
+
+<nav class="w-full grid grid-cols-3 text-center mt-8">
+  <span>{prevUrl && <a href={prevUrl}>&larr; Previous page</a>}</span>
+  <span>Page {current}</span>
+  <span>{nextUrl && <a href={nextUrl}>Next page &rarr;</a>}</span>
+</nav>

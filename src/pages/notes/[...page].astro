@@ -1,13 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import {getArticles} from '../../utils/mdUtils';
-import Grid from '../../components/Grid.astro';
 import MainWrapper from '../../components/MainWrapper.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import PageTitle from '../../components/PageTitle.astro';
-import Link from '../../components/Link.astro';
+import type {GetStaticPaths} from 'astro';
+import Pagination from '../../components/Pagination.astro';
 
-const posts = await getArticles();
+export const getStaticPaths = (async ({paginate}) => {
+  const posts = await getArticles();
+  return paginate(posts, {pageSize: 5});
+}) satisfies GetStaticPaths;
+
+const {page} = Astro.props;
 ---
 
 <Layout title="Notes">
@@ -39,7 +44,12 @@ const posts = await getArticles();
       </div>
 
       <div class="flex flex-col gap-4 mt-4">
-        {posts.map(post => <ArticleCard post={post} />)}
+        {page.data.map(post => <ArticleCard post={post} />)}
+        <Pagination
+          current={page.currentPage}
+          prevUrl={page.url.prev}
+          nextUrl={page.url.next}
+        />
       </div>
     </MainWrapper>
   </div>

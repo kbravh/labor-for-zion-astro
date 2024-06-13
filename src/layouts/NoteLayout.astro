@@ -5,6 +5,7 @@ import Layout from './Layout.astro';
 import type {Frontmatter, Heading} from '../validation/md';
 import TableOfContents from '../components/TableOfContents.astro';
 import HeadingObserver from '../components/HeadingObserver.astro';
+import slugify from 'slugify';
 
 interface Props {
   slug: string;
@@ -15,6 +16,8 @@ interface Props {
 }
 
 const {slug, frontmatter, backlinks, content, headings} = Astro.props;
+
+const tags = frontmatter.tags?.map(tag => ({name: tag, slug: slugify(tag, {lower: true})}));
 ---
 
 <Layout
@@ -37,12 +40,14 @@ const {slug, frontmatter, backlinks, content, headings} = Astro.props;
           {frontmatter.date.toLocaleDateString('en-US', {dateStyle: 'medium'})}
         </time>
         {
-          !!frontmatter.tags?.length && (
+          !!tags?.length && (
             <div class="flex gap-2">
               Tags:
               <ul>
-                {frontmatter.tags.map(tag => (
-                  <li class="inline-block bg-slate-300 dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md px-2 py-1 text-xs font-bold mr-2">{tag}</li>
+                {tags.map(({name, slug}) => (
+                  <li class="inline-block bg-slate-300 dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md px-2 py-1 text-xs font-bold mr-2">
+                    <a href={`/topics/${slug}`}>{name}</a>
+                  </li>
                 ))}
               </ul>
             </div>

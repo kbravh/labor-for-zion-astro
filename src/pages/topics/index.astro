@@ -1,0 +1,27 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import MainWrapper from '../../components/MainWrapper.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import {getNoteTopics} from '../../utils/mdUtils';
+import HoverUnderline from '../../components/HoverUnderline.astro';
+
+const {slugToTopic} = await getNoteTopics();
+const topics = Object.entries(slugToTopic);
+---
+
+<Layout title="Topics">
+  <div class="flex flex-col items-center flex-grow mb-10">
+    <PageTitle title="Topics" />
+    <MainWrapper>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {
+          topics.map(([slug, topic]) => (
+            <HoverUnderline>
+              <a href={`/topics/${slug}`}>{topic}</a>
+            </HoverUnderline>
+          ))
+        }
+      </div>
+    </MainWrapper>
+  </div>
+</Layout>

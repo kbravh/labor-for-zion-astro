@@ -214,7 +214,7 @@ export const addLinks = async (
       // fetch markdown file content
       const filePath = slugToPathMap[slug];
       if (!filePath) {
-        throw new Error(`File path not found for the slug ${slug}`);
+        throw new Error(`File path not found for the slug ${slug} while trying to embed`);
       }
       let rawEmbed = await readFile(filePath, 'utf-8');
       let embed = matter(rawEmbed).content;

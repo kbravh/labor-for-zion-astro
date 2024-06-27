@@ -18,8 +18,6 @@ The first references that we get to anointing with oil come from Exodus 29 and 3
 
 Later on in Israelite history, even the kings of Israel were anointed as they rose to their positions of leadership.
 
-> Are you curious why olive oil was used? Check out this article about [[Wine and olive oil as symbols of the blood of Christ and the Spirit]].
-
 ## Anointing in the New Testament
 
 In [[Luke 7.46]], we read that Christ scolds a Pharisee for not anointing His head with oil after the Pharisee criticizes a woman for anointing Christ with perfume.

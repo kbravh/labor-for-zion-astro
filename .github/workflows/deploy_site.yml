@@ -9,9 +9,29 @@ concurrency: # prevent concurrent deploys doing strange things
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    name: "Deploy site and functions"
+  deploy-site:
+    name: "Deploy site"
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm install
+      - run: npm run build
+
+      - uses: bcomnes/deploy-to-neocities@v2
+        with:
+          api_token: ${{ secrets.NEOCITIES_TOKEN }}
+          dist_dir: "dist/"
+          cleanup: true # delete anything on neocities that's not in my dist_dir
+  deploy-functions:
+    name: "Deploy functions"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        function: [log-view, fetch-views]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -28,16 +48,10 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - uses: bcomnes/deploy-to-neocities@v2
-        with:
-          api_token: ${{ secrets.NEOCITIES_TOKEN }}
-          dist_dir: "dist/"
-          cleanup: true # delete anything on neocities that's not in my dist_dir
-
       - name: Copy data, build and zip function
         run: |
-          cp -r data functions/log-view
-          cd functions/log-view
+          cp -r data functions/${{ matrix.function }}
+          cd functions/${{ matrix.function }}
           npm i
           npm run build
           cp -r data dist/
@@ -46,5 +60,4 @@ jobs:
 
       - name: Update Lambda function
         run: |
-          aws lambda update-function-code --function-name LFZ-logview --zip-file fileb://functions/log-view/dist/function.zip
-
+          aws lambda update-function-code --function-name LFZ-${{ matrix.function }} --zip-file fileb://functions/${{ matrix.function }}/dist/function.zip

@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Labor for Zion">
+  <main class="container mx-auto max-w-[800px] flex flex-col items-center p-4 flex-grow gap-12">
+    <div>
+      <h1 class="text-5xl md:text-[5rem] leading-normal font-extrabold text-slate-700 text-balance">Labor For Zion</h1>
+    </div>
+
+    <section class="max-w-2xl">
+      <h2 class="text-slate-600 font-bold text-3xl">Page views</h2>
+      <div
+        id="page-views"
+        class="grid columns-4"
+      >
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  type HitResult = {
+    slug: string;
+    hits: number;
+  };
+
+  const fetchPageViews = async () => {
+    const response = await fetch('/api/views');
+    const data = await response.json();
+    return data;
+  };
+
+  fetchPageViews()
+    .then(data => {
+      const pageViewsContainer = document.getElementById('page-views');
+      if (!pageViewsContainer) return;
+      pageViewsContainer.innerHTML = data
+        .sort((a: HitResult, b: HitResult) => b.hits - a.hits)
+        .map((page: HitResult) => `<p>${page.slug}: ${page.hits}</p>`)
+        .join('');
+    })
+    .catch(error => {
+      console.error('Unable to fetch page views', error);
+      const pageViewsContainer = document.getElementById('page-views');
+      if (pageViewsContainer) {
+        pageViewsContainer.innerHTML = '<p>Unable to fetch page views</p>';
+      }
+    });
+</script>

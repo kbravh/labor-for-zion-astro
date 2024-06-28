@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        function: [log-view, fetch-views]
+        function: [logview, fetchviews]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

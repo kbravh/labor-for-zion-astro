@@ -10,7 +10,7 @@ import Layout from '../layouts/Layout.astro';
 
     <section class="max-w-2xl">
       <h2 class="text-slate-600 font-bold text-3xl">Page views</h2>
-      <div id="page-views"></div>
+      <div id="page-views">Javascript required to load page views.</div>
     </section>
   </main>
 </Layout>
@@ -27,18 +27,42 @@ import Layout from '../layouts/Layout.astro';
     return data;
   };
 
+  const pageViewsContainer = document.getElementById('page-views');
+  pageViewsContainer.innerHTML = '<p>Loading page views...</p>';
+
   fetchPageViews()
     .then(data => {
-      const pageViewsContainer = document.getElementById('page-views');
       if (!pageViewsContainer) return;
-      pageViewsContainer.innerHTML = data
-        .sort((a: HitResult, b: HitResult) => b.hits - a.hits)
-        .map((page: HitResult) => `<p>${page.slug}: ${page.hits}</p>`)
-        .join('');
+      // create a table of page views
+      const table = document.createElement('table');
+      table.classList.add('table-auto');
+      table.innerHTML = `
+        <caption>Page views</caption>
+        <thead>
+          <tr>
+            <th scope="col">Slug</th>
+            <th scope="col">Views</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${data
+            .sort((a: HitResult, b: HitResult) => b.hits - a.hits)
+            .map(
+              (page: HitResult) => `
+              <tr>
+                <td>${page.slug}</td>
+                <td>${page.hits}</td>
+              </tr>
+            `
+            )
+            .join('')}
+        </tbody>
+      `;
+      pageViewsContainer.innerHTML = '';
+      pageViewsContainer.appendChild(table);
     })
     .catch(error => {
       console.error('Unable to fetch page views', error);
-      const pageViewsContainer = document.getElementById('page-views');
       if (pageViewsContainer) {
         pageViewsContainer.innerHTML = '<p>Unable to fetch page views</p>';
       }

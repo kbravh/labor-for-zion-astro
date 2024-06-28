@@ -7,14 +7,16 @@ interface Props {
   slug: string;
   title: string;
   backlinks: Backlink[];
+  socialImage: string;
 }
 
-const {title, backlinks, slug} = Astro.props;
+const {title, backlinks, slug, socialImage} = Astro.props;
 ---
 
 <Layout
   title={title}
   description={`A note about ${title}.`}
+  socialImage={socialImage}
 >
   <main class="flex-grow max-w-3xl">
     <div class="border-slate-800 border-solid border-b-2 text-slate-700">

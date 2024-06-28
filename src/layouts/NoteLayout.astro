@@ -13,9 +13,10 @@ interface Props {
   frontmatter: Frontmatter;
   backlinks: Backlink[];
   headings: Heading[];
+  socialImage: string;
 }
 
-const {slug, frontmatter, backlinks, content, headings} = Astro.props;
+const {slug, frontmatter, backlinks, content, headings, socialImage} = Astro.props;
 
 const tags = frontmatter.tags?.map(tag => ({name: tag, slug: slugify(tag, {lower: true})}));
 ---
@@ -23,6 +24,7 @@ const tags = frontmatter.tags?.map(tag => ({name: tag, slug: slugify(tag, {lower
 <Layout
   title={frontmatter.title}
   description={frontmatter.description}
+  socialImage={socialImage}
 >
   <main class="mb-10">
     <article class="grid grid-cols-1 md:grid-cols-[1fr,_300px] gap-x-14">

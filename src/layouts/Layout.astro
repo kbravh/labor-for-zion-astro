@@ -7,9 +7,10 @@ import HitCounterWebComponent from '../components/HitCounter/HitCounterWebCompon
 export interface Props {
   title: string;
   description?: string;
+  socialImage?: string;
 }
 
-const {title, description} = Astro.props;
+const {title, description, socialImage} = Astro.props;
 ---
 
 <!doctype html>
@@ -28,26 +29,31 @@ const {title, description} = Astro.props;
       content={Astro.generator}
     />
     <meta
+      property="og:title"
+      content={title === 'Labor for Zion' ? 'Labor for Zion' : `${title} | Labor For Zion`}
+    />
+    <meta
       name="description"
-      content={description ??
-        'A collection of notes, talks, and tools centered around gospel topics.'}
+      content={description ?? 'A collection of notes, talks, and tools centered around gospel topics.'}
+    />
+    <meta
+      property="og:description"
+      content={description ?? 'A collection of notes, talks, and tools centered around gospel topics.'}
+    />
+    <meta
+      property="og:image"
+      content={socialImage}
     />
     <link
       rel="icon"
       href="/favicon.ico"
     />
     <title>
-      {
-        title === 'Labor for Zion'
-          ? 'Labor for Zion'
-          : `${title} | Labor For Zion`
-      }
+      {title === 'Labor for Zion' ? 'Labor for Zion' : `${title} | Labor For Zion`}
     </title>
     <ViewTransitions />
   </head>
-  <body
-    class="h-full flex flex-col items-center selection:bg-emerald-900 selection:text-emerald-50 scroll-smooth"
-  >
+  <body class="h-full flex flex-col items-center selection:bg-emerald-900 selection:text-emerald-50 scroll-smooth">
     <Header />
     <slot />
     <Footer />
@@ -106,13 +112,11 @@ const {title, description} = Astro.props;
       h4,
       h5,
       h6 {
-        font-family: 'Munken Sans', 'Lucida Sans', 'Lucida Sans Regular',
-          'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-family: 'Munken Sans', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       }
 
       p {
-        font-family: 'Atkinson Hyperlegible', Georgia, 'Times New Roman', Times,
-          serif;
+        font-family: 'Atkinson Hyperlegible', Georgia, 'Times New Roman', Times, serif;
       }
     </style>
     <HitCounterWebComponent />

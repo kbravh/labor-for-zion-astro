@@ -4,6 +4,12 @@ export const Frontmatter = z.object({
   title: z.string(),
   description: z.string(),
   date: z.coerce.date(),
+  // A coerced undefined will be set to the epoch.
+  updated: z.coerce
+    .date()
+    // so if we get the epoch, we'll replace it  with undefined
+    .transform(date => (!!date.getTime() ? date : undefined))
+    .optional(),
   language: z.enum(['en_US']),
   aliases: z.string().array().optional(),
   tags: z.string().array().optional(),

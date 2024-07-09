@@ -1,5 +1,5 @@
 import {readFile, readdir, stat} from 'fs/promises';
-import {existsSync, mkdirSync, rmSync, writeFileSync} from 'fs';
+import {existsSync, mkdirSync, readFileSync, rmSync, writeFileSync} from 'fs';
 import matter from 'gray-matter';
 import path, {basename} from 'path';
 import slugify from 'slugify';
@@ -380,3 +380,17 @@ export const getArticles = async (filter?: Filter): Promise<PostListing[]> => {
 
   return posts;
 };
+
+// Returns `updated` if defined, otherwise returns the initial publish date
+export const getLastUpdatedDateFromSlug = (slug: string): Date | undefined => {
+  const slugToPathMap = getSlugToPathMap();
+  const path = slugToPathMap[slug];
+  if (!path) {
+    return;
+  };
+
+  const source = readFileSync(path, 'utf-8');
+  const {date, updated} = Frontmatter.parse(matter(source).data);
+  const lastUpdated = updated || date;
+  return lastUpdated;
+}

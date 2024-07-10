@@ -4,57 +4,44 @@ import Logo from './Logo.astro';
 import Link from './Link.astro';
 ---
 
-<div
-  class="flex justify-between py-4 px-8 items-center max-w-6xl mx-auto mt-8 mb-5 w-full"
->
+<div class="flex justify-between py-4 px-8 items-center max-w-6xl mx-auto mt-8 mb-5 w-full">
   <Link href="/">
-    <div
-      class="text-slate-700 text-6xl cursor-pointer select-none flex items-center gap-3"
-    >
+    <div class="text-slate-700 text-6xl cursor-pointer select-none flex items-center gap-3">
       <Logo className="h-12 w-12 bg-emerald-900 rounded-full" />
       <span class="sr-only">Home</span>
     </div>
   </Link>
   <!-- large menu -->
-  <nav class="hidden sm:flex text-slate-700 list-none gap-6 text-lg">
-    <li>
-      <HoverUnderline>
-        <Link href="/">Home</Link>
-      </HoverUnderline>
-    </li>
-    <li>
-      <HoverUnderline>
-        <Link href="/notes">Notes</Link>
-      </HoverUnderline>
-    </li>
-    <li>
-      <HoverUnderline>
-        <Link href="/projects">Projects</Link>
-      </HoverUnderline>
-    </li>
-    <li>
-      <HoverUnderline>
-        <Link href="/about">About</Link>
-      </HoverUnderline>
-    </li>
+  <nav class="hidden sm:block text-slate-700 text-lg">
+    <ul class="flex list-none gap-6">
+      <li>
+        <HoverUnderline>
+          <Link href="/">Home</Link>
+        </HoverUnderline>
+      </li>
+      <li>
+        <HoverUnderline>
+          <Link href="/notes">Notes</Link>
+        </HoverUnderline>
+      </li>
+      <li>
+        <HoverUnderline>
+          <Link href="/projects">Projects</Link>
+        </HoverUnderline>
+      </li>
+      <li>
+        <HoverUnderline>
+          <Link href="/about">About</Link>
+        </HoverUnderline>
+      </li>
+    </ul>
   </nav>
 
   <!-- mobile menu -->
   <div class="sm:hidden block">
-    <details
-      class:list={[
-        'flex items-center px-3 py-2 rounded',
-        'text-slate-700 hover:text-slate-900 border border-slate-700 hover:border-slate-900',
-        'select-none',
-      ]}
-    >
+    <details class:list={['flex items-center px-3 py-2 rounded', 'text-slate-700 hover:text-slate-900 border border-slate-700 hover:border-slate-900', 'select-none']}>
       <summary>Menu</summary>
-      <nav
-        class:list={[
-          'flex flex-col items-center gap-6 absolute w-48 right-8 mt-6 p-4 z-[1]',
-          'text-slate-700 border border-slate-700 list-none text-lg bg-white',
-        ]}
-      >
+      <nav class:list={['flex flex-col items-center gap-6 absolute w-48 right-8 mt-6 p-4 z-[1]', 'text-slate-700 border border-slate-700 list-none text-lg bg-white']}>
         <li>
           <HoverUnderline>
             <Link href="/">Home</Link>

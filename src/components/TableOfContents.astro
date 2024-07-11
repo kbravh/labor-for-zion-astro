@@ -10,28 +10,25 @@ const {headings} = Astro.props;
 ---
 
 <nav id="table-of-contents">
-  <h2 class="font-heading font-bold text-lg">Table of Contents</h2>
-  <ul>
-    {
-      headings.map(heading => (
-        <li
-          class:list={[
-            heading.level === 2 && 'ml-2',
-            heading.level === 3 && 'ml-4',
-            heading.level === 4 && 'ml-6',
-            heading.level === 5 && 'ml-8',
-            heading.level === 6 && 'ml-10',
-            'mt-2',
-          ]}
-        >
-          <Link
-            href={`#${heading.id}`}
-            className="text-slate-800 dark:text-slate-100 hover:text-emerald-800 dark:hover:text-emerald-300"
-          >
-            {heading.text}
-          </Link>
-        </li>
-      ))
-    }
-  </ul>
+  {
+    !!headings.length ? (
+      <>
+        <h2 class="font-heading font-bold text-lg">Table of Contents</h2>
+        <ul>
+          {headings.map(heading => (
+            <li class:list={[heading.level === 2 && 'ml-2', heading.level === 3 && 'ml-4', heading.level === 4 && 'ml-6', heading.level === 5 && 'ml-8', heading.level === 6 && 'ml-10', 'mt-2']}>
+              <Link
+                href={`#${heading.id}`}
+                className="text-slate-800 dark:text-slate-100 hover:text-emerald-800 dark:hover:text-emerald-300"
+              >
+                {heading.text}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </>
+    ) : (
+      <span />
+    )
+  }
 </nav>

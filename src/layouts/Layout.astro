@@ -16,7 +16,7 @@ const {title, description, socialImage} = Astro.props;
 <!doctype html>
 <html
   lang="en"
-  class="h-full"
+  class="h-full dark:bg-slate-900 dark:text-slate-200"
 >
   <head>
     <meta charset="UTF-8" />
@@ -40,10 +40,16 @@ const {title, description, socialImage} = Astro.props;
       property="og:description"
       content={description ?? 'A collection of notes, talks, and tools centered around gospel topics.'}
     />
-    <meta
-      property="og:image"
-      content={socialImage}
-    />
+    {
+      socialImage ? (
+        <meta
+          property="og:image"
+          content={socialImage}
+        />
+      ) : (
+        ''
+      )
+    }
     <link
       rel="icon"
       href="/favicon.ico"
@@ -57,7 +63,11 @@ const {title, description, socialImage} = Astro.props;
     </title>
     <ViewTransitions />
   </head>
-  <body class="h-full flex flex-col items-center selection:bg-emerald-900 selection:text-emerald-50 scroll-smooth">
+  <body class:list={[
+    'h-full flex flex-col items-center scroll-smooth',
+    'selection:bg-emerald-900 selection:text-emerald-50',
+    'dark:selection:text-emerald-900 dark:selection:bg-emerald-50']
+  }>
     <Header />
     <slot />
     <Footer />
@@ -109,6 +119,7 @@ const {title, description, socialImage} = Astro.props;
       /* https://developer.mozilla.org/en-US/docs/Web/CSS/::target-text */
       ::target-text {
         @apply bg-emerald-900 text-emerald-50;
+        @apply dark:text-emerald-900 dark:bg-emerald-50;
       }
 
       h2,

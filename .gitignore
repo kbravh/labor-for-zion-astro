@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 # Lambda function builds
 functions/**/dist/
+
+# Test coverage
+coverage/

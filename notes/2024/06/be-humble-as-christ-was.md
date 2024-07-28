@@ -12,7 +12,7 @@ tags:
 One of the attributes of Christ is humility. We can see this personified by Saints in the scriptures, as well as by the Savior himself. To better understand how we can develop humility ourselves, let's first learn what humility is, then look at a tool we can use to put our learnings into practice.
 
 ## Humility from the Saints
-In order to learn to be humble like Christ was, we must first understand what it means to be humble in the scriptural sense. A great example and explanation comes from [[Alma 32]], when Alma is teaching the poor in Onidah. This group had been kicked out of their tabernacles by the richer members because of their destitution. Alma says that their physical burdens had pushed them to be ready to hear the word of God because:
+In order to learn to be humble like Christ was, we must first understand what it means to be humble in the scriptural sense. A great example and explanation comes from [[Alma 32]], when Alma is teaching the poor at Onidah. This group had been kicked out of their tabernacles by the richer members because of their destitution. Alma says that their physical burdens had pushed them to be ready to hear the word of God because:
 - they are ready to learn from the Lord ([[Alma 32.12]])
 - they are ready to make a change, that is, repent ([[Alma 32.13]])
 

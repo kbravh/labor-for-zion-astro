@@ -3,7 +3,7 @@ title: And My Father Dwelt in a Tent
 description: Why did Nephi feel it important to include this small detail about his father in his historical record?
 date: 2024-01-12T10:40:16.967392700-05:00
 updated: 2024-01-18T21:46:02.850159800-05:00
-language: en_US
+language: en
 tags:
   - Book of Mormon
   - Jewish tradition

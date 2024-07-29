@@ -3,7 +3,7 @@ title: The Good Samaritan
 description: A look into the parable of the good Samaritan as a symbol of Christ.
 date: 2023-04-22T02:34:47.361Z
 updated:
-language: en_US
+language: en
 tags:
   - Parable
   - New Testament

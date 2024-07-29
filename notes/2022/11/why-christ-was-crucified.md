@@ -2,7 +2,7 @@
 title: Why was Christ crucified?
 description: Why was Christ crucified and not executed another way?
 date: 2022-11-19T14:27:50.383Z
-language: en_US
+language: en
 aliases: ["Why Christ was crucified"]
 tags:
   - Atonement

@@ -3,7 +3,7 @@ title: Why did Alma baptize himself?
 description: When Alma baptized Helam in the Waters of Mormon, he also submerged himself in the water. Was this a unique case of self-baptism?
 date: 2023-05-30T22:24:17.913269200-04:00
 updated:
-language: en_US
+language: en
 tags:
   - Book of Mormon
   - Baptism

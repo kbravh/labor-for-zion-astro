@@ -2,7 +2,7 @@
 title: The Bread of the Presence
 description: Shewbread was an important symbol of Christ in the Tabernacle of Moses.
 date: 2022-09-19T14:29:18.607Z
-language: en_US
+language: en
 aliases: ['Shewbread', 'shewbread']
 tags:
   - Sacrament

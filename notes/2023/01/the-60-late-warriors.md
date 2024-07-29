@@ -3,7 +3,7 @@ title: The 60 late warriors
 description: The story of the stripling warriors in the Book of Mormon teaches us that it's never too late to join the Lord's work and receive blessings.
 date: 2023-02-01T03:00:14.025Z
 updated: 2023-02-01T03:00:14.025Z
-language: en_US
+language: en
 tags:
   - Book of Mormon
   - Repentance

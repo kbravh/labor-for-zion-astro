@@ -3,7 +3,7 @@ title: Be Humble as Christ Was
 description: Learn how to develop Christlike humility through scriptural examples and the power of prayer.
 date: 2024-06-18T10:50:10.508803600-04:00
 updated:
-language: en_US
+language: en
 tags:
   - Humility
   - Prayer

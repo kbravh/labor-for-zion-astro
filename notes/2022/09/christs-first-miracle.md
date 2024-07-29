@@ -2,7 +2,7 @@
 title: Christ's First Miracle
 description: What was the purpose of Christ's first miracle, turning water into wine?
 date: 2022-09-20T14:29:18.607Z
-language: en_US
+language: en
 tags:
   - Old Testament
   - New Testament

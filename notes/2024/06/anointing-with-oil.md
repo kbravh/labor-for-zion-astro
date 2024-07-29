@@ -3,7 +3,7 @@ title: Anointing with Oil
 description: Why do we anoint people with oil?
 date: 2024-06-03T22:33:36.911600600-04:00
 updated:
-language: en_US
+language: en
 tags:
   - Old Testament
   - New Testament

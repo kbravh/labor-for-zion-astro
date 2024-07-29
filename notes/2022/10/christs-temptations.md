@@ -3,7 +3,7 @@ title: Christ's Temptations
 description: What was the motive behind Satan's temptations of Christ after his forty-day fast?
 date: 2022-10-30T21:48:07.541Z
 updated: 2024-02-12T09:04:11.036145100-05:00
-language: en_US
+language: en
 tags:
   - Temptation
   - New Testament

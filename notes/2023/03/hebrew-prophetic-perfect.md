@@ -3,7 +3,7 @@ title: Hebrew prophetic perfect
 description: Explore the deep-rooted faith of biblical prophets through the lens of the Hebrew Prophetic Perfect, a unique linguistic feature in scriptures.
 date: 2023-03-29T14:35:41.689Z
 updated: 2023-03-29T14:35:41.689Z
-language: en_US
+language: en
 tags:
   - Hebrew language
   - Old Testament

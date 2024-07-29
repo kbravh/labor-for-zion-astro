@@ -3,7 +3,7 @@ title: The Dead Know Not Any Thing
 description: Are vicarious ordinances important if, according to Ecclesiastes, "the dead know not any thing, neither have they any more reward"?
 date: 2023-01-27T05:15:04.734Z
 updated: 2023-01-27T05:15:04.734Z
-language: en_US
+language: en
 tags:
   - Vicarious ordinances
   - New Testament

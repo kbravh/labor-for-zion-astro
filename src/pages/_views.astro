@@ -28,11 +28,12 @@ import Layout from '../layouts/Layout.astro';
   };
 
   const pageViewsContainer = document.getElementById('page-views');
+  if (!pageViewsContainer) return;
+
   pageViewsContainer.innerHTML = '<p>Loading page views...</p>';
 
   fetchPageViews()
     .then(data => {
-      if (!pageViewsContainer) return;
       // create a table of page views
       const table = document.createElement('table');
       table.classList.add('table-auto');
@@ -63,8 +64,6 @@ import Layout from '../layouts/Layout.astro';
     })
     .catch(error => {
       console.error('Unable to fetch page views', error);
-      if (pageViewsContainer) {
-        pageViewsContainer.innerHTML = '<p>Unable to fetch page views</p>';
-      }
+      pageViewsContainer.innerHTML = '<p>Unable to fetch page views</p>';
     });
 </script>

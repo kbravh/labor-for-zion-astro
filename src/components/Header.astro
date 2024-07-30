@@ -47,30 +47,24 @@ import Link from './Link.astro';
     ]}>
       <summary>Menu</summary>
       <nav class:list={[
-        'flex flex-col items-center gap-6 absolute w-48 right-8 mt-6 p-4 z-[1]',
+        'absolute w-48 right-8 mt-4 z-[1]',
         'text-slate-700 border border-slate-700 list-none text-lg bg-white',
         'dark:text-slate-300 border dark:border-slate-300 list-none text-lg dark:bg-slate-800',
       ]}>
-        <li>
-          <HoverUnderline>
-            <Link href="/">Home</Link>
-          </HoverUnderline>
-        </li>
-        <li>
-          <HoverUnderline>
-            <Link href="/notes">Notes</Link>
-          </HoverUnderline>
-        </li>
-        <li>
-          <HoverUnderline>
-            <Link href="/projects">Projects</Link>
-          </HoverUnderline>
-        </li>
-        <li>
-          <HoverUnderline>
-            <Link href="/about">About</Link>
-          </HoverUnderline>
-        </li>
+        <ul class="flex flex-col items-center gap-2 pt-2 text-center">
+          <li class="w-full h-10 flex items-center justify-center relative">
+              <Link className="absolute inset-0" href="/">Home</Link>
+          </li>
+          <li class="w-full h-10 flex items-center justify-center relative">
+              <Link className="absolute inset-0" href="/notes">Notes</Link>
+          </li>
+          <li class="w-full h-10 flex items-center justify-center relative">
+              <Link className="absolute inset-0" href="/projects">Projects</Link>
+          </li>
+          <li class="w-full h-10 flex items-center justify-center relative">
+              <Link className="absolute inset-0" href="/about">About</Link>
+          </li>
+        </ul>
       </nav>
     </details>
   </div>

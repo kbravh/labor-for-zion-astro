@@ -7,8 +7,11 @@ export const headingObserver = () => {
   let closestHeading: Element | null = null;
   let closestHeadingDistance = Number.MAX_VALUE;
 
+  if (!articleTitle) return;
+
   const titleBoundingRect = articleTitle?.getBoundingClientRect();
-  const titleDistance = Math.abs(titleBoundingRect?.top || Number.MAX_VALUE);
+
+  const titleDistance = Math.abs(titleBoundingRect.top);
   if (titleDistance < closestHeadingDistance && titleDistance <= 300) {
     closestHeading = articleTitle;
     closestHeadingDistance = titleDistance;

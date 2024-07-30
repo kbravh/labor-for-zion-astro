@@ -1,3 +1,7 @@
+/**
+ * Takes in a 1D array of items and returns the
+ * list split into the specified number of sub-groups.
+ */
 export const splitArray = <T>(groups: number, items: T[]): T[][] => {
   if (groups < 1) {
     throw new Error('Group must be 1 or greater');
@@ -11,10 +15,13 @@ export const splitArray = <T>(groups: number, items: T[]): T[][] => {
     collection.push(set);
     counter++;
   }
-
   return collection;
 };
 
+/**
+ * Takes an array of items and a function to select
+ * a key. Deduplicates the array based on the specified key.
+ */
 export const dedupeArray = <T>(
   array: T[],
   keySelector: (item: T) => any

@@ -1,0 +1,122 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`expandScriptureReference > Book of Mormon > expands a single verse 1`] = `
+[
+  "26. And we talk of Christ, we rejoice in Christ, we preach of Christ, we prophesy of Christ, and we write according to our prophecies, that our children may know to what source they may look for a remission of their sins.",
+]
+`;
+
+exports[`expandScriptureReference > Book of Mormon > expands a verse range 1`] = `
+[
+  "11. And he shall go forth, suffering pains and afflictions and temptations of every kind; and this that the word might be fulfilled which saith he will take upon him the pains and the sicknesses of his people.",
+  "12. And he will take upon him death, that he may loose the bands of death which bind his people; and he will take upon him their infirmities, that his bowels may be filled with mercy, according to the flesh, that he may know according to the flesh how to succor his people according to their infirmities.",
+  "13. Now the Spirit knoweth all things; nevertheless the Son of God suffereth according to the flesh that he might take upon him the sins of his people, that he might blot out their transgressions according to the power of his deliverance; and now behold, this is the testimony which is in me.",
+]
+`;
+
+exports[`expandScriptureReference > Book of Mormon > expands multiple verse ranges 1`] = `
+[
+  "11. And he shall go forth, suffering pains and afflictions and temptations of every kind; and this that the word might be fulfilled which saith he will take upon him the pains and the sicknesses of his people.",
+  "12. And he will take upon him death, that he may loose the bands of death which bind his people; and he will take upon him their infirmities, that his bowels may be filled with mercy, according to the flesh, that he may know according to the flesh how to succor his people according to their infirmities.",
+  "13. Now the Spirit knoweth all things; nevertheless the Son of God suffereth according to the flesh that he might take upon him the sins of his people, that he might blot out their transgressions according to the power of his deliverance; and now behold, this is the testimony which is in me.",
+  "15. Yea, I say unto you come and fear not, and lay aside every sin, which easily doth beset you, which doth bind you down to destruction, yea, come and go forth, and show unto your God that ye are willing to repent of your sins and enter into a covenant with him to keep his commandments, and witness it unto him this day by going into the waters of baptism.",
+  "17. And now my beloved brethren, do you believe these things? Behold, I say unto you, yea, I know that ye believe them; and the way that I know that ye believe them is by the manifestation of the Spirit which is in me. And now because your faith is strong concerning that, yea, concerning the things which I have spoken, great is my joy.",
+  "18. For as I said unto you from the beginning, that I had much desire that ye were not in the state of dilemma like your brethren, even so I have found that my desires have been gratified.",
+  "19. For I perceive that ye are in the paths of righteousness; I perceive that ye are in the path which leads to the kingdom of God; yea, I perceive that ye are making his paths straight.",
+]
+`;
+
+exports[`expandScriptureReference > Doctrine and Covenants > expands a single verse 1`] = `
+[
+  "1. Now behold, a marvelous work is about to come forth among the children of men.",
+]
+`;
+
+exports[`expandScriptureReference > Doctrine and Covenants > expands a verse range 1`] = `
+[
+  "2. Behold, I have manifested unto you, by my Spirit in many instances, that the things which you have written are true; wherefore you know that they are true.",
+  "3. And if you know that they are true, behold, I give unto you a commandment, that you rely upon the things which are written;",
+  "4. For in them are all things written concerning the foundation of my church, my gospel, and my rock.",
+]
+`;
+
+exports[`expandScriptureReference > Doctrine and Covenants > expands multiple verse ranges 1`] = `
+[
+  "4. This Comforter is the promise which I give unto you of eternal life, even the glory of the celestial kingdom;",
+  "8. As also he is in the moon, and is the light of the moon, and the power thereof by which it was made;",
+  "9. As also the light of the stars, and the power thereof by which they were made;",
+  "10. And the earth also, and the power thereof, even the earth upon which you stand.",
+  "15. And the spirit and the body are the soul of man.",
+  "16. And the resurrection from the dead is the redemption of the soul.",
+]
+`;
+
+exports[`expandScriptureReference > New Testament > expands a single verse 1`] = `
+[
+  "4. But we will give ourselves continually to prayer, and to the ministry of the word.",
+]
+`;
+
+exports[`expandScriptureReference > New Testament > expands a verse range 1`] = `
+[
+  "28. Now we, brethren, as Isaac was, are the children of promise.",
+  "29. But as then he that was born after the flesh persecuted him that was born after the Spirit, even so it is now.",
+]
+`;
+
+exports[`expandScriptureReference > New Testament > expands multiple verse ranges 1`] = `
+[
+  "1. And there was given me a reed like unto a rod: and the angel stood, saying, Rise, and measure the temple of God, and the altar, and them that worship therein.",
+  "3. And I will give power unto my two witnesses, and they shall prophesy a thousand two hundred and threescore days, clothed in sackcloth.",
+  "4. These are the two olive trees, and the two candlesticks standing before the God of the earth.",
+  "7. And when they shall have finished their testimony, the beast that ascendeth out of the bottomless pit shall make war against them, and shall overcome them, and kill them.",
+  "8. And their dead bodies shall lie in the street of the great city, which spiritually is called Sodom and Egypt, where also our Lord was crucified.",
+]
+`;
+
+exports[`expandScriptureReference > Old Testament > expands a single verse 1`] = `
+[
+  "5. And she said unto her, All that thou sayest unto me I will do.",
+]
+`;
+
+exports[`expandScriptureReference > Old Testament > expands a verse range 1`] = `
+[
+  "1. In the beginning God created the heaven and the earth.",
+  "2. And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.",
+  "3. And God said, Let there be light: and there was light.",
+]
+`;
+
+exports[`expandScriptureReference > Old Testament > expands multiple verse ranges 1`] = `
+[
+  "2. And Job spake, and said,",
+  "11. Why died I not from the womb? why did I not give up the ghost when I came out of the belly?",
+  "12. Why did the knees prevent me? or why the breasts that I should suck?",
+  "20. Wherefore is light given to him that is in misery, and life unto the bitter in soul;",
+  "21. Which long for death, but it cometh not; and dig for it more than for hid treasures;",
+]
+`;
+
+exports[`expandScriptureReference > Pearl of Great Price > expands a single verse 1`] = `
+[
+  "1. The words of God, which he spake unto Moses at a time when Moses was caught up into an exceedingly high mountain,",
+]
+`;
+
+exports[`expandScriptureReference > Pearl of Great Price > expands a verse range 1`] = `
+[
+  "10. And it came to pass that it was for the space of many hours before Moses did again receive his natural strength like unto man; and he said unto himself: Now, for this cause I know that man is nothing, which thing I never had supposed.",
+  "11. But now mine own eyes have beheld God; but not my natural, but my spiritual eyes, for my natural eyes could not have beheld; for I should have withered and died in his presence; but his glory was upon me; and I beheld his face, for I was transfigured before him.",
+]
+`;
+
+exports[`expandScriptureReference > Pearl of Great Price > expands multiple verse ranges 1`] = `
+[
+  "1. And I, Abraham, had the Urim and Thummim, which the Lord my God had given unto me, in Ur of the Chaldees;",
+  "7. Now the set time of the lesser light is a longer time as to its reckoning than the reckoning of the time of the earth upon which thou standest.",
+  "8. And where these two facts exist, there shall be another fact above them, that is, there shall be another planet whose reckoning of time shall be longer still;",
+  "10. And it is given unto thee to know the set time of all the stars that are set to give light, until thou come near unto the throne of God.",
+  "11. Thus I, Abraham, talked with the Lord, face to face, as one man talketh with another; and he told me of the works which his hands had made;",
+]
+`;

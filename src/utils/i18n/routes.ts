@@ -5,10 +5,12 @@ export type Route = '/' | '/about' | '/notes' | '/projects';
 export const routes: Route[] = ['/', '/notes', '/projects', '/about'];
 
 type RouteMap = {
-  [k in Locale]: Record<Route, string>;
+  [k in Locale]: {
+    [k in Route]: string;
+  };
 };
 
-const routeMap: RouteMap = {
+export const routeMap: RouteMap = {
   en: {
     '/': 'Home',
     '/notes': 'Notes',
@@ -22,11 +24,3 @@ const routeMap: RouteMap = {
     '/about': 'Acerca de',
   },
 };
-
-export const getRouteTitle = ({
-  locale,
-  slug,
-}: {
-  locale: Locale;
-  slug: Route;
-}): string => routeMap[locale][slug];

@@ -1,19 +1,25 @@
 import type {Locale} from '@validation/i18n';
 import {routeMap, type Route} from './routes';
+import {navigationStrings, type Navigation} from './navigation';
 
 type Translations = {
   [k in Locale]: {
-    navigation: {
+    route: {
       [k in Route]: string;
+    };
+    navigation: {
+      [k in Navigation]: string;
     };
   };
 };
 
 export const translations: Translations = {
   en: {
-    navigation: routeMap.en,
+    route: routeMap.en,
+    navigation: navigationStrings.en,
   },
   es: {
-    navigation: routeMap.es,
-  }
+    route: routeMap.es,
+    navigation: navigationStrings.es,
+  },
 };

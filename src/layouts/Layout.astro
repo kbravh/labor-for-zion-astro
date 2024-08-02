@@ -3,6 +3,8 @@ import {ViewTransitions} from 'astro:transitions';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import HitCounterWebComponent from '../components/HitCounter/HitCounterWebComponent.astro';
+import {getLocale} from '@utils/i18n/main';
+import {translations} from '@utils/i18n/translations';
 
 export interface Props {
   title: string;
@@ -11,6 +13,12 @@ export interface Props {
 }
 
 const {title, description, socialImage} = Astro.props;
+const locale = getLocale(Astro.currentLocale);
+
+const strings = {
+  site: translations[locale].meta.site,
+  description: translations[locale].meta.description,
+};
 ---
 
 <!doctype html>
@@ -28,17 +36,20 @@ const {title, description, socialImage} = Astro.props;
       name="generator"
       content={Astro.generator}
     />
+    <title>
+      {title === strings.site ? title : `${title} | ${strings.site}`}
+    </title>
     <meta
       property="og:title"
-      content={title === 'Labor for Zion' ? 'Labor for Zion' : `${title} | Labor For Zion`}
+      content={title === strings.site ? title : `${title} | ${strings.site}`}
     />
     <meta
       name="description"
-      content={description ?? 'A collection of notes, talks, and tools centered around gospel topics.'}
+      content={description ?? strings.description}
     />
     <meta
       property="og:description"
-      content={description ?? 'A collection of notes, talks, and tools centered around gospel topics.'}
+      content={description ?? strings.description}
     />
     {
       socialImage ? (
@@ -58,16 +69,9 @@ const {title, description, socialImage} = Astro.props;
       rel="sitemap"
       href="/sitemap-index.xml"
     />
-    <title>
-      {title === 'Labor for Zion' ? 'Labor for Zion' : `${title} | Labor For Zion`}
-    </title>
     <ViewTransitions />
   </head>
-  <body class:list={[
-    'h-full flex flex-col items-center scroll-smooth',
-    'selection:bg-emerald-900 selection:text-emerald-50',
-    'dark:selection:text-emerald-900 dark:selection:bg-emerald-50']
-  }>
+  <body class:list={['h-full flex flex-col items-center scroll-smooth', 'selection:bg-emerald-900 selection:text-emerald-50', 'dark:selection:text-emerald-900 dark:selection:bg-emerald-50']}>
     <Header />
     <slot />
     <Footer />

@@ -1,37 +1,44 @@
 <script>
   class HitCounter extends HTMLElement {
+    displayText: string | null | undefined;
+    slug: string | null | undefined;
+
     // This gets called when the element is inserted into the DOM.
     connectedCallback() {
+      this.displayText = this.getAttribute('data-display-text');
+      if (!this.displayText) throw new Error('data-display-text is missing');
+
+      this.slug = this.getAttribute('data-slug');
+      if (!this.slug) throw new Error('data-slug is missing');
+
       this.fetchAndDisplayCount();
     }
 
     async fetchAndDisplayCount() {
-      const slug = this.getAttribute("data-slug");
-      if (process.env.NODE_ENV === "development") {
+      if (process.env.NODE_ENV === 'development') {
         this.displayCount(1123);
         return;
       }
 
       try {
         const response = await fetch(
-          `https://api.laborforzion.com/log-view?slug=${slug}`,
+          `https://api.laborforzion.com/log-view?slug=${this.slug}`,
         );
         if (!response.ok) {
-          console.error("Network response was not ok");
+          console.error('Network response was not ok');
           return;
         }
         const data = await response.json();
         this.displayCount(data.count);
       } catch (error) {
-        console.error("Fetch error:", error);
+        console.error('Fetch error:', error);
       }
     }
 
     displayCount(count: number) {
-      const displayText = this.getAttribute("data-display-text")
-      this.textContent = `${displayText}: ${count}`;
+      this.textContent = `${this.displayText}: ${count}`;
     }
   }
 
-  customElements.define("hit-counter", HitCounter);
+  customElements.define('hit-counter', HitCounter);
 </script>

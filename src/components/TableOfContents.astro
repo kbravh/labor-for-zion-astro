@@ -19,16 +19,15 @@ const locale = getLocale(Astro.currentLocale);
         <h2 class="font-heading font-bold text-lg">
           {translations[locale].ui.toc}
         </h2>
-        <ul>
+        <ul class="flex flex-col">
           {headings.map((heading) => (
             <li
               class:list={[
-                heading.level === 2 && "ml-2",
-                heading.level === 3 && "ml-4",
-                heading.level === 4 && "ml-6",
-                heading.level === 5 && "ml-8",
-                heading.level === 6 && "ml-10",
-                "mt-2",
+                heading.level === 2 && "ml-0 mt-3",
+                heading.level === 3 && "ml-2 mt-1",
+                heading.level === 4 && "ml-4 mt-1",
+                heading.level === 5 && "ml-6 mt-1",
+                heading.level === 6 && "ml-8 mt-1",
               ]}
             >
               <Link

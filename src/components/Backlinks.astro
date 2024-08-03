@@ -2,17 +2,21 @@
 import type {Backlink} from '../utils/mdUtils';
 import Link from './Link.astro';
 import HoverUnderline from './HoverUnderline.astro';
+import { getLocale } from '@utils/i18n/main';
+import { translations } from '@utils/i18n/translations';
 
 interface Props {
   backlinks: Backlink[];
 }
 
 const {backlinks} = Astro.props;
+
+const locale = getLocale(Astro.currentLocale);
 ---
 
 <div>
   <h3 class="font-heading font-bold text-lg">
-    Pages that reference this note:
+    {translations[locale].ui.backlinks}
   </h3>
   <ul class="flex flex-col gap-2 px-4 py-2">
     {

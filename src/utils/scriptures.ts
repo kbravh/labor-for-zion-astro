@@ -15,6 +15,29 @@ enum works {
 
 type Work = keyof typeof works;
 
+
+type Verse = {
+  number: number;
+  text: string;
+};
+
+type Chapter = {
+  number: number;
+  summary: string;
+  verses: Verse[];
+};
+
+type Book = {
+  name: string;
+  chapters: Chapter[];
+};
+
+type Scripture = {
+  name: string;
+  link: string;
+  books: Book[];
+};
+
 const books: Record<string, Work> = {
   Genesis: 'Old Testament',
   Exodus: 'Old Testament',
@@ -167,28 +190,6 @@ export const processScriptureReference = (
     chapter,
     verses: expandedVerses,
   };
-};
-
-type Verse = {
-  number: number;
-  text: string;
-};
-
-type Chapter = {
-  number: number;
-  summary: string;
-  verses: Verse[];
-};
-
-type Book = {
-  name: string;
-  chapters: Chapter[];
-};
-
-type Scripture = {
-  name: string;
-  link: string;
-  books: Book[];
 };
 
 export const expandScriptureReference = (

@@ -1,6 +1,6 @@
 import type {Locale} from '@validation/i18n';
 import {routeMap, type Route} from './routes';
-import {navigationStrings, type Navigation} from './navigation';
+import {uiStrings, type UI} from './ui';
 import { metaMap, type Meta } from './meta';
 
 type Translations = {
@@ -8,8 +8,8 @@ type Translations = {
     meta: {
       [k in Meta]: string;
     }
-    navigation: {
-      [k in Navigation]: string;
+    ui: {
+      [k in UI]: string;
     };
     route: {
       [k in Route]: string;
@@ -20,12 +20,12 @@ type Translations = {
 export const translations: Translations = {
   en: {
     meta: metaMap.en,
-    navigation: navigationStrings.en,
+    ui: uiStrings.en,
     route: routeMap.en,
   },
   es: {
     meta: metaMap.es,
-    navigation: navigationStrings.es,
+    ui: uiStrings.es,
     route: routeMap.es,
   },
 };

@@ -6,7 +6,9 @@ import { basename } from "path";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://laborforzion.com",
+  site: import.meta.env.PROD
+    ? "https://laborforzion.com"
+    : "http://localhost:4321",
   i18n: {
     defaultLocale: "en",
     locales: ["en", "es"],

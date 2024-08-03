@@ -1,6 +1,4 @@
 ---
-import ArticleCard from '../../components/ArticleCard.astro';
-import Grid from '../../components/Grid.astro';
 import MainWrapper from '../../components/MainWrapper.astro';
 import PageTitle from '../../components/PageTitle.astro';
 import Layout from '../../layouts/Layout.astro';
@@ -11,20 +9,12 @@ import Link from '../../components/Link.astro';
   <div class="flex flex-col items-center flex-grow mb-10">
     <PageTitle title="Projects" />
     <MainWrapper>
-      <Grid>
+      <div class="max-w-4xl sm:mx-20 mx-8 grid sm:grid-cols-2 gap-8">
         <Link href="/projects/obsidian-scripture-vault">
           <article class="text-balance flex flex-col">
             <div>
-              <h3
-                class="group-hover:text-emerald-500 font-semibold text-lg decoration-emerald-500 group-hover:underline text-emerald-700"
-              >
-                LDS scriptures Obsidian vault
-              </h3>
-              <p class="text-slate-700 text-md group-hover:text-slate-500">
-                Take notes on the scriptures using Obsidian, a note-taking tool
-                that will help you connect ideas and think more deeply about the
-                scriptures.
-              </p>
+              <h3 class="group-hover:text-emerald-500 font-semibold text-lg decoration-emerald-500 group-hover:underline text-emerald-700">LDS scriptures Obsidian vault</h3>
+              <p class="text-slate-700 text-md group-hover:text-slate-500">Take notes on the scriptures using Obsidian, a note-taking tool that will help you connect ideas and think more deeply about the scriptures.</p>
             </div>
           </article>
         </Link>
@@ -32,19 +22,12 @@ import Link from '../../components/Link.astro';
         <Link href="https://scripture.page">
           <article class="text-balance flex flex-col">
             <div>
-              <h3
-                class="group-hover:text-emerald-500 font-semibold text-lg decoration-emerald-500 group-hover:underline text-emerald-700"
-              >
-                Scriptly
-              </h3>
-              <p class="text-slate-700 text-md group-hover:text-slate-500">
-                Style your patriarchal blessing to look like a page right out of
-                the scriptures.
-              </p>
+              <h3 class="group-hover:text-emerald-500 font-semibold text-lg decoration-emerald-500 group-hover:underline text-emerald-700">Scriptly</h3>
+              <p class="text-slate-700 text-md group-hover:text-slate-500">Style your patriarchal blessing to look like a page right out of the scriptures.</p>
             </div>
           </article>
         </Link>
-      </Grid>
+      </div>
     </MainWrapper>
   </div>
 </Layout>

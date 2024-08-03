@@ -7,6 +7,7 @@ export type UI =
   | "next"
   | "page"
   | "previous"
+  | "rss"
   | "toc"
   | "views";
 
@@ -25,6 +26,7 @@ export const uiMap: UIMap = {
     next: "Next page",
     page: "Page",
     previous: "Previous page",
+    rss: "Grab the RSS Feed",
     toc: "Table of Contents",
     views: "Page views",
   },
@@ -36,6 +38,7 @@ export const uiMap: UIMap = {
     next: "Siguiente",
     page: "Página",
     previous: "Anterior",
+    rss: "Fuente RSS",
     toc: "Índice",
     views: "Vistas de página",
   },

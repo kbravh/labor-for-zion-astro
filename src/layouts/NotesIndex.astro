@@ -1,0 +1,62 @@
+---
+import Layout from '@layouts/Layout.astro';
+import MainWrapper from '@components/MainWrapper.astro';
+import ArticleCard from '@components/ArticleCard.astro';
+import PageTitle from '@components/PageTitle.astro';
+import Pagination from '@components/Pagination.astro';
+import { translations } from '@utils/i18n/translations';
+import { getLocale } from '@utils/i18n/main';
+import type { Page } from 'astro';
+import type { PostListing } from '@utils/mdUtils';
+
+const locale = getLocale(Astro.currentLocale);
+
+export interface Props {
+  page: Page<PostListing>;
+}
+
+const {page} = Astro.props;
+---
+
+<Layout title={translations[locale].route['/notes']}>
+  <div class="flex flex-col flex-grow max-w-2xl mb-10">
+    <PageTitle title={translations[locale].route['/notes']} />
+    <MainWrapper>
+      <div class="max-w-4xl w-full">
+        <a
+          href="/rss.xml"
+          target="_blank"
+          rel="noopener noreferer"
+          class="flex gap-2 items-center text-gray-700 hover:text-emerald-600"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            height="24"
+            width="24"
+            style="width: 24px; height: 24px;"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12.75 19.5v-.75a7.5 7.5 0 0 0-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+            ></path>
+          </svg>
+          {translations[locale].ui.rss}
+        </a>
+      </div>
+
+      <div class="flex flex-col gap-4 mt-4">
+        {page.data.map((post) => <ArticleCard post={post} />)}
+        <Pagination
+          current={page.currentPage}
+          prevUrl={page.url.prev}
+          nextUrl={page.url.next}
+        />
+      </div>
+    </MainWrapper>
+  </div>
+</Layout>

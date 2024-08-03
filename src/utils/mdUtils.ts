@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import path, { basename } from "path";
 import slugify from "slugify";
 import { BracketLink, Frontmatter } from "../validation/md";
+import type { Locale } from "@validation/i18n";
 
 export const NOTES_PATH = path.join(process.cwd(), "notes");
 
@@ -352,6 +353,7 @@ export interface PostListing {
 
 interface Filter {
   topic?: string;
+  locale?: Locale;
 }
 
 /**
@@ -364,15 +366,16 @@ export const getArticles = async (filter?: Filter): Promise<PostListing[]> => {
     const source = await readFile(articlePath, "utf-8");
     const frontmatter = matter(source).data;
     const parsedFrontmatter = Frontmatter.parse(frontmatter);
-    if (
-      !filter?.topic ||
-      (filter.topic && parsedFrontmatter.tags?.includes(filter.topic))
-    ) {
-      posts.push({
-        frontmatter: parsedFrontmatter,
-        slug: getSlugFromFilepath(articlePath),
-      });
+    if (filter?.topic && !parsedFrontmatter.tags?.includes(filter.topic)) {
+      continue;
     }
+    if (filter?.locale && parsedFrontmatter.language !== filter.locale) {
+      continue;
+    }
+    posts.push({
+      frontmatter: parsedFrontmatter,
+      slug: getSlugFromFilepath(articlePath),
+    });
   }
 
   // sort posts by written at date, recent to old

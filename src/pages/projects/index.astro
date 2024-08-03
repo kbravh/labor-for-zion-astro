@@ -3,6 +3,10 @@ import MainWrapper from "../../components/MainWrapper.astro";
 import PageTitle from "../../components/PageTitle.astro";
 import Layout from "../../layouts/Layout.astro";
 import Link from "../../components/Link.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
+
+const locale = getLocale(Astro.currentLocale);
 ---
 
 <Layout title="Projects">
@@ -16,12 +20,10 @@ import Link from "../../components/Link.astro";
               <h3
                 class="group-hover:text-emerald-500 font-semibold text-lg decoration-emerald-500 group-hover:underline text-emerald-700"
               >
-                LDS scriptures Obsidian vault
+                {translations[locale].project.vault.title}
               </h3>
               <p class="text-slate-700 text-md group-hover:text-slate-500">
-                Take notes on the scriptures using Obsidian, a note-taking tool
-                that will help you connect ideas and think more deeply about the
-                scriptures.
+                {translations[locale].project.vault.description}
               </p>
             </div>
           </article>
@@ -33,11 +35,10 @@ import Link from "../../components/Link.astro";
               <h3
                 class="group-hover:text-emerald-500 font-semibold text-lg decoration-emerald-500 group-hover:underline text-emerald-700"
               >
-                Scriptly
+                {translations[locale].project.scriptly.title}
               </h3>
               <p class="text-slate-700 text-md group-hover:text-slate-500">
-                Style your patriarchal blessing to look like a page right out of
-                the scriptures.
+                {translations[locale].project.scriptly.description}
               </p>
             </div>
           </article>

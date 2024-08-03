@@ -2,13 +2,13 @@ import type { Locale } from "@validation/i18n";
 
 export type UI = "menu" | "backlinks" | "page" | "next" | "previous" | "toc";
 
-export type UIStrings = {
+export type UIMap = {
   [k in Locale]: {
     [k in UI]: string;
   };
 };
 
-export const uiStrings: UIStrings = {
+export const uiMap: UIMap = {
   en: {
     menu: "Menu",
     backlinks: "Pages that reference this note:",

@@ -28,7 +28,8 @@
     }
 
     displayCount(count: number) {
-      this.textContent = `Page views: ${count}`;
+      const displayText = this.getAttribute("data-display-text")
+      this.textContent = `${displayText}: ${count}`;
     }
   }
 

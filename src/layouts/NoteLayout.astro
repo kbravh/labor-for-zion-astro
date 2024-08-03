@@ -1,11 +1,13 @@
 ---
-import type { Backlink } from "../utils/mdUtils";
-import Backlinks from "../components/Backlinks.astro";
-import Layout from "./Layout.astro";
-import type { Frontmatter, Heading } from "../validation/md";
-import TableOfContents from "../components/TableOfContents.astro";
-import HeadingObserver from "../components/HeadingObserver.astro";
-import slugify from "slugify";
+import type { Backlink } from '../utils/mdUtils';
+import Backlinks from '../components/Backlinks.astro';
+import Layout from './Layout.astro';
+import type { Frontmatter, Heading } from '../validation/md';
+import TableOfContents from '../components/TableOfContents.astro';
+import HeadingObserver from '../components/HeadingObserver.astro';
+import slugify from 'slugify';
+import { getLocale } from '@utils/i18n/main';
+import { translations } from '@utils/i18n/translations';
 
 interface Props {
   slug: string;
@@ -18,6 +20,8 @@ interface Props {
 
 const { slug, frontmatter, backlinks, content, headings, socialImage } =
   Astro.props;
+
+const locale = getLocale(Astro.currentLocale);
 
 const tags = frontmatter.tags?.map((tag) => ({
   name: tag,
@@ -54,8 +58,8 @@ const tags = frontmatter.tags?.map((tag) => ({
         <div class="flex justify-between gap-4 p-4 flex-wrap">
           <time datetime={frontmatter.date.toISOString()}>
             {
-              frontmatter.date.toLocaleDateString("en-US", {
-                dateStyle: "medium",
+              frontmatter.date.toLocaleDateString(locale, {
+                dateStyle: 'medium',
               })
             }
           </time>
@@ -65,7 +69,12 @@ const tags = frontmatter.tags?.map((tag) => ({
                 Tags:
                 <ul>
                   {tags.map(({ name, slug }) => (
-                    <li class="inline-block bg-slate-300 dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md px-2 py-1 text-xs font-bold mr-2">
+                    <li
+                      class:list={[
+                        'inline-block rounded-md px-2 py-1 text-xs font-bold mr-2',
+                        'bg-slate-300 dark:bg-slate-800 text-slate-900 dark:text-slate-100',
+                      ]}
+                    >
                       <a href={`/topics/${slug}`}>{name}</a>
                     </li>
                   ))}
@@ -102,6 +111,8 @@ const tags = frontmatter.tags?.map((tag) => ({
       </section>
     </article>
   </main>
-  <hit-counter data-slug={slug}></hit-counter>
+  <hit-counter
+    data-slug={slug}
+    data-display-text={translations[locale].ui.views}></hit-counter>
   <HeadingObserver />
 </Layout>

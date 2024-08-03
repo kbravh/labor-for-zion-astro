@@ -1,6 +1,13 @@
 import type { Locale } from "@validation/i18n";
 
-export type UI = "menu" | "backlinks" | "page" | "next" | "previous" | "toc";
+export type UI =
+  | "menu"
+  | "backlinks"
+  | "page"
+  | "next"
+  | "previous"
+  | "toc"
+  | "views";
 
 export type UIMap = {
   [k in Locale]: {
@@ -16,6 +23,7 @@ export const uiMap: UIMap = {
     page: "Page",
     previous: "Previous page",
     toc: "Table of Contents",
+    views: "Page views",
   },
   es: {
     menu: "Menú",
@@ -24,5 +32,6 @@ export const uiMap: UIMap = {
     page: "Página",
     previous: "Anterior",
     toc: "Índice",
+    views: "Vistas de página",
   },
 } as const;

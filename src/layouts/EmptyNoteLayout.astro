@@ -1,7 +1,9 @@
 ---
-import type { Backlink } from "../utils/mdUtils";
-import Backlinks from "../components/Backlinks.astro";
-import Layout from "./Layout.astro";
+import type { Backlink } from '../utils/mdUtils';
+import Backlinks from '../components/Backlinks.astro';
+import Layout from './Layout.astro';
+import { getLocale } from '@utils/i18n/main';
+import { translations } from '@utils/i18n/translations';
 
 interface Props {
   slug: string;
@@ -11,6 +13,7 @@ interface Props {
 }
 
 const { title, backlinks, slug, socialImage } = Astro.props;
+const locale = getLocale(Astro.currentLocale);
 ---
 
 <Layout {title} description={`A note about ${title}.`} {socialImage}>
@@ -25,10 +28,7 @@ const { title, backlinks, slug, socialImage } = Astro.props;
     >
       <slot />
 
-      <p>
-        This page hasn't been created yet! But if it has been mentioned
-        somewhere else, you can see those references below.
-      </p>
+      <p>{translations[locale].ui.empty}</p>
       {!!backlinks.length && <Backlinks backlinks={backlinks} />}
       <hit-counter data-slug={slug}></hit-counter>
     </article>

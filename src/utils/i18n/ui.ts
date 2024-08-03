@@ -1,10 +1,11 @@
 import type { Locale } from "@validation/i18n";
 
 export type UI =
-  | "menu"
   | "backlinks"
-  | "page"
+  | "empty"
+  | "menu"
   | "next"
+  | "page"
   | "previous"
   | "toc"
   | "views";
@@ -17,8 +18,10 @@ export type UIMap = {
 
 export const uiMap: UIMap = {
   en: {
-    menu: "Menu",
     backlinks: "Pages that reference this note:",
+    empty:
+      "This page hasn't been created yet! But if it has been mentioned somewhere else, you can see those references below.",
+    menu: "Menu",
     next: "Next page",
     page: "Page",
     previous: "Previous page",
@@ -26,8 +29,10 @@ export const uiMap: UIMap = {
     views: "Page views",
   },
   es: {
-    menu: "Menú",
     backlinks: "Páginas que mencionan esta nota:",
+    empty:
+      "Esta página aún no se ha creado! Pero si ha sido mencionado en otro lado, podrás ver esas referencias aquí.",
+    menu: "Menú",
     next: "Siguiente",
     page: "Página",
     previous: "Anterior",

@@ -1,8 +1,8 @@
 ---
-import type { Heading } from "../validation/md";
-import Link from "./Link.astro";
-import { getLocale } from "@utils/i18n/main";
-import { translations } from "@utils/i18n/translations";
+import type { Heading } from '../validation/md';
+import Link from './Link.astro';
+import { getLocale } from '@utils/i18n/main';
+import { translations } from '@utils/i18n/translations';
 
 interface Props {
   headings: Heading[];
@@ -23,11 +23,11 @@ const locale = getLocale(Astro.currentLocale);
           {headings.map((heading) => (
             <li
               class:list={[
-                heading.level === 2 && "ml-0 mt-3",
-                heading.level === 3 && "ml-2 mt-1",
-                heading.level === 4 && "ml-4 mt-1",
-                heading.level === 5 && "ml-6 mt-1",
-                heading.level === 6 && "ml-8 mt-1",
+                heading.level === 2 && 'ml-0 mt-3',
+                heading.level === 3 && 'ml-2 mt-1',
+                heading.level === 4 && 'ml-4 mt-1',
+                heading.level === 5 && 'ml-6 mt-1',
+                heading.level === 6 && 'ml-8 mt-1',
               ]}
             >
               <Link

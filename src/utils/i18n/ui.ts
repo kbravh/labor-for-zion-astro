@@ -1,6 +1,6 @@
 import type { Locale } from "@validation/i18n";
 
-export type UI = "menu" | "backlinks" | "page" | "next" | "previous";
+export type UI = "menu" | "backlinks" | "page" | "next" | "previous" | 'toc';
 
 export type UIStrings = {
   [k in Locale]: {
@@ -14,13 +14,15 @@ export const uiStrings: UIStrings = {
     backlinks: "Pages that reference this note:",
     next: 'Next page',
     page: 'Page',
-    previous: 'Previous page'
+    previous: 'Previous page',
+    toc: "Table of Contents"
   },
   es: {
     menu: "Menú",
     backlinks: "Páginas que mencionan esta nota:",
     next: 'Siguiente',
     page: 'Página',
-    previous: 'Anterior'
+    previous: 'Anterior',
+    toc: 'Índice'
   },
 } as const;

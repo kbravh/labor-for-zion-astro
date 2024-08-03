@@ -1,5 +1,5 @@
-import {headingObserver} from '@utils/headingObserver';
-import {describe, it, expect, beforeEach, vi} from 'vitest';
+import { headingObserver } from "@utils/headingObserver";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 
 /**
  * @vitest-environment jsdom
@@ -17,7 +17,7 @@ const getBoundingClientRectValues = {
   toJSON: () => {},
 };
 
-describe('headingObserver', () => {
+describe("headingObserver", () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div id="table-of-contents">
@@ -32,13 +32,13 @@ describe('headingObserver', () => {
     `;
   });
 
-  it('should highlight the closest heading link in the table of contents', () => {
-    const articleTitle = document.querySelector('#article-title');
-    const heading1 = document.querySelector('#heading1');
-    const heading2 = document.querySelector('#heading2');
+  it("should highlight the closest heading link in the table of contents", () => {
+    const articleTitle = document.querySelector("#article-title");
+    const heading1 = document.querySelector("#heading1");
+    const heading2 = document.querySelector("#heading2");
 
     if (!articleTitle || !heading1 || !heading2) {
-      throw new Error('Test elements not found');
+      throw new Error("Test elements not found");
     }
 
     // Mock getBoundingClientRect to control the distances
@@ -57,17 +57,17 @@ describe('headingObserver', () => {
 
     headingObserver();
 
-    const tocLinks = document.querySelectorAll('#table-of-contents a');
-    expect(tocLinks[0].classList.contains('!text-emerald-500')).toBe(false);
-    expect(tocLinks[0].classList.contains('font-bold')).toBe(false);
-    expect(tocLinks[1].classList.contains('!text-emerald-500')).toBe(true);
-    expect(tocLinks[1].classList.contains('font-bold')).toBe(true);
+    const tocLinks = document.querySelectorAll("#table-of-contents a");
+    expect(tocLinks[0].classList.contains("!text-emerald-500")).toBe(false);
+    expect(tocLinks[0].classList.contains("font-bold")).toBe(false);
+    expect(tocLinks[1].classList.contains("!text-emerald-500")).toBe(true);
+    expect(tocLinks[1].classList.contains("font-bold")).toBe(true);
   });
 
-  it('Should return early if no article title found', () => {
-    const articleTitle = document.querySelector('#article-title');
+  it("Should return early if no article title found", () => {
+    const articleTitle = document.querySelector("#article-title");
     articleTitle?.remove();
 
     expect(headingObserver()).toEqual(undefined);
-  })
+  });
 });

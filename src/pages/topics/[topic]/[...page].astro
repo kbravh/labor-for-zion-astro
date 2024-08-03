@@ -1,28 +1,30 @@
 ---
-import ArticleCard from '../../../components/ArticleCard.astro';
-import MainWrapper from '../../../components/MainWrapper.astro';
-import PageTitle from '../../../components/PageTitle.astro';
-import Layout from '../../../layouts/Layout.astro';
-import {getArticles, getNoteTopics} from '../../../utils/mdUtils';
-import type {GetStaticPaths} from 'astro';
-import slugify from 'slugify';
-import Pagination from '../../../components/Pagination.astro';
+import ArticleCard from "../../../components/ArticleCard.astro";
+import MainWrapper from "../../../components/MainWrapper.astro";
+import PageTitle from "../../../components/PageTitle.astro";
+import Layout from "../../../layouts/Layout.astro";
+import { getArticles, getNoteTopics } from "../../../utils/mdUtils";
+import type { GetStaticPaths } from "astro";
+import slugify from "slugify";
+import Pagination from "../../../components/Pagination.astro";
 
-const {slugToTopic} = await getNoteTopics();
+const { slugToTopic } = await getNoteTopics();
 
-export const getStaticPaths = (async ({paginate}) => {
-  const {articleTopics} = await getNoteTopics();
+export const getStaticPaths = (async ({ paginate }) => {
+  const { articleTopics } = await getNoteTopics();
   const posts = await getArticles();
-  return [...articleTopics].flatMap(topic => {
-    const matchingPosts = posts.filter(post => post.frontmatter.tags?.includes(topic));
+  return [...articleTopics].flatMap((topic) => {
+    const matchingPosts = posts.filter((post) =>
+      post.frontmatter.tags?.includes(topic),
+    );
     return paginate(matchingPosts, {
-      params: {topic: slugify(topic, {lower: true})},
+      params: { topic: slugify(topic, { lower: true }) },
       pageSize: 5,
     });
   });
 }) satisfies GetStaticPaths;
 
-const {page} = Astro.props;
+const { page } = Astro.props;
 const params = Astro.params;
 
 const topic = slugToTopic[params.topic];
@@ -33,7 +35,7 @@ const topic = slugToTopic[params.topic];
     <PageTitle title={`Notes about: ${topic}`} />
     <MainWrapper>
       <div class="flex flex-col gap-4 mt-4">
-        {page.data.map(post => <ArticleCard post={post} />)}
+        {page.data.map((post) => <ArticleCard post={post} />)}
         <Pagination
           current={page.currentPage}
           prevUrl={page.url.prev}

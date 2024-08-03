@@ -1,7 +1,7 @@
 ---
-import type {Backlink} from '../utils/mdUtils';
-import Backlinks from '../components/Backlinks.astro';
-import Layout from './Layout.astro';
+import type { Backlink } from "../utils/mdUtils";
+import Backlinks from "../components/Backlinks.astro";
+import Layout from "./Layout.astro";
 
 interface Props {
   slug: string;
@@ -10,14 +10,10 @@ interface Props {
   socialImage: string;
 }
 
-const {title, backlinks, slug, socialImage} = Astro.props;
+const { title, backlinks, slug, socialImage } = Astro.props;
 ---
 
-<Layout
-  title={title}
-  description={`A note about ${title}.`}
-  socialImage={socialImage}
->
+<Layout {title} description={`A note about ${title}.`} {socialImage}>
   <main class="flex-grow max-w-3xl">
     <div class="border-slate-800 border-solid border-b-2 text-slate-700">
       <h1 id="article-title" class="text-[clamp(2rem,_10vw,_3rem)] font-bold">
@@ -27,15 +23,14 @@ const {title, backlinks, slug, socialImage} = Astro.props;
     <article
       class="prose prose-lg prose-slate dark:prose-invert min-w-full prose-h1:text-4xl prose-h1:sm:text-5xl prose-h1:md:text-7xl px-4"
     >
-
       <slot />
 
       <p>
-        This page hasn't been created yet! But if it has been mentioned somewhere
-        else, you can see those references below.
+        This page hasn't been created yet! But if it has been mentioned
+        somewhere else, you can see those references below.
       </p>
       {!!backlinks.length && <Backlinks backlinks={backlinks} />}
-      <hit-counter data-slug={slug} />
+      <hit-counter data-slug={slug}></hit-counter>
     </article>
   </main>
 </Layout>

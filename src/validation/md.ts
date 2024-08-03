@@ -1,4 +1,4 @@
-import {z} from 'zod';
+import { z } from "zod";
 
 export const Frontmatter = z.object({
   title: z.string(),
@@ -8,9 +8,9 @@ export const Frontmatter = z.object({
   updated: z.coerce
     .date()
     // so if we get the epoch, we'll replace it  with undefined
-    .transform(date => (!!date.getTime() ? date : undefined))
+    .transform((date) => (!!date.getTime() ? date : undefined))
     .optional(),
-  language: z.enum(['en']),
+  language: z.enum(["en"]),
   aliases: z.string().array().optional(),
   tags: z.string().array().optional(),
 });

@@ -4,7 +4,7 @@
  */
 export const splitArray = <T>(groups: number, items: T[]): T[][] => {
   if (groups < 1) {
-    throw new Error('Group must be 1 or greater');
+    throw new Error("Group must be 1 or greater");
   }
   const collection: T[][] = [];
   let counter = 0;
@@ -24,10 +24,10 @@ export const splitArray = <T>(groups: number, items: T[]): T[][] => {
  */
 export const dedupeArray = <T>(
   array: T[],
-  keySelector: (item: T) => any
+  keySelector: (item: T) => any,
 ): T[] => {
   const seen = new Set();
-  return array.filter(item => {
+  return array.filter((item) => {
     const key = keySelector(item);
     if (seen.has(key)) {
       return false;

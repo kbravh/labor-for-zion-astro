@@ -1,11 +1,11 @@
 ---
-import type {Backlink} from '../utils/mdUtils';
-import Backlinks from '../components/Backlinks.astro';
-import Layout from './Layout.astro';
-import type {Frontmatter, Heading} from '../validation/md';
-import TableOfContents from '../components/TableOfContents.astro';
-import HeadingObserver from '../components/HeadingObserver.astro';
-import slugify from 'slugify';
+import type { Backlink } from "../utils/mdUtils";
+import Backlinks from "../components/Backlinks.astro";
+import Layout from "./Layout.astro";
+import type { Frontmatter, Heading } from "../validation/md";
+import TableOfContents from "../components/TableOfContents.astro";
+import HeadingObserver from "../components/HeadingObserver.astro";
+import slugify from "slugify";
 
 interface Props {
   slug: string;
@@ -16,78 +16,90 @@ interface Props {
   socialImage: string;
 }
 
-const {slug, frontmatter, backlinks, content, headings, socialImage} = Astro.props;
+const { slug, frontmatter, backlinks, content, headings, socialImage } =
+  Astro.props;
 
-const tags = frontmatter.tags?.map(tag => ({name: tag, slug: slugify(tag, {lower: true})}));
+const tags = frontmatter.tags?.map((tag) => ({
+  name: tag,
+  slug: slugify(tag, { lower: true }),
+}));
 ---
 
 <Layout
   title={frontmatter.title}
   description={frontmatter.description}
-  socialImage={socialImage}
+  {socialImage}
 >
   <main class="mb-10">
     <article class="grid grid-cols-1 md:grid-cols-[1fr,_300px] gap-x-14">
-      <div class="border-slate-800 border-solid border-b-2 text-slate-700 p-4 max-w-3xl">
-        <h1
-          id="article-title"
-          class="text-[clamp(2rem,_10vw,_3rem)] font-bold"
-        >
+      <div
+        class="border-slate-800 border-solid border-b-2 text-slate-700 p-4 max-w-3xl"
+      >
+        <h1 id="article-title" class="text-[clamp(2rem,_10vw,_3rem)] font-bold">
           {frontmatter.title}
         </h1>
-        {frontmatter.description && <p class="text-[clamp(1rem,_5vw,_1.5rem)] font-body">{frontmatter.description}</p>}
+        {
+          frontmatter.description && (
+            <p class="text-[clamp(1rem,_5vw,_1.5rem)] font-body">
+              {frontmatter.description}
+            </p>
+          )
+        }
       </div>
 
       <!-- empty spot to take up the top right corner on desktop -->
-      <div/>
+      <div></div>
 
-        <section class="max-w-3xl">
-          <div class="flex justify-between gap-4 p-4 flex-wrap">
-            <time datetime={frontmatter.date.toISOString()}>
-              {frontmatter.date.toLocaleDateString('en-US', {dateStyle: 'medium'})}
-            </time>
+      <section class="max-w-3xl">
+        <div class="flex justify-between gap-4 p-4 flex-wrap">
+          <time datetime={frontmatter.date.toISOString()}>
             {
-              !!tags?.length && (
-                <div class="flex gap-2">
-                  Tags:
-                  <ul>
-                    {tags.map(({name, slug}) => (
-                      <li class="inline-block bg-slate-300 dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md px-2 py-1 text-xs font-bold mr-2">
-                        <a href={`/topics/${slug}`}>{name}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
+              frontmatter.date.toLocaleDateString("en-US", {
+                dateStyle: "medium",
+              })
             }
-          </div>
-          <aside class="p-4 block md:hidden">
-            <TableOfContents headings={headings} />
+          </time>
+          {
+            !!tags?.length && (
+              <div class="flex gap-2">
+                Tags:
+                <ul>
+                  {tags.map(({ name, slug }) => (
+                    <li class="inline-block bg-slate-300 dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md px-2 py-1 text-xs font-bold mr-2">
+                      <a href={`/topics/${slug}`}>{name}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </div>
+        <aside class="p-4 block md:hidden">
+          <TableOfContents {headings} />
+        </aside>
+        <!-- used for scripture verses -->
+        <slot />
+        <div
+          id="article-body"
+          class="prose prose-lg prose-slate dark:prose-invert min-w-full px-4 prose-hr:border-emerald-800 mt-8"
+          set:html={content}
+        />
+      </section>
+
+      <section class="pr-4">
+        <div class="sticky top-4 flex flex-col gap-5">
+          <aside class="hidden md:block">
+            <TableOfContents {headings} />
           </aside>
-          <!-- used for scripture verses -->
-          <slot />
-          <div
-            id="article-body"
-            class="prose prose-lg prose-slate dark:prose-invert min-w-full px-4 prose-hr:border-emerald-800 mt-8"
-            set:html={content}
-          />
-        </section>
-
-        <section class="pr-4">
-          <div class="sticky top-4 flex flex-col gap-5">
-            <aside class="hidden md:block">
-              <TableOfContents headings={headings} />
-            </aside>
-            {
-              !!backlinks.length && (
-                <aside>
-                  <Backlinks backlinks={backlinks} />
-                </aside>
-              )
-            }
-          </div>
-        </section>
-
+          {
+            !!backlinks.length && (
+              <aside>
+                <Backlinks backlinks={backlinks} />
+              </aside>
+            )
+          }
+        </div>
+      </section>
     </article>
   </main>
   <hit-counter data-slug={slug}></hit-counter>

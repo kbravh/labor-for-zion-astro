@@ -1,10 +1,10 @@
-import {getHeadings} from '@utils/htmlUtils';
-import {Heading} from '@validation/md';
-import {describe, it, expect} from 'vitest';
+import { getHeadings } from "@utils/htmlUtils";
+import { Heading } from "@validation/md";
+import { describe, it, expect } from "vitest";
 
-describe('HTML Utilities', () => {
-  describe('getHeadings', () => {
-    it('parses headings correctly', () => {
+describe("HTML Utilities", () => {
+  describe("getHeadings", () => {
+    it("parses headings correctly", () => {
       const html = `
       <div>
         <h1 id="title">Title</h1>

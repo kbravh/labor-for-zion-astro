@@ -1,25 +1,25 @@
-import type {APIGatewayProxyEvent, APIGatewayProxyResult} from 'aws-lambda';
-import {logPageView} from './utils/db';
-import {getTitleAndSlugMaps} from './utils/md';
+import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { logPageView } from "./utils/db";
+import { getTitleAndSlugMaps } from "./utils/md";
 
 // defining this outside the handler to abuse the cold start
-const {slugToTitle} = getTitleAndSlugMaps();
+const { slugToTitle } = getTitleAndSlugMaps();
 const set = new Set(Object.keys(slugToTitle));
 
 const headers = {
-  'Access-Control-Allow-Origin': 'https://laborforzion.com',
-  'Content-Type': 'application/json',
+  "Access-Control-Allow-Origin": "https://laborforzion.com",
+  "Content-Type": "application/json",
 };
 
 export const handler = async (
-  event: APIGatewayProxyEvent
+  event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
-  const {slug, dev} = event.queryStringParameters || {};
+  const { slug, dev } = event.queryStringParameters || {};
 
-  if (dev === 'true') {
+  if (dev === "true") {
     return {
       statusCode: 200,
-      body: JSON.stringify({count: 1123}),
+      body: JSON.stringify({ count: 1123 }),
       headers,
     };
   }
@@ -27,7 +27,7 @@ export const handler = async (
   if (!slug) {
     return {
       statusCode: 400,
-      body: JSON.stringify({message: 'No slug'}),
+      body: JSON.stringify({ message: "No slug" }),
       headers,
     };
   }
@@ -35,7 +35,7 @@ export const handler = async (
   if (!set.has(slug)) {
     return {
       statusCode: 404,
-      body: JSON.stringify({message: 'Slug not found'}),
+      body: JSON.stringify({ message: "Slug not found" }),
       headers,
     };
   }
@@ -44,20 +44,20 @@ export const handler = async (
     const count = await logPageView(slug);
     return {
       statusCode: 200,
-      body: JSON.stringify({count}),
+      body: JSON.stringify({ count }),
       headers,
     };
   } catch (error) {
     if (error instanceof Error) {
       return {
         statusCode: 500,
-        body: JSON.stringify({error: error.message}),
+        body: JSON.stringify({ error: error.message }),
         headers,
       };
     } else {
       return {
         statusCode: 500,
-        body: JSON.stringify({error: 'Unknown error ocurred'}),
+        body: JSON.stringify({ error: "Unknown error ocurred" }),
         headers,
       };
     }

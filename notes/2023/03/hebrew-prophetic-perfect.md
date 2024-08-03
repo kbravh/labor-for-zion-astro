@@ -23,6 +23,7 @@ In addition to providing intriguing scriptures for analysis, these examples also
 Take a look at this list of other examples of the Hebrew prophetic perfect I've found, and try to find some of your own!
 
 ## Examples
+
 - [[Isaiah 9.6]] (quoted in [[2 Nephi 19.6]]) - Isaiah foretells the birth of Christ
 - [[Isaiah 21.9]] - prophecy of Babylon's fall
 - [[Jeremiah 31.15]] (quoted in [[Matthew 2.18]]) - Jeremiah prophesies of Israel's suffering

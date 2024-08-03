@@ -1,8 +1,8 @@
-import {MongoClient, ServerApiVersion} from 'mongodb';
+import { MongoClient, ServerApiVersion } from "mongodb";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
-  throw new Error('Define the MONGODB_URI environment variable');
+  throw new Error("Define the MONGODB_URI environment variable");
 }
 
 type HitResult = {
@@ -20,18 +20,17 @@ export const fetchPageViews = async (): Promise<HitResult[]> => {
   });
   try {
     await client.connect();
-    const database = client.db('LaborForZion');
-    const collection = database.collection('hits');
+    const database = client.db("LaborForZion");
+    const collection = database.collection("hits");
 
     const cursor = collection.find();
     const hits: HitResult[] = [];
     // iterate over the cursor using await...of
     for await (const doc of cursor) {
-      hits.push({slug: doc.slug, hits: doc.hits});
+      hits.push({ slug: doc.slug, hits: doc.hits });
     }
 
     return hits;
-
   } catch (err) {
     if (err instanceof Error) {
       console.error(err.stack);
@@ -40,4 +39,4 @@ export const fetchPageViews = async (): Promise<HitResult[]> => {
   } finally {
     await client.close();
   }
-}
+};

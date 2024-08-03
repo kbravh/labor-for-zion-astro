@@ -1,13 +1,13 @@
-import type {APIGatewayProxyEvent, APIGatewayProxyResult} from 'aws-lambda';
-import {fetchPageViews} from './utils/db';
+import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { fetchPageViews } from "./utils/db";
 
 const headers = {
-  'Access-Control-Allow-Origin': 'https://laborforzion.com',
-  'Content-Type': 'application/json',
+  "Access-Control-Allow-Origin": "https://laborforzion.com",
+  "Content-Type": "application/json",
 };
 
 export const handler = async (
-  event: APIGatewayProxyEvent
+  event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
   try {
     const pageViews = await fetchPageViews();
@@ -20,13 +20,13 @@ export const handler = async (
     if (error instanceof Error) {
       return {
         statusCode: 500,
-        body: JSON.stringify({error: error.message}),
+        body: JSON.stringify({ error: error.message }),
         headers,
       };
     } else {
       return {
         statusCode: 500,
-        body: JSON.stringify({error: 'Unknown error ocurred'}),
+        body: JSON.stringify({ error: "Unknown error ocurred" }),
         headers,
       };
     }

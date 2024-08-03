@@ -1,15 +1,15 @@
 ---
-import type {Backlink} from '../utils/mdUtils';
-import Link from './Link.astro';
-import HoverUnderline from './HoverUnderline.astro';
-import { getLocale } from '@utils/i18n/main';
-import { translations } from '@utils/i18n/translations';
+import type { Backlink } from "../utils/mdUtils";
+import Link from "./Link.astro";
+import HoverUnderline from "./HoverUnderline.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
 
 interface Props {
   backlinks: Backlink[];
 }
 
-const {backlinks} = Astro.props;
+const { backlinks } = Astro.props;
 
 const locale = getLocale(Astro.currentLocale);
 ---
@@ -20,14 +20,14 @@ const locale = getLocale(Astro.currentLocale);
   </h3>
   <ul class="flex flex-col gap-2 px-4 py-2">
     {
-      backlinks.map(({title, slug, excerpt}) => (
+      backlinks.map(({ title, slug, excerpt }) => (
         <li class="list-disc">
           <article>
             <HoverUnderline>
               <Link href={`/notes/${slug}`}>
                 <span>
                   <span class="font-semibold">{title}: </span>
-                  {excerpt ? `"...${excerpt}..."` : ''}
+                  {excerpt ? `"...${excerpt}..."` : ""}
                 </span>
               </Link>
             </HoverUnderline>

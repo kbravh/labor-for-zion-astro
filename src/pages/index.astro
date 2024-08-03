@@ -1,24 +1,37 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import {getArticles} from '../utils/mdUtils';
-import ArticleCard from '../components/ArticleCard.astro';
+import Layout from "../layouts/Layout.astro";
+import { getArticles } from "../utils/mdUtils";
+import ArticleCard from "../components/ArticleCard.astro";
 
 let posts = await getArticles();
 posts = posts.slice(0, 3);
 ---
 
 <Layout title="Labor for Zion">
-  <main class="container mx-auto max-w-[800px] flex flex-col items-center p-4 flex-grow gap-12">
+  <main
+    class="container mx-auto max-w-[800px] flex flex-col items-center p-4 flex-grow gap-12"
+  >
     <div>
-      <h1 class="text-5xl md:text-[5rem] leading-normal font-extrabold text-slate-700 dark:text-slate-200 text-balance">Labor For Zion</h1>
-      <p>A collection of notes, talks, and tools centered around gospel topics.</p>
-      <p>Most of these will be centered on the doctrine of the Church of Jesus Christ of Latter-Day Saints.</p>
+      <h1
+        class="text-5xl md:text-[5rem] leading-normal font-extrabold text-slate-700 dark:text-slate-200 text-balance"
+      >
+        Labor For Zion
+      </h1>
+      <p>
+        A collection of notes, talks, and tools centered around gospel topics.
+      </p>
+      <p>
+        Most of these will be centered on the doctrine of the Church of Jesus
+        Christ of Latter-Day Saints.
+      </p>
     </div>
 
     <section class="max-w-2xl">
-      <h2 class="text-slate-600 dark:text-slate-300 font-bold text-3xl">Recent articles</h2>
+      <h2 class="text-slate-600 dark:text-slate-300 font-bold text-3xl">
+        Recent articles
+      </h2>
       <div class="flex flex-col gap-4 mt-2">
-        {posts.map(post => <ArticleCard post={post} />)}
+        {posts.map((post) => <ArticleCard post={post} />)}
       </div>
     </section>
   </main>

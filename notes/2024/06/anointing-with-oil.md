@@ -12,6 +12,7 @@ tags:
 Anointing with olive oil is a Biblical practice that has been carried out since the times of Moses. What is the meaning of this anointing, and what significance does it hold for us today?
 
 ## Anointing in the Old Testament
+
 In Old Testament times, prophets of the Lord anointed people who had important roles to play. Anointing acts as a consecration, or setting apart, of whoever or whatever is anointed.
 
 The first references that we get to anointing with oil come from Exodus 29 and 30, where the Lord explains how the tabernacle should be built and consecrated to Him. In [[Exodus 30.22-29]], He explains how a mixture of oil and fragrances should be prepared to anoint the structures and utensils of the tabernacle. In [[Exodus 29.7]], we also learn that not only should the material parts of the tabernacle be anointed, but that Aaron and the priests should be anointed as well.

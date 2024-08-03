@@ -6,22 +6,24 @@
     }
 
     async fetchAndDisplayCount() {
-      const slug = this.getAttribute('data-slug');
-      if (process.env.NODE_ENV === 'development') {
-        this.displayCount(1123)
+      const slug = this.getAttribute("data-slug");
+      if (process.env.NODE_ENV === "development") {
+        this.displayCount(1123);
         return;
       }
 
       try {
-        const response = await fetch(`https://api.laborforzion.com/log-view?slug=${slug}`);
+        const response = await fetch(
+          `https://api.laborforzion.com/log-view?slug=${slug}`,
+        );
         if (!response.ok) {
-          console.error('Network response was not ok');
+          console.error("Network response was not ok");
           return;
         }
         const data = await response.json();
         this.displayCount(data.count);
       } catch (error) {
-        console.error('Fetch error:', error);
+        console.error("Fetch error:", error);
       }
     }
 
@@ -30,5 +32,5 @@
     }
   }
 
-  customElements.define('hit-counter', HitCounter);
+  customElements.define("hit-counter", HitCounter);
 </script>

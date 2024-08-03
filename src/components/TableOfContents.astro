@@ -1,25 +1,36 @@
 ---
-import type {Heading} from '../validation/md';
-import Link from './Link.astro';
-import { getLocale } from '@utils/i18n/main';
-import { translations } from '@utils/i18n/translations';
+import type { Heading } from "../validation/md";
+import Link from "./Link.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
 
 interface Props {
   headings: Heading[];
 }
 
-const {headings} = Astro.props;
-const locale = getLocale(Astro.currentLocale)
+const { headings } = Astro.props;
+const locale = getLocale(Astro.currentLocale);
 ---
 
 <nav id="table-of-contents">
   {
     !!headings.length ? (
       <>
-        <h2 class="font-heading font-bold text-lg">{translations[locale].ui.toc}</h2>
+        <h2 class="font-heading font-bold text-lg">
+          {translations[locale].ui.toc}
+        </h2>
         <ul>
-          {headings.map(heading => (
-            <li class:list={[heading.level === 2 && 'ml-2', heading.level === 3 && 'ml-4', heading.level === 4 && 'ml-6', heading.level === 5 && 'ml-8', heading.level === 6 && 'ml-10', 'mt-2']}>
+          {headings.map((heading) => (
+            <li
+              class:list={[
+                heading.level === 2 && "ml-2",
+                heading.level === 3 && "ml-4",
+                heading.level === 4 && "ml-6",
+                heading.level === 5 && "ml-8",
+                heading.level === 6 && "ml-10",
+                "mt-2",
+              ]}
+            >
               <Link
                 href={`#${heading.id}`}
                 className="text-slate-800 dark:text-slate-100 hover:text-emerald-800 dark:hover:text-emerald-300"

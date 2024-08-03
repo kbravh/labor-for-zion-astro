@@ -1,24 +1,24 @@
-import {defineConfig} from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-import sitemap from '@astrojs/sitemap';
-import {getLastUpdatedDateFromSlug} from './src/utils/mdUtils.ts';
-import {basename} from 'path';
+import { defineConfig } from "astro/config";
+import tailwind from "@astrojs/tailwind";
+import sitemap from "@astrojs/sitemap";
+import { getLastUpdatedDateFromSlug } from "./src/utils/mdUtils.ts";
+import { basename } from "path";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://laborforzion.com',
+  site: "https://laborforzion.com",
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'es'],
+    defaultLocale: "en",
+    locales: ["en", "es"],
     fallback: {
-      es: 'en',
+      es: "en",
     },
   },
   integrations: [
     tailwind(),
     sitemap({
-      filter: page => page !== 'https://laborforzion.com/views',
-      serialize: item => {
+      filter: (page) => page !== "https://laborforzion.com/views",
+      serialize: (item) => {
         //Fetch the last modified date for articles
         if (/.*notes\/.+/.test(item.url)) {
           const slug = basename(item.url);

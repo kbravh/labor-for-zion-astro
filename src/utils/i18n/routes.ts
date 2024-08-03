@@ -1,8 +1,8 @@
-import type {Locale} from '@validation/i18n';
+import type { Locale } from "@validation/i18n";
 
-export type Route = '/' | '/about' | '/notes' | '/projects';
+export type Route = "/" | "/about" | "/notes" | "/projects";
 
-export const routes: Route[] = ['/', '/notes', '/projects', '/about'];
+export const routes: Route[] = ["/", "/notes", "/projects", "/about"];
 
 type RouteMap = {
   [k in Locale]: {
@@ -12,15 +12,15 @@ type RouteMap = {
 
 export const routeMap: RouteMap = {
   en: {
-    '/': 'Home',
-    '/notes': 'Notes',
-    '/projects': 'Projects',
-    '/about': 'About',
+    "/": "Home",
+    "/notes": "Notes",
+    "/projects": "Projects",
+    "/about": "About",
   },
   es: {
-    '/': 'Inicio',
-    '/notes': 'Notas',
-    '/projects': 'Proyectos',
-    '/about': 'Acerca de',
+    "/": "Inicio",
+    "/notes": "Notas",
+    "/projects": "Proyectos",
+    "/about": "Acerca de",
   },
 };

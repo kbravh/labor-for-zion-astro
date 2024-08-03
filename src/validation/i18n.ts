@@ -1,6 +1,6 @@
-import {z} from 'zod';
+import { z } from "zod";
 
-export const LOCALES = ['en', 'es'] as const;
+export const LOCALES = ["en", "es"] as const;
 
 export const Locale = z.enum(LOCALES);
 

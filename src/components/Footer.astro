@@ -1,7 +1,7 @@
 ---
-import Link from './Link.astro';
-import {getLocale} from '@utils/i18n/main';
-import {translations} from '@utils/i18n/translations';
+import Link from "./Link.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
 
 const locale = getLocale(Astro.currentLocale);
 ---
@@ -13,7 +13,9 @@ const locale = getLocale(Astro.currentLocale);
       cite="https://www.churchofjesuschrist.org/study/scriptures/bofm/2-ne/26?&id=31#31"
     >
       <p class="mb-0 italic">
-        {translations[locale].meta.theme1}<br />{translations[locale].meta.theme2}
+        {translations[locale].meta.theme1}<br />{
+          translations[locale].meta.theme2
+        }
       </p>
       <footer class="font-bold text-slate-500">
         <Link

@@ -1,43 +1,44 @@
 ---
-import type {PostListing} from '../utils/mdUtils';
+import type { PostListing } from "../utils/mdUtils";
 
 export interface Props {
   post: PostListing;
 }
 
-const {post} = Astro.props;
+const { post } = Astro.props;
 ---
 
-<a
-  href={`/notes/${post.slug}`}
-  class="group w-full"
->
+<a href={`/notes/${post.slug}`} class="group w-full">
   <article class="text-balance flex flex-col">
     <div>
-      <h3 class:list={[
-        'font-black text-lg group-hover:underline',
-        'group-hover:text-emerald-500 decoration-emerald-500 text-emerald-700',
-        'dark:group-hover:text-emerald-300 dark:decoration-emerald-300 dark:text-emerald-400',
-      ]}>
+      <h3
+        class:list={[
+          "font-black text-lg group-hover:underline",
+          "group-hover:text-emerald-500 decoration-emerald-500 text-emerald-700",
+          "dark:group-hover:text-emerald-300 dark:decoration-emerald-300 dark:text-emerald-400",
+        ]}
+      >
         {post.frontmatter.title}
       </h3>
-      <p class:list={[
-        "text-slate-700 group-hover:text-slate-500 text-md",
-        "dark:text-slate-300 dark:group-hover:text-slate-100"
-      ]}>
+      <p
+        class:list={[
+          "text-slate-700 group-hover:text-slate-500 text-md",
+          "dark:text-slate-300 dark:group-hover:text-slate-100",
+        ]}
+      >
         {post.frontmatter.description}
       </p>
     </div>
     <time
       class:list={[
         "text-slate-600 group-hover:text-slate-500",
-        "dark:text-slate-400 dark:group-hover:text-slate-300"
+        "dark:text-slate-400 dark:group-hover:text-slate-300",
       ]}
       datetime={post.frontmatter.date.toISOString()}
     >
       {
-        post.frontmatter.date.toLocaleDateString('en-US', {
-          dateStyle: 'medium',
+        post.frontmatter.date.toLocaleDateString("en-US", {
+          dateStyle: "medium",
         })
       }
     </time>

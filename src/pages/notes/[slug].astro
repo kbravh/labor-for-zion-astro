@@ -1,22 +1,36 @@
 ---
-import {readFileSync} from 'fs';
-import {addLinks, getBacklinks, getSlugToPathMap, getTitleAndSlugMaps, type Backlink} from '../../utils/mdUtils';
+import { readFileSync } from "fs";
+import {
+  addLinks,
+  getBacklinks,
+  getSlugToPathMap,
+  getTitleAndSlugMaps,
+  type Backlink,
+} from "../../utils/mdUtils";
 // @ts-ignore - untyped dependency
-import matter from 'gray-matter';
-import MarkdownIt from 'markdown-it';
-import MarkdownItAnchor from 'markdown-it-anchor';
-import MarkdownItFootnote from 'markdown-it-footnote';
-import EmptyNoteLayout from '../../layouts/EmptyNoteLayout.astro';
-import NoteLayout from '../../layouts/NoteLayout.astro';
-import {dedupeArray} from '../../utils/array';
-import {getHeadings} from '../../utils/htmlUtils';
-import {Frontmatter, type Heading} from '../../validation/md';
-import {isScriptureReference, parseScriptureReference, processScriptureReference, expandScriptureReference} from '../../utils/scriptures';
-import {generateSocialImage, createTaglineFromTags} from '../../utils/openGraph';
+import matter from "gray-matter";
+import MarkdownIt from "markdown-it";
+import MarkdownItAnchor from "markdown-it-anchor";
+import MarkdownItFootnote from "markdown-it-footnote";
+import EmptyNoteLayout from "../../layouts/EmptyNoteLayout.astro";
+import NoteLayout from "../../layouts/NoteLayout.astro";
+import { dedupeArray } from "../../utils/array";
+import { getHeadings } from "../../utils/htmlUtils";
+import { Frontmatter, type Heading } from "../../validation/md";
+import {
+  isScriptureReference,
+  parseScriptureReference,
+  processScriptureReference,
+  expandScriptureReference,
+} from "../../utils/scriptures";
+import {
+  generateSocialImage,
+  createTaglineFromTags,
+} from "../../utils/openGraph";
 
-const {slug} = Astro.params;
+const { slug } = Astro.params;
 if (!slug) {
-  throw new Error('No slug provided');
+  throw new Error("No slug provided");
 }
 
 const md = new MarkdownIt({
@@ -28,7 +42,7 @@ const md = new MarkdownIt({
   .use(MarkdownItAnchor);
 
 const slugToPathMap = getSlugToPathMap();
-const {titleToSlug, slugToTitle} = await getTitleAndSlugMaps();
+const { titleToSlug, slugToTitle } = await getTitleAndSlugMaps();
 const titlesWithBacklinks = await getBacklinks();
 
 const filePath = slugToPathMap[slug];
@@ -50,13 +64,13 @@ let noteData:
       slug: string;
       headings: Heading[];
       backlinks: Backlink[];
-      type: 'note';
+      type: "note";
     }
-  | {title: string; slug: string; backlinks: Backlink[]; type: 'empty'};
+  | { title: string; slug: string; backlinks: Backlink[]; type: "empty" };
 
 // if we have a filepath, this is a real page and we can parse and prepare
 if (filePath) {
-  const source = readFileSync(filePath, 'utf-8');
+  const source = readFileSync(filePath, "utf-8");
   const markdown = matter(source);
   const text = await addLinks(titleToSlug, markdown.content);
   const content = md.render(text);
@@ -75,78 +89,76 @@ if (filePath) {
     frontmatter: parsedFrontmatter,
     slug,
     headings,
-    backlinks: dedupeArray(backlinks, backlink => backlink.slug),
-    type: 'note',
+    backlinks: dedupeArray(backlinks, (backlink) => backlink.slug),
+    type: "note",
   };
   // otherwise, let's check if it's an empty page referenced in other articles
 } else {
   const title = slugToTitle[slug];
   if (!title) {
     // This page doesn't exist as a note.
-    return Astro.redirect('/404');
+    return Astro.redirect("/404");
   }
   noteData = {
     slug,
     backlinks: titlesWithBacklinks[title] ?? [],
-    type: 'empty',
+    type: "empty",
     title,
   };
 }
 
 export async function getStaticPaths() {
-  const {slugToTitle} = await getTitleAndSlugMaps();
-  const paths = Object.keys(slugToTitle).map(slug => ({
-    params: {slug},
+  const { slugToTitle } = await getTitleAndSlugMaps();
+  const paths = Object.keys(slugToTitle).map((slug) => ({
+    params: { slug },
   }));
   return paths;
 }
 
-let socialImage = '';
-if (noteData.type === 'note') {
+let socialImage = "";
+if (noteData.type === "note") {
   socialImage = generateSocialImage({
     title: noteData.frontmatter.title,
-    tagline: noteData.frontmatter.tags ? createTaglineFromTags(noteData.frontmatter.tags) : "",
-    cloudName: 'drn1fmjus',
-    imagePublicID: 'title_og_rgze3y',
-    titleFont: 'futura',
-    taglineFont: 'futura',
-    textColor: 'F1F3F7',
-    titleColor: 'F1F3F7',
-    taglineColor: 'F1F3F7',
-    version: 'v1719583369',
+    tagline: noteData.frontmatter.tags
+      ? createTaglineFromTags(noteData.frontmatter.tags)
+      : "",
+    cloudName: "drn1fmjus",
+    imagePublicID: "title_og_rgze3y",
+    titleFont: "futura",
+    taglineFont: "futura",
+    textColor: "F1F3F7",
+    titleColor: "F1F3F7",
+    taglineColor: "F1F3F7",
+    version: "v1719583369",
   });
 } else {
   socialImage = generateSocialImage({
     title: noteData.title,
-    cloudName: 'drn1fmjus',
-    imagePublicID: 'title_og_rgze3y',
-    titleColor: 'F1F3F7',
-    taglineColor: 'F1F3F7',
-    titleFont: 'futura',
-    taglineFont: 'futura',
-    titleExtraConfig: '_line_spacing_-10',
-    taglineExtraConfig: '_line_spacing_10',
+    cloudName: "drn1fmjus",
+    imagePublicID: "title_og_rgze3y",
+    titleColor: "F1F3F7",
+    taglineColor: "F1F3F7",
+    titleFont: "futura",
+    taglineFont: "futura",
+    titleExtraConfig: "_line_spacing_-10",
+    taglineExtraConfig: "_line_spacing_10",
   });
 }
 ---
 
 {
-  noteData.type === 'empty' && (
-    <EmptyNoteLayout
-      {...noteData}
-      socialImage={socialImage}
-    >
-      {!!scripture.length && scripture.map(verse => <blockquote>{verse}</blockquote>)}
+  noteData.type === "empty" && (
+    <EmptyNoteLayout {...noteData} socialImage={socialImage}>
+      {!!scripture.length &&
+        scripture.map((verse) => <blockquote>{verse}</blockquote>)}
     </EmptyNoteLayout>
   )
 }
 {
-  noteData.type === 'note' && (
-    <NoteLayout
-      {...noteData}
-      socialImage={socialImage}
-    >
-      {!!scripture.length && scripture.map(verse => <blockquote>{verse}</blockquote>)}
+  noteData.type === "note" && (
+    <NoteLayout {...noteData} socialImage={socialImage}>
+      {!!scripture.length &&
+        scripture.map((verse) => <blockquote>{verse}</blockquote>)}
     </NoteLayout>
   )
 }

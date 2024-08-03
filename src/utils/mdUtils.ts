@@ -1,13 +1,13 @@
-import {readFile, readdir, stat} from 'fs/promises';
-import {existsSync, mkdirSync, readFileSync, rmSync, writeFileSync} from 'fs';
-import matter from 'gray-matter';
-import path, {basename} from 'path';
-import slugify from 'slugify';
-import {BracketLink, Frontmatter} from '../validation/md';
+import { readFile, readdir, stat } from "fs/promises";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
+import matter from "gray-matter";
+import path, { basename } from "path";
+import slugify from "slugify";
+import { BracketLink, Frontmatter } from "../validation/md";
 
-export const NOTES_PATH = path.join(process.cwd(), 'notes');
+export const NOTES_PATH = path.join(process.cwd(), "notes");
 
-export const removeMdxExtension = (path: string) => path.replace(/\.mdx?$/, '');
+export const removeMdxExtension = (path: string) => path.replace(/\.mdx?$/, "");
 
 const writeFile = (key: string | symbol, data: unknown) => {
   // Handle serialization of Sets
@@ -23,8 +23,8 @@ const writeFile = (key: string | symbol, data: unknown) => {
   const filename = `data/${key.toString()}.json`;
 
   // create the path if it doesn't exist
-  if (!existsSync('data')) {
-    mkdirSync('data');
+  if (!existsSync("data")) {
+    mkdirSync("data");
   }
 
   // erase the old file and create a new one
@@ -35,7 +35,7 @@ const writeFile = (key: string | symbol, data: unknown) => {
   writeFileSync(filename, JSON.stringify(data, replacer));
 };
 
-export type Backlink = {title: string; slug: string; excerpt: string | null};
+export type Backlink = { title: string; slug: string; excerpt: string | null };
 
 type RawData = {
   slugToTopic: Record<string, string> | undefined;
@@ -68,7 +68,7 @@ const dataStore = new Proxy(rawData, {
  */
 const walkPath = async (dir: string): Promise<string[]> => {
   const files = await readdir(dir);
-  const promises = files.map(async file => {
+  const promises = files.map(async (file) => {
     const filepath = path.join(dir, file);
     const stats = await stat(filepath);
     if (stats.isDirectory()) {
@@ -85,7 +85,7 @@ export const getSlugFromFilepath = (path: string): string =>
   removeMdxExtension(basename(path));
 
 export const getSlugFromTitle = (title: string): string =>
-  slugify(title, {lower: true});
+  slugify(title, { lower: true });
 export const notePaths = await walkPath(NOTES_PATH);
 
 /**
@@ -96,7 +96,7 @@ export const getNoteTopics = async (): Promise<{
   slugToTopic: Record<string, string>;
   articleTopics: Set<string>;
 }> => {
-  let {slugToTopic, articleTopics} = dataStore;
+  let { slugToTopic, articleTopics } = dataStore;
   if (slugToTopic && articleTopics) {
     return {
       slugToTopic,
@@ -107,11 +107,11 @@ export const getNoteTopics = async (): Promise<{
   const newArticleTopics = new Set<string>();
   // Loop through all articles and extract topic and frontmatter
   for (const notePath of notePaths) {
-    const source = await readFile(notePath, 'utf-8');
+    const source = await readFile(notePath, "utf-8");
     const frontmatter = Frontmatter.parse(matter(source).data);
     for (const tag of frontmatter.tags ?? []) {
       newArticleTopics.add(tag);
-      newSlugToTopic[slugify(tag, {lower: true})] = tag;
+      newSlugToTopic[slugify(tag, { lower: true })] = tag;
     }
   }
   dataStore.slugToTopic = newSlugToTopic;
@@ -133,25 +133,25 @@ export const getTitleAndSlugMaps = async (): Promise<{
   titleToSlug: Record<string, string>;
   slugToTitle: Record<string, string>;
 }> => {
-  const {titleToSlug, slugToTitle} = dataStore;
+  const { titleToSlug, slugToTitle } = dataStore;
 
   if (titleToSlug && slugToTitle) {
-    return {titleToSlug, slugToTitle};
+    return { titleToSlug, slugToTitle };
   }
   const titleMap: Record<string, string> = {};
   const slugMap: Record<string, string> = {};
   // this creates a map of all titles and aliases to their corresponding slug
   for (const article of notePaths) {
-    const source = await readFile(article, 'utf-8');
+    const source = await readFile(article, "utf-8");
     const frontmatter = Frontmatter.parse(matter(source).data);
     titleMap[frontmatter.title] = getSlugFromFilepath(article);
     slugMap[getSlugFromFilepath(article)] = frontmatter.title;
-    frontmatter.aliases?.forEach(alias => {
+    frontmatter.aliases?.forEach((alias) => {
       titleMap[alias] = getSlugFromFilepath(article);
     });
     // check all backlinks to create slugs for pages that don't exist yet
     const bracketLinks = getOutgoingLinks(source);
-    for (const {title} of bracketLinks) {
+    for (const { title } of bracketLinks) {
       if (!titleMap[title]) {
         titleMap[title] = getSlugFromTitle(title);
         slugMap[getSlugFromTitle(title)] = title;
@@ -172,7 +172,7 @@ export const getTitleAndSlugMaps = async (): Promise<{
  * support nested filepaths.
  */
 export const getSlugToPathMap = (): Record<string, string> => {
-  const {slugToPath} = dataStore;
+  const { slugToPath } = dataStore;
   if (slugToPath) {
     return slugToPath;
   }
@@ -199,14 +199,14 @@ export const getSlugToPathMap = (): Record<string, string> => {
  */
 export const addLinks = async (
   titleToSlug: Record<string, string>,
-  source: string
+  source: string,
 ): Promise<string> => {
   // Replace embed links with content first
   let embedLinks = getEmbedLinks(source);
   let firstEmbed = true;
   const slugToPathMap = getSlugToPathMap();
   do {
-    for (const {link, title} of embedLinks) {
+    for (const { link, title } of embedLinks) {
       const slug = titleToSlug[title];
       if (!slug) {
         throw new Error(`Slug not found for embed of ${title}!`);
@@ -214,9 +214,11 @@ export const addLinks = async (
       // fetch markdown file content
       const filePath = slugToPathMap[slug];
       if (!filePath) {
-        throw new Error(`File path not found for the slug ${slug} while trying to embed`);
+        throw new Error(
+          `File path not found for the slug ${slug} while trying to embed`,
+        );
       }
-      let rawEmbed = await readFile(filePath, 'utf-8');
+      let rawEmbed = await readFile(filePath, "utf-8");
       let embed = matter(rawEmbed).content;
       // remove frontmatter
       if (firstEmbed) {
@@ -237,7 +239,7 @@ export const addLinks = async (
 
   const bracketLinks = getOutgoingLinks(source);
 
-  for (const {link, title, alias} of bracketLinks) {
+  for (const { link, title, alias } of bracketLinks) {
     const slug = titleToSlug[title];
     if (!slug) {
       // ? - create a placeholder page for linked, non-existent pages?
@@ -245,7 +247,9 @@ export const addLinks = async (
     }
     source = source.replace(
       link,
-      slug ? `<a href="/notes/${slug}">${alias ?? title}</a>` : alias ?? title
+      slug
+        ? `<a href="/notes/${slug}">${alias ?? title}</a>`
+        : (alias ?? title),
     );
   }
   return source;
@@ -264,7 +268,7 @@ const getBracketLinks =
     const outgoingLinks = [...source.matchAll(pattern)];
     for (const outgoingLink of outgoingLinks) {
       if (!outgoingLink[0]) {
-        console.error('A match was not found in the outgoing link result.');
+        console.error("A match was not found in the outgoing link result.");
         continue;
       }
       // if we found a match, we should have capturing groups
@@ -273,22 +277,22 @@ const getBracketLinks =
       if (!link || !text) {
         continue;
       }
-      const [title = '', alias] = text?.split('|');
+      const [title = "", alias] = text?.split("|");
       links.push({
         link,
         title,
         alias,
-        excerpt: cleanupExcerpt({excerpt, link, title, alias}),
+        excerpt: cleanupExcerpt({ excerpt, link, title, alias }),
       });
     }
     return links;
   };
 
 export const getOutgoingLinks = getBracketLinks(
-  /(?:\w+\W){0,10}(\[\[([^\[\]]+)\]\])(?:\W?\w+\W){0,10}/g
+  /(?:\w+\W){0,10}(\[\[([^\[\]]+)\]\])(?:\W?\w+\W){0,10}/g,
 );
 export const getEmbedLinks = getBracketLinks(
-  /(?:\w+\W){0,10}(!\[\[([^\[\]]+)\]\])(?:\W?\w+\W){0,10}/g
+  /(?:\w+\W){0,10}(!\[\[([^\[\]]+)\]\])(?:\W?\w+\W){0,10}/g,
 );
 
 export const cleanupExcerpt = ({
@@ -303,7 +307,7 @@ export const cleanupExcerpt = ({
   alias?: string;
 }): string =>
   excerpt
-    .replace(/\n/g, ' ')
+    .replace(/\n/g, " ")
     .replace(link, alias ?? title)
     .trim();
 
@@ -311,16 +315,16 @@ export const cleanupExcerpt = ({
  * Provides a map of titles and aliases to all backlinks from other files.
  */
 export const getBacklinks = async (): Promise<Record<string, Backlink[]>> => {
-  const {titlesWithBacklinks} = dataStore;
+  const { titlesWithBacklinks } = dataStore;
 
   if (titlesWithBacklinks) {
     return titlesWithBacklinks;
   }
   const map: Record<string, Backlink[]> = {};
-  const {titleToSlug} = await getTitleAndSlugMaps();
+  const { titleToSlug } = await getTitleAndSlugMaps();
 
   for (const articlePath of notePaths) {
-    const source = await readFile(articlePath, 'utf-8');
+    const source = await readFile(articlePath, "utf-8");
     const frontmatter = Frontmatter.parse(matter(source).data);
     const title = frontmatter.title;
     const slug = titleToSlug[title];
@@ -329,10 +333,10 @@ export const getBacklinks = async (): Promise<Record<string, Backlink[]>> => {
     }
     // this will catch embed links too
     const links = getOutgoingLinks(source);
-    for (const {title: reference, excerpt, link} of links) {
+    for (const { title: reference, excerpt, link } of links) {
       map[reference] = [
         ...(map[reference] ?? []),
-        {slug, title, excerpt: excerpt === link ? null : excerpt},
+        { slug, title, excerpt: excerpt === link ? null : excerpt },
       ];
     }
   }
@@ -357,7 +361,7 @@ export const getArticles = async (filter?: Filter): Promise<PostListing[]> => {
   let posts: PostListing[] = [];
   // Loop through all articles and extract slug and frontmatter
   for (const articlePath of notePaths) {
-    const source = await readFile(articlePath, 'utf-8');
+    const source = await readFile(articlePath, "utf-8");
     const frontmatter = matter(source).data;
     const parsedFrontmatter = Frontmatter.parse(frontmatter);
     if (
@@ -375,7 +379,7 @@ export const getArticles = async (filter?: Filter): Promise<PostListing[]> => {
   posts = posts.toSorted(
     (a, b) =>
       new Date(b.frontmatter.date).getTime() -
-      new Date(a.frontmatter.date).getTime()
+      new Date(a.frontmatter.date).getTime(),
   );
 
   return posts;
@@ -387,10 +391,10 @@ export const getLastUpdatedDateFromSlug = (slug: string): Date | undefined => {
   const path = slugToPathMap[slug];
   if (!path) {
     return;
-  };
+  }
 
-  const source = readFileSync(path, 'utf-8');
-  const {date, updated} = Frontmatter.parse(matter(source).data);
+  const source = readFileSync(path, "utf-8");
+  const { date, updated } = Frontmatter.parse(matter(source).data);
   const lastUpdated = updated || date;
   return lastUpdated;
-}
+};

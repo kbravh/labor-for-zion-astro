@@ -1,10 +1,10 @@
 ---
-import {ViewTransitions} from 'astro:transitions';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import HitCounterWebComponent from '../components/HitCounter/HitCounterWebComponent.astro';
-import {getLocale} from '@utils/i18n/main';
-import {translations} from '@utils/i18n/translations';
+import { ViewTransitions } from "astro:transitions";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import HitCounterWebComponent from "../components/HitCounter/HitCounterWebComponent.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
 
 export interface Props {
   title: string;
@@ -12,7 +12,7 @@ export interface Props {
   socialImage?: string;
 }
 
-const {title, description, socialImage} = Astro.props;
+const { title, description, socialImage } = Astro.props;
 const locale = getLocale(Astro.currentLocale);
 
 const strings = {
@@ -22,20 +22,11 @@ const strings = {
 ---
 
 <!doctype html>
-<html
-  lang="en"
-  class="h-full dark:bg-slate-900 dark:text-slate-200"
->
+<html lang="en" class="h-full dark:bg-slate-900 dark:text-slate-200">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width"
-    />
-    <meta
-      name="generator"
-      content={Astro.generator}
-    />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
     <title>
       {title === strings.site ? title : `${title} | ${strings.site}`}
     </title>
@@ -43,78 +34,66 @@ const strings = {
       property="og:title"
       content={title === strings.site ? title : `${title} | ${strings.site}`}
     />
-    <meta
-      name="description"
-      content={description ?? strings.description}
-    />
+    <meta name="description" content={description ?? strings.description} />
     <meta
       property="og:description"
       content={description ?? strings.description}
     />
-    {
-      socialImage ? (
-        <meta
-          property="og:image"
-          content={socialImage}
-        />
-      ) : (
-        ''
-      )
-    }
-    <link
-      rel="icon"
-      href="/favicon.ico"
-    />
-    <link
-      rel="sitemap"
-      href="/sitemap-index.xml"
-    />
+    {socialImage ? <meta property="og:image" content={socialImage} /> : ""}
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <ViewTransitions />
   </head>
-  <body class:list={['h-full flex flex-col items-center scroll-smooth', 'selection:bg-emerald-900 selection:text-emerald-50', 'dark:selection:text-emerald-900 dark:selection:bg-emerald-50']}>
+  <body
+    class:list={[
+      "h-full flex flex-col items-center scroll-smooth",
+      "selection:bg-emerald-900 selection:text-emerald-50",
+      "dark:selection:text-emerald-900 dark:selection:bg-emerald-50",
+    ]}
+  >
     <Header />
     <slot />
     <Footer />
     <style is:global>
       @font-face {
-        font-family: 'Atkinson Hyperlegible';
-        src: url('/fonts/AtkinsonRegular.woff2') format('woff2');
+        font-family: "Atkinson Hyperlegible";
+        src: url("/fonts/AtkinsonRegular.woff2") format("woff2");
         font-weight: normal;
         font-style: normal;
         font-display: swap;
       }
       @font-face {
-        font-family: 'Atkinson Hyperlegible';
-        src: url('/fonts/AtkinsonBold.woff2') format('woff2');
+        font-family: "Atkinson Hyperlegible";
+        src: url("/fonts/AtkinsonBold.woff2") format("woff2");
         font-weight: bold;
         font-style: normal;
         font-display: swap;
       }
       @font-face {
-        font-family: 'Atkinson Hyperlegible';
-        src: url('/fonts/AtkinsonItalic.woff2') format('woff2');
+        font-family: "Atkinson Hyperlegible";
+        src: url("/fonts/AtkinsonItalic.woff2") format("woff2");
         font-weight: normal;
         font-style: italic;
         font-display: swap;
       }
       @font-face {
-        font-family: 'Atkinson Hyperlegible';
-        src: url('/fonts/AtkinsonBoldItalic.woff2') format('woff2');
+        font-family: "Atkinson Hyperlegible";
+        src: url("/fonts/AtkinsonBoldItalic.woff2") format("woff2");
         font-weight: bold;
         font-style: italic;
         font-display: swap;
       }
 
       @font-face {
-        font-family: 'Munken Sans';
-        src: url('/fonts/MunkenSansRegular.woff2') format('woff2');
+        font-family: "Munken Sans";
+        src: url("/fonts/MunkenSansRegular.woff2") format("woff2");
         font-weight: normal;
         font-style: normal;
         font-display: swap;
       }
       @font-face {
-        font-family: 'Munken Sans';
-        src: url('/fonts/MunkenSansBold.woff2') format('woff2');
+        font-family: "Munken Sans";
+        src: url("/fonts/MunkenSansBold.woff2") format("woff2");
         font-weight: bold;
         font-style: normal;
         font-display: swap;
@@ -131,11 +110,13 @@ const strings = {
       h4,
       h5,
       h6 {
-        font-family: 'Munken Sans', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-family: "Munken Sans", "Lucida Sans", "Lucida Sans Regular",
+          "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
       }
 
       p {
-        font-family: 'Atkinson Hyperlegible', Georgia, 'Times New Roman', Times, serif;
+        font-family: "Atkinson Hyperlegible", Georgia, "Times New Roman", Times,
+          serif;
       }
     </style>
     <HitCounterWebComponent />

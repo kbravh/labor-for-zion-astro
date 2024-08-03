@@ -7,7 +7,7 @@ import { Locale } from "@validation/i18n";
  */
 export const getLocale = (locale: string | undefined): Locale => {
   if (!locale) {
-    throw new Error('No locale found');
+    throw new Error("No locale found");
   }
   const parsed = Locale.safeParse(locale);
   if (!parsed.success) {

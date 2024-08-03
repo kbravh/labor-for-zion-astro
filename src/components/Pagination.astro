@@ -1,6 +1,6 @@
 ---
-import { getLocale } from '@utils/i18n/main';
-import { translations } from '@utils/i18n/translations';
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
 
 export interface Props {
   current: number;
@@ -8,13 +8,21 @@ export interface Props {
   nextUrl?: string;
 }
 
-const {current, prevUrl, nextUrl} = Astro.props
+const { current, prevUrl, nextUrl } = Astro.props;
 
-const locale = getLocale(Astro.currentLocale)
+const locale = getLocale(Astro.currentLocale);
 ---
 
 <nav class="w-full grid grid-cols-3 text-center mt-8">
-  <span>{prevUrl && <a href={prevUrl}>&larr; {translations[locale].ui.previous}</a>}</span>
+  <span
+    >{
+      prevUrl && <a href={prevUrl}>&larr; {translations[locale].ui.previous}</a>
+    }</span
+  >
   <span>{translations[locale].ui.page} {current}</span>
-  <span>{nextUrl && <a href={nextUrl}>{translations[locale].ui.next} &rarr;</a>}</span>
+  <span
+    >{
+      nextUrl && <a href={nextUrl}>{translations[locale].ui.next} &rarr;</a>
+    }</span
+  >
 </nav>

@@ -45,5 +45,4 @@ Lehi is able to rejoice in the Lord despite his hardships because he is so sure 
 
 Let us strive to have faith as great as Lehi and emulate his attitude of praising God, even when we are in the depths of our struggles. God has done such great and marvelous things for those who have come before; will He not do the same and deliver us as well?
 
-
 [^timing]: While we do not know the exact timing of when Lehi and his family left Jerusalem, we do know that they see a river of water ([[1 Nephi 2.6]]). Given the fact that these rivers in the desert are not permanent, this could hint that they were traveling during the rainy season, when the [[Feast of Tabernacles]] is celebrated. Highly circumstantial, but interesting to note 🙂

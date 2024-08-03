@@ -1,22 +1,22 @@
-import rss, {type RSSFeedItem} from '@astrojs/rss';
-import MarkdownIt from 'markdown-it';
-import MarkdownItAnchor from 'markdown-it-anchor';
-import MarkdownItFootnote from 'markdown-it-footnote';
-import sanitizeHtml from 'sanitize-html';
+import rss, { type RSSFeedItem } from "@astrojs/rss";
+import MarkdownIt from "markdown-it";
+import MarkdownItAnchor from "markdown-it-anchor";
+import MarkdownItFootnote from "markdown-it-footnote";
+import sanitizeHtml from "sanitize-html";
 
 import {
   addLinks,
   getSlugFromFilepath,
   getTitleAndSlugMaps,
   notePaths,
-} from '../utils/mdUtils';
-import {readFileSync} from 'fs';
-import matter from 'gray-matter';
-import {Frontmatter} from '../validation/md';
+} from "../utils/mdUtils";
+import { readFileSync } from "fs";
+import matter from "gray-matter";
+import { Frontmatter } from "../validation/md";
 
 type GenerateRSSFeedArgs = {
-  site: URL | undefined
-}
+  site: URL | undefined;
+};
 
 const md = new MarkdownIt({
   html: true,
@@ -26,16 +26,16 @@ const md = new MarkdownIt({
   .use(MarkdownItAnchor)
   .use(MarkdownItFootnote);
 
-export const generateRssFeed = async ({site}: GenerateRSSFeedArgs) => {
-  const {titleToSlug} = await getTitleAndSlugMaps();
+export const generateRssFeed = async ({ site }: GenerateRSSFeedArgs) => {
+  const { titleToSlug } = await getTitleAndSlugMaps();
   return rss({
-    title: 'Labor for Zion',
+    title: "Labor for Zion",
     description:
-      'A collection of notes and talks centered around gospel topics.',
-    site: site ?? 'https://laborforzion.com',
+      "A collection of notes and talks centered around gospel topics.",
+    site: site ?? "https://laborforzion.com",
     items: await Promise.all(
       notePaths.toReversed().map(async (notePath): Promise<RSSFeedItem> => {
-        const source = readFileSync(notePath, 'utf-8');
+        const source = readFileSync(notePath, "utf-8");
         const document = matter(source);
         const text = await addLinks(titleToSlug, document.content);
         const content = md.render(text);
@@ -48,9 +48,9 @@ export const generateRssFeed = async ({site}: GenerateRSSFeedArgs) => {
           pubDate: parsedFrontmatter.date,
           description: parsedFrontmatter.description,
         };
-      })
+      }),
     ),
     customData: `<language>en-US</language>`,
-    stylesheet: '/pretty-feed-v3.xsl',
+    stylesheet: "/pretty-feed-v3.xsl",
   });
-}
+};

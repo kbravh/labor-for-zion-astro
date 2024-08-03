@@ -37,7 +37,7 @@ const locale = getLocale(Astro.currentLocale);
     <details
       class:list={['flex items-center rounded', 'text-slate-700 hover:text-slate-900 border border-slate-700 hover:border-slate-900', 'dark:text-slate-300 dark:hover:text-slate-100 border dark:border-slate-300 dark:hover:border-slate-100', 'select-none']}
     >
-      <summary class="px-3 py-2">{translations[locale].navigation.menu}</summary>
+      <summary class="px-3 py-2">{translations[locale].ui.menu}</summary>
       <nav class:list={['absolute w-48 right-8 mt-4 z-[1]', 'text-slate-700 border border-slate-700 list-none text-lg bg-white', 'dark:text-slate-300 border dark:border-slate-300 list-none text-lg dark:bg-slate-800']}>
         <ul class="flex flex-col items-center gap-2 pt-2 text-center">
           {

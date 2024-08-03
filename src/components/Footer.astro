@@ -1,18 +1,19 @@
 ---
 import Link from './Link.astro';
+import {getLocale} from '@utils/i18n/main';
+import {translations} from '@utils/i18n/translations';
+
+const locale = getLocale(Astro.currentLocale);
 ---
 
-<footer
-  class="text-slate-700 w-full py-5 text-center mt-5"
->
+<footer class="text-slate-700 w-full py-5 text-center mt-5">
   <div class="flex flex-col max-w-lg mx-auto gap-5 text-balance">
     <blockquote
       class="text-sm"
       cite="https://www.churchofjesuschrist.org/study/scriptures/bofm/2-ne/26?&id=31#31"
     >
       <p class="mb-0 italic">
-        "But the laborer in Zion shall labor for Zion;<br />for if they labor
-        for money they shall perish."
+        {translations[locale].meta.theme1}<br />{translations[locale].meta.theme2}
       </p>
       <footer class="font-bold text-slate-500">
         <Link
@@ -20,7 +21,7 @@ import Link from './Link.astro';
           target="_blank"
           rel="noreferrer"
         >
-          2 Nephi 26:31
+          {translations[locale].meta.themeReference}
         </Link>
       </footer>
     </blockquote>

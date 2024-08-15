@@ -6,27 +6,27 @@ import {
   getSlugToPathMap,
   getTitleAndSlugMaps,
   type Backlink,
-} from "../../utils/mdUtils";
+} from "@utils/mdUtils";
 // @ts-ignore - untyped dependency
 import matter from "gray-matter";
 import MarkdownIt from "markdown-it";
 import MarkdownItAnchor from "markdown-it-anchor";
 import MarkdownItFootnote from "markdown-it-footnote";
-import EmptyNoteLayout from "../../layouts/EmptyNoteLayout.astro";
-import NoteLayout from "../../layouts/NoteLayout.astro";
-import { dedupeArray } from "../../utils/array";
-import { getHeadings } from "../../utils/htmlUtils";
-import { Frontmatter, type Heading } from "../../validation/md";
+import EmptyNoteLayout from "@layouts/EmptyNoteLayout.astro";
+import NoteLayout from "@layouts/NoteLayout.astro";
+import { dedupeArray } from "@utils/array";
+import { getHeadings } from "@utils/htmlUtils";
+import { Frontmatter, type Heading } from "@validation/md";
 import {
   isScriptureReference,
   parseScriptureReference,
   processScriptureReference,
   expandScriptureReference,
-} from "../../utils/scriptures";
+} from "@utils/scriptures";
 import {
   generateSocialImage,
   createTaglineFromTags,
-} from "../../utils/openGraph";
+} from "@utils/openGraph";
 
 const { slug } = Astro.params;
 if (!slug) {

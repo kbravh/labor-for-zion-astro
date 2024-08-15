@@ -1,5 +1,5 @@
 import { parseHTML } from "linkedom";
-import type { Heading } from "../validation/md";
+import type { Heading } from "@validation/md";
 
 export const getHeadings = (source: string): Heading[] => {
   const headings: Heading[] = [];

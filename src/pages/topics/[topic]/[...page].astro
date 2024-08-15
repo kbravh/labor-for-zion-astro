@@ -1,12 +1,12 @@
 ---
-import ArticleCard from "../../../components/ArticleCard.astro";
-import MainWrapper from "../../../components/layout/Main.astro";
-import PageTitle from "../../../components/typography/PageTitle.astro";
-import Layout from "../../../layouts/Layout.astro";
-import { getArticles, getNoteTopics } from "../../../utils/mdUtils";
+import ArticleCard from "@components/ArticleCard.astro";
+import MainWrapper from "@components/layout/Main.astro";
+import PageTitle from "@components/typography/PageTitle.astro";
+import Layout from "@layouts/Layout.astro";
+import { getArticles, getNoteTopics } from "@utils/mdUtils";
 import type { GetStaticPaths } from "astro";
 import slugify from "slugify";
-import Pagination from "../../../components/layout/Pagination.astro";
+import Pagination from "@components/layout/Pagination.astro";
 
 const { slugToTopic } = await getNoteTopics();
 

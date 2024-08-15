@@ -1,7 +1,7 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { getArticles } from "../utils/mdUtils";
-import ArticleCard from "../components/ArticleCard.astro";
+import Layout from "@layouts/Layout.astro";
+import { getArticles } from "@utils/mdUtils";
+import ArticleCard from "@components/ArticleCard.astro";
 
 let posts = await getArticles();
 posts = posts.slice(0, 3);

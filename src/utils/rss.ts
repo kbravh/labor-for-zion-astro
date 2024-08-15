@@ -9,10 +9,10 @@ import {
   getSlugFromFilepath,
   getTitleAndSlugMaps,
   notePaths,
-} from "../utils/mdUtils";
+} from "@utils/mdUtils";
 import { readFileSync } from "fs";
 import matter from "gray-matter";
-import { Frontmatter } from "../validation/md";
+import { Frontmatter } from "@validation/md";
 
 type GenerateRSSFeedArgs = {
   site: URL | undefined;

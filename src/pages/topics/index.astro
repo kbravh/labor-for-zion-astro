@@ -1,9 +1,9 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import MainWrapper from "../../components/layout/Main.astro";
-import PageTitle from "../../components/typography/PageTitle.astro";
-import { getNoteTopics } from "../../utils/mdUtils";
-import HoverUnderline from "../../components/interaction/HoverUnderline.astro";
+import Layout from "@layouts/Layout.astro";
+import MainWrapper from "@components/layout/Main.astro";
+import PageTitle from "@components/typography/PageTitle.astro";
+import { getNoteTopics } from "@utils/mdUtils";
+import HoverUnderline from "@components/interaction/HoverUnderline.astro";
 
 const { slugToTopic } = await getNoteTopics();
 const topics = Object.entries(slugToTopic);

@@ -1,10 +1,10 @@
 ---
-import type { Backlink } from '../utils/mdUtils';
-import Backlinks from '../components/layout/Backlinks.astro';
+import type { Backlink } from '@utils/mdUtils';
+import Backlinks from '@components/layout/Backlinks.astro';
 import Layout from './Layout.astro';
-import type { Frontmatter, Heading } from '../validation/md';
-import TableOfContents from '../components/layout/TableOfContents.astro';
-import HeadingObserver from '../components/layout/HeadingObserver.astro';
+import type { Frontmatter, Heading } from '@validation/md';
+import TableOfContents from '@components/layout/TableOfContents.astro';
+import HeadingObserver from '@components/layout/HeadingObserver.astro';
 import slugify from 'slugify';
 import { getLocale } from '@utils/i18n/main';
 import { translations } from '@utils/i18n/translations';

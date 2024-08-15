@@ -5,7 +5,7 @@ import {
   processScriptureReference,
   type RawScriptureReference,
   type ScriptureReference,
-} from "../../utils/scriptures";
+} from "@utils/scriptures";
 import { describe, expect, it } from "vitest";
 
 describe.concurrent("isScriptureReference", () => {

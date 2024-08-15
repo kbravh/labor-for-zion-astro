@@ -1,6 +1,11 @@
 import type { Locale } from "@validation/i18n";
 
-export type Project = "scriptly" | "vault";
+enum Projects {
+  scriptly = "scriptly",
+  vault = "vault",
+}
+
+export type Project = keyof typeof Projects;
 
 export type ProjectMap = {
   [k in Locale]: {

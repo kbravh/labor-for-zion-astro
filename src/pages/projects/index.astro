@@ -1,49 +1,57 @@
 ---
-import MainWrapper from "../../components/MainWrapper.astro";
-import PageTitle from "../../components/PageTitle.astro";
-import Layout from "../../layouts/Layout.astro";
-import Link from "../../components/Link.astro";
-import { getLocale } from "@utils/i18n/main";
-import { translations } from "@utils/i18n/translations";
+import Main from '@components/layout/Main.astro';
+import PageTitle from '@components/typography/PageTitle.astro';
+import Layout from '@layouts/Layout.astro';
+import Link from '@components/interaction/Link.astro';
+import { getLocale } from '@utils/i18n/main';
+import { translations } from '@utils/i18n/translations';
+import PageWrapper from '@components/layout/PageWrapper.astro';
+import Grid from '@components/layout/Grid.astro';
+import H3 from '@components/typography/H3.astro';
+import Description from '@components/typography/Description.astro';
+import type { Project } from '@utils/i18n/projects';
 
 const locale = getLocale(Astro.currentLocale);
+
+type ProjectListing = {
+  // Link to project
+  href: string;
+  // Slug used for translations
+  name: Project;
+};
+
+const projects: ProjectListing[] = [
+  {
+    href: '/projects/obsidian-scripture-vault',
+    name: 'vault',
+  },
+  {
+    href: 'https://scripture.page',
+    name: 'scriptly',
+  },
+];
 ---
 
 <Layout title="Projects">
-  <div class="flex flex-col items-center flex-grow mb-10">
+  <PageWrapper>
     <PageTitle title="Projects" />
-    <MainWrapper>
-      <div class="max-w-4xl sm:mx-20 mx-8 grid sm:grid-cols-2 gap-8">
-        <Link href="/projects/obsidian-scripture-vault">
-          <article class="text-balance flex flex-col">
-            <div>
-              <h3
-                class="group-hover:text-emerald-500 font-semibold text-lg decoration-emerald-500 group-hover:underline text-emerald-700"
-              >
-                {translations[locale].project.vault.title}
-              </h3>
-              <p class="text-slate-700 text-md group-hover:text-slate-500">
-                {translations[locale].project.vault.description}
-              </p>
-            </div>
-          </article>
-        </Link>
-
-        <Link href="https://scripture.page">
-          <article class="text-balance flex flex-col">
-            <div>
-              <h3
-                class="group-hover:text-emerald-500 font-semibold text-lg decoration-emerald-500 group-hover:underline text-emerald-700"
-              >
-                {translations[locale].project.scriptly.title}
-              </h3>
-              <p class="text-slate-700 text-md group-hover:text-slate-500">
-                {translations[locale].project.scriptly.description}
-              </p>
-            </div>
-          </article>
-        </Link>
-      </div>
-    </MainWrapper>
-  </div>
+    <Main>
+      <Grid>
+        {
+          projects.map(({ href, name }) => (
+            <Link href={href}>
+              <article class="text-balance flex flex-col">
+                <div>
+                  <H3>{translations[locale].project[name].title}</H3>
+                  <Description>
+                    {translations[locale].project[name].description}
+                  </Description>
+                </div>
+              </article>
+            </Link>
+          ))
+        }
+      </Grid>
+    </Main>
+  </PageWrapper>
 </Layout>

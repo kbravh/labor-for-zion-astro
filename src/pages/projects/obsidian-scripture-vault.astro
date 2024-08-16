@@ -1,20 +1,16 @@
 ---
-import Layout from "@layouts/Layout.astro";
+import PageWrapper from '@components/layout/PageWrapper.astro';
+import PageTitle from '@components/typography/PageTitle.astro';
+import Prose from '@components/typography/Prose.astro';
+import Layout from '@layouts/Layout.astro';
 ---
 
 <Layout title="Obsidian scripture vault">
-  <div class="flex flex-col items-center flex-grow mb-10">
+  <PageWrapper>
     <main class="flex-grow max-w-3xl mx-auto">
       <article>
-        <div class="max-w-5xl w-full px-8 mb-4">
-          <h1 class="text-5xl text-slate-800 font-extrabold">
-            Obsidian Scripture vault
-          </h1>
-        </div>
-
-        <div
-          class="prose prose-lg prose-slate dark:prose-invert min-w-full px-4 prose-hr:border-emerald-800"
-        >
+        <PageTitle>Obsidian Scripture vault</PageTitle>
+        <Prose>
           <p>
             The LDS Scriptures Obsidian vault is a collection of the scriptures
             in Markdown format set up and ready to use in the notetaking app <a
@@ -60,8 +56,8 @@ import Layout from "@layouts/Layout.astro";
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen></iframe>
-        </div>
+        </Prose>
       </article>
     </main>
-  </div>
+  </PageWrapper>
 </Layout>

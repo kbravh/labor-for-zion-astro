@@ -1,0 +1,15 @@
+---
+const props = Astro.props;
+---
+
+<div
+  {...props}
+  class:list={[
+    'prose prose-lg prose-slate dark:prose-invert min-w-full px-4 prose-hr:border-emerald-800 mt-8',
+    'prose-headings:underline prose-headings:decoration-2',
+    'prose-headings:decoration-emerald-800 dark:prose-headings:decoration-emerald-500',
+    'hover:prose-a:text-emerald-700 dark:hover:prose-a:text-emerald-600',
+  ]}
+>
+  <slot />
+</div>

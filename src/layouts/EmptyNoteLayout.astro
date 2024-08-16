@@ -4,6 +4,9 @@ import Backlinks from '@components/layout/Backlinks.astro';
 import Layout from './Layout.astro';
 import { getLocale } from '@utils/i18n/main';
 import { translations } from '@utils/i18n/translations';
+import Prose from '@components/typography/Prose.astro';
+import NoteTitle from '@components/typography/NoteTitle.astro';
+import NoteHeader from '@components/layout/NoteHeader.astro';
 
 interface Props {
   slug: string;
@@ -18,14 +21,10 @@ const locale = getLocale(Astro.currentLocale);
 
 <Layout {title} description={`A note about ${title}.`} {socialImage}>
   <main class="flex-grow max-w-3xl">
-    <div class="border-slate-800 border-solid border-b-2 text-slate-700">
-      <h1 id="article-title" class="text-[clamp(2rem,_10vw,_3rem)] font-bold">
-        {title}
-      </h1>
-    </div>
-    <article
-      class="prose prose-lg prose-slate dark:prose-invert min-w-full prose-h1:text-4xl prose-h1:sm:text-5xl prose-h1:md:text-7xl px-4"
-    >
+    <NoteHeader>
+      <NoteTitle>{title}</NoteTitle>
+    </NoteHeader>
+    <Prose>
       <slot />
 
       <p>{translations[locale].ui.empty}</p>
@@ -33,6 +32,6 @@ const locale = getLocale(Astro.currentLocale);
       <hit-counter
         data-slug={slug}
         data-display-text={translations[locale].ui.views}></hit-counter>
-    </article>
+    </Prose>
   </main>
 </Layout>

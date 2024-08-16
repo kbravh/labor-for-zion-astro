@@ -22,7 +22,7 @@ const {page} = Astro.props;
 
 <Layout title={translations[locale].route['/notes']}>
   <PageWrapper>
-    <PageTitle title={translations[locale].route['/notes']} />
+    <PageTitle>{translations[locale].route['/notes']}</PageTitle>
     <Main>
       <div class="max-w-4xl w-full">
         <RSSLink>{translations[locale].ui.rss}</RSSLink>

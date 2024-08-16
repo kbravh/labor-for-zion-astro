@@ -8,6 +8,9 @@ import HeadingObserver from '@components/layout/HeadingObserver.astro';
 import slugify from 'slugify';
 import { getLocale } from '@utils/i18n/main';
 import { translations } from '@utils/i18n/translations';
+import NoteHeader from '@components/layout/NoteHeader.astro';
+import NoteTitle from '@components/typography/NoteTitle.astro';
+import Prose from '@components/typography/Prose.astro';
 
 interface Props {
   slug: string;
@@ -36,12 +39,8 @@ const tags = frontmatter.tags?.map((tag) => ({
 >
   <main class="mb-10">
     <article class="grid grid-cols-1 md:grid-cols-[1fr,_300px] gap-x-14">
-      <div
-        class="border-slate-800 border-solid border-b-2 text-slate-700 p-4 max-w-3xl"
-      >
-        <h1 id="article-title" class="text-[clamp(2rem,_10vw,_3rem)] font-bold">
-          {frontmatter.title}
-        </h1>
+      <NoteHeader>
+        <NoteTitle>{frontmatter.title}</NoteTitle>
         {
           frontmatter.description && (
             <p class="text-[clamp(1rem,_5vw,_1.5rem)] font-body">
@@ -49,7 +48,7 @@ const tags = frontmatter.tags?.map((tag) => ({
             </p>
           )
         }
-      </div>
+      </NoteHeader>
 
       <!-- empty spot to take up the top right corner on desktop -->
       <div></div>
@@ -88,11 +87,7 @@ const tags = frontmatter.tags?.map((tag) => ({
         </aside>
         <!-- used for scripture verses -->
         <slot />
-        <div
-          id="article-body"
-          class="prose prose-lg prose-slate dark:prose-invert min-w-full px-4 prose-hr:border-emerald-800 mt-8"
-          set:html={content}
-        />
+        <Prose id="article-body" set:html={content} />
       </section>
 
       <section class="pr-4">

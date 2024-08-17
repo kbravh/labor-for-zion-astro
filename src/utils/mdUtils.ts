@@ -289,11 +289,14 @@ const getBracketLinks =
     return links;
   };
 
+// Finds [[Link]] style note links
 export const getOutgoingLinks = getBracketLinks(
-  /(?:\w+\W){0,10}(\[\[([^\[\]]+)\]\])(?:\W?\w+\W){0,10}/g,
+  /(?:\w+\W+){0,10}(\[\[([^\[\]]+)\]\])(?:\W+\w+\W){0,10}/ig,
 );
+
+// Finds ![[Link]] style embed links
 export const getEmbedLinks = getBracketLinks(
-  /(?:\w+\W){0,10}(!\[\[([^\[\]]+)\]\])(?:\W?\w+\W){0,10}/g,
+  /(?:\w+\W+){0,10}(!\[\[([^\[\]]+)\]\])(?:\W+\w+\W){0,10}/ig,
 );
 
 export const cleanupExcerpt = ({

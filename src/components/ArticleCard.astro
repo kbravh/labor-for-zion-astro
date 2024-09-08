@@ -12,7 +12,7 @@ const { post } = Astro.props;
 ---
 
 <a href={`/notes/${post.slug}`} class="group w-full">
-  <article class="text-balance flex flex-col">
+  <article class="flex flex-col">
     <div>
       <H3>{post.frontmatter.title}</H3>
       <Description>{post.frontmatter.description}</Description>

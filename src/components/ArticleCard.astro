@@ -18,12 +18,13 @@ const { post } = Astro.props;
       <Description>{post.frontmatter.description}</Description>
     </div>
     <SupportText>
-      <time datetime={post.frontmatter.date.toISOString()}> </time>
+      <time datetime={post.frontmatter.date.toISOString()}>
       {
         post.frontmatter.date.toLocaleDateString('en-US', {
           dateStyle: 'medium',
         })
       }
+      </time>
     </SupportText>
   </article>
 </a>

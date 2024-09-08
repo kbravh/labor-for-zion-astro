@@ -1,6 +1,6 @@
 ---
 title: Anointing with Oil
-description: Why do we anoint people with oil?
+description: Why do we anoint people with oil for blessings and ordinances?
 date: 2024-06-03T22:33:36.911600600-04:00
 updated:
 language: en

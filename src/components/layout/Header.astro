@@ -1,11 +1,11 @@
 ---
-import HoverUnderline from "../interaction/HoverUnderline.astro";
-import Logo from "../Logo.astro";
-import Link from "../interaction/Link.astro";
-import { routes } from "@utils/i18n/routes";
-import { translations } from "@utils/i18n/translations";
-import { getLocale } from "@utils/i18n/main";
-import { getAbsoluteLocaleUrl } from "astro:i18n";
+import HoverUnderline from '../interaction/HoverUnderline.astro';
+import Logo from '../Logo.astro';
+import Link from '../interaction/Link.astro';
+import { routes } from '@utils/i18n/routes';
+import { translations } from '@utils/i18n/translations';
+import { getLocale } from '@utils/i18n/main';
+import { getAbsoluteLocaleUrl } from 'astro:i18n';
 
 const locale = getLocale(Astro.currentLocale);
 ---
@@ -13,14 +13,14 @@ const locale = getLocale(Astro.currentLocale);
 <div
   class="flex justify-between py-4 px-8 items-center max-w-6xl mx-auto mt-8 mb-5 w-full"
 >
-  <Link href={getAbsoluteLocaleUrl(locale, "/")}>
+  <Link href={getAbsoluteLocaleUrl(locale, '/')}>
     <div
       class:list={[
-        "text-6xl cursor-pointer select-none flex items-center gap-3",
+        'text-6xl cursor-pointer select-none flex items-center gap-3',
       ]}
     >
       <Logo className="h-12 w-12 bg-emerald-900 rounded-full" />
-      <span class="sr-only">{translations[locale].route["/"]}</span>
+      <span class="sr-only">{translations[locale].route['/']}</span>
     </div>
   </Link>
   <!-- large menu -->
@@ -44,26 +44,31 @@ const locale = getLocale(Astro.currentLocale);
   <div class="sm:hidden block">
     <details
       class:list={[
-        "flex items-center rounded",
-        "text-slate-700 hover:text-slate-900 border border-slate-700 hover:border-slate-900",
-        "dark:text-slate-300 dark:hover:text-slate-100 border dark:border-slate-300 dark:hover:border-slate-100",
-        "select-none",
+        'flex items-center rounded',
+        'text-slate-700 hover:text-slate-900 border border-slate-700 hover:border-slate-900',
+        'dark:text-slate-300 dark:hover:text-slate-100 border dark:border-slate-300 dark:hover:border-slate-100',
+        'select-none',
       ]}
     >
-      <summary class="px-3 py-2">{translations[locale].ui.menu}</summary>
+      <summary
+        class:list={[
+          'px-3 py-2',
+          'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500',
+        ]}>{translations[locale].ui.menu}</summary
+      >
       <nav
         class:list={[
-          "absolute w-48 right-8 mt-4 z-[1]",
-          "text-slate-700 border border-slate-700 list-none text-lg bg-white",
-          "dark:text-slate-300 border dark:border-slate-300 list-none text-lg dark:bg-slate-800",
+          'absolute w-48 right-8 mt-4 z-[1]',
+          'text-slate-700 border border-slate-700 list-none text-lg bg-white',
+          'dark:text-slate-300 border dark:border-slate-300 list-none text-lg dark:bg-slate-800',
         ]}
       >
-        <ul class="flex flex-col items-center gap-2 pt-2 text-center">
+        <ul class="flex flex-col items-center gap-2 py-2 text-center">
           {
             routes.map((route) => (
               <li class="w-full h-10 flex items-center justify-center relative">
                 <Link
-                  className="absolute inset-0"
+                  className="flex flex-col justify-center"
                   href={getAbsoluteLocaleUrl(locale, route)}
                 >
                   {translations[locale].route[route]}

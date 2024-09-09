@@ -6,7 +6,7 @@ import {
   getSlugToPathMap,
   getTitleAndSlugMaps,
   type Backlink,
-} from "@utils/mdUtils";
+} from "@utils/md/readAndParse";
 // @ts-ignore - untyped dependency
 import matter from "gray-matter";
 import MarkdownIt from "markdown-it";
@@ -27,11 +27,14 @@ import {
   generateSocialImage,
   createTaglineFromTags,
 } from "@utils/openGraph";
+import { getLocale } from "@utils/i18n/main";
 
 const { slug } = Astro.params;
 if (!slug) {
   throw new Error("No slug provided");
 }
+
+const locale = getLocale(Astro.currentLocale);
 
 const md = new MarkdownIt({
   html: true,
@@ -41,9 +44,9 @@ const md = new MarkdownIt({
   .use(MarkdownItFootnote)
   .use(MarkdownItAnchor);
 
-const slugToPathMap = getSlugToPathMap();
-const { titleToSlug, slugToTitle } = await getTitleAndSlugMaps();
-const titlesWithBacklinks = await getBacklinks();
+const slugToPathMap = getSlugToPathMap(locale);
+const { titleToSlug, slugToTitle } = await getTitleAndSlugMaps(locale);
+const titlesWithBacklinks = await getBacklinks(locale);
 
 const filePath = slugToPathMap[slug];
 const title = slugToTitle[slug];
@@ -72,7 +75,7 @@ let noteData:
 if (filePath) {
   const source = readFileSync(filePath, "utf-8");
   const markdown = matter(source);
-  const text = await addLinks(titleToSlug, markdown.content);
+  const text = await addLinks(locale, titleToSlug, markdown.content);
   const content = md.render(text);
   const frontmatter = markdown.data;
   const parsedFrontmatter = Frontmatter.parse(frontmatter);
@@ -108,7 +111,7 @@ if (filePath) {
 }
 
 export async function getStaticPaths() {
-  const { slugToTitle } = await getTitleAndSlugMaps();
+  const { slugToTitle } = await getTitleAndSlugMaps("en");
   const paths = Object.keys(slugToTitle).map((slug) => ({
     params: { slug },
   }));

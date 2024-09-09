@@ -2,10 +2,13 @@
 import Layout from '@layouts/Layout.astro';
 import MainWrapper from '@components/layout/Main.astro';
 import PageTitle from '@components/typography/PageTitle.astro';
-import { getNoteTopics } from '@utils/mdUtils';
+import { getNoteTopics } from '@utils/md/readAndParse';
 import HoverUnderline from '@components/interaction/HoverUnderline.astro';
+import { getLocale } from '@utils/i18n/main';
 
-const { slugToTopic } = await getNoteTopics();
+const locale = getLocale(Astro.currentLocale)
+
+const { slugToTopic } = await getNoteTopics(locale);
 const topics = Object.entries(slugToTopic);
 ---
 

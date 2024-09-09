@@ -9,12 +9,14 @@ import {
   getSlugFromFilepath,
   getTitleAndSlugMaps,
   notePaths,
-} from "@utils/mdUtils";
+} from "@utils/md/readAndParse";
 import { readFileSync } from "fs";
 import matter from "gray-matter";
 import { Frontmatter } from "@validation/md";
+import type { Locale } from "@validation/i18n";
 
 type GenerateRSSFeedArgs = {
+  locale: Locale;
   site: URL | undefined;
 };
 
@@ -26,8 +28,8 @@ const md = new MarkdownIt({
   .use(MarkdownItAnchor)
   .use(MarkdownItFootnote);
 
-export const generateRssFeed = async ({ site }: GenerateRSSFeedArgs) => {
-  const { titleToSlug } = await getTitleAndSlugMaps();
+export const generateRssFeed = async ({ locale, site }: GenerateRSSFeedArgs) => {
+  const { titleToSlug } = await getTitleAndSlugMaps(locale);
   return rss({
     title: "Labor for Zion",
     description:
@@ -37,7 +39,7 @@ export const generateRssFeed = async ({ site }: GenerateRSSFeedArgs) => {
       notePaths.toReversed().map(async (notePath): Promise<RSSFeedItem> => {
         const source = readFileSync(notePath, "utf-8");
         const document = matter(source);
-        const text = await addLinks(titleToSlug, document.content);
+        const text = await addLinks(locale, titleToSlug, document.content);
         const content = md.render(text);
         const frontmatter = document.data;
         const parsedFrontmatter = Frontmatter.parse(frontmatter);

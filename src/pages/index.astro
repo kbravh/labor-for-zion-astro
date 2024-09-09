@@ -1,6 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import { getArticles } from "@utils/mdUtils";
+import { getArticles } from "@utils/md/readAndParse";
 import ArticleCard from "@components/ArticleCard.astro";
 
 let posts = await getArticles();

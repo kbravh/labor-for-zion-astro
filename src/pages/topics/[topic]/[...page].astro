@@ -3,16 +3,17 @@ import ArticleCard from '@components/ArticleCard.astro';
 import Main from '@components/layout/Main.astro';
 import PageTitle from '@components/typography/PageTitle.astro';
 import Layout from '@layouts/Layout.astro';
-import { getArticles, getNoteTopics } from '@utils/mdUtils';
+import { getArticles, getNoteTopics } from '@utils/md/readAndParse';
 import type { GetStaticPaths } from 'astro';
 import slugify from 'slugify';
 import Pagination from '@components/layout/Pagination.astro';
 import PageWrapper from '@components/layout/PageWrapper.astro';
+import { LOCALES } from '@validation/i18n';
 
-const { slugToTopic } = await getNoteTopics();
+const { slugToTopic } = await getNoteTopics("en");
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const { articleTopics } = await getNoteTopics();
+  const { articleTopics } = await getNoteTopics("en");
   const results = await Promise.all(
     [...articleTopics].map(async (topic) => {
       const matchingPosts = await getArticles({ topic });

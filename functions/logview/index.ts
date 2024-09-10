@@ -1,20 +1,20 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { logPageView } from "./utils/db";
 import { getTitleAndSlugMaps } from "./utils/md";
-
-// defining this outside the handler to abuse the cold start
-const { slugToTitle } = getTitleAndSlugMaps();
-const set = new Set(Object.keys(slugToTitle));
+import { Locale, LOCALES } from "@validation/i18n";
 
 const headers = {
   "Access-Control-Allow-Origin": "https://laborforzion.com",
   "Content-Type": "application/json",
 };
 
+const isValidLocale = (locale: string | undefined): locale is Locale =>
+  LOCALES.includes(locale as Locale);
+
 export const handler = async (
   event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
-  const { slug, dev } = event.queryStringParameters || {};
+  const { locale, slug, dev } = event.queryStringParameters || {};
 
   if (dev === "true") {
     return {
@@ -32,15 +32,34 @@ export const handler = async (
     };
   }
 
-  if (!set.has(slug)) {
+  if (!locale) {
     return {
-      statusCode: 404,
-      body: JSON.stringify({ message: "Slug not found" }),
+      statusCode: 400,
+      body: JSON.stringify({ message: "No locale" }),
+      headers,
+    };
+  }
+
+  if (!isValidLocale(locale)) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: "Not a valid locale" }),
       headers,
     };
   }
 
   try {
+    const { slugToTitle } = getTitleAndSlugMaps(locale);
+    const set = new Set(Object.keys(slugToTitle));
+
+    if (!set.has(slug)) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ message: "Slug not found" }),
+        headers,
+      };
+    }
+
     const count = await logPageView(slug);
     return {
       statusCode: 200,

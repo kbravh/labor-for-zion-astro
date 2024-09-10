@@ -107,7 +107,8 @@ const tags = frontmatter.tags?.map((tag) => ({
     </article>
   </main>
   <hit-counter
-    data-slug={slug}
-    data-display-text={translations[locale].ui.views}></hit-counter>
+    data-display-text={translations[locale].ui.views}
+    data-locale={locale}
+    data-slug={slug}></hit-counter>
   <HeadingObserver />
 </Layout>

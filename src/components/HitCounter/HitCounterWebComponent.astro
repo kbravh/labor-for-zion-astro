@@ -1,12 +1,16 @@
 <script>
   class HitCounter extends HTMLElement {
     displayText: string | null | undefined;
+    locale: string | null | undefined;
     slug: string | null | undefined;
 
     // This gets called when the element is inserted into the DOM.
     connectedCallback() {
       this.displayText = this.getAttribute('data-display-text');
       if (!this.displayText) throw new Error('data-display-text is missing');
+
+      this.locale = this.getAttribute('data-locale');
+      if (!this.locale) throw new Error('data-locale is missing');
 
       this.slug = this.getAttribute('data-slug');
       if (!this.slug) throw new Error('data-slug is missing');
@@ -22,7 +26,7 @@
 
       try {
         const response = await fetch(
-          `https://api.laborforzion.com/log-view?slug=${this.slug}`,
+          `https://api.laborforzion.com/log-view?slug=${this.slug}&locale=${this.locale}`,
         );
         if (!response.ok) {
           console.error('Network response was not ok');

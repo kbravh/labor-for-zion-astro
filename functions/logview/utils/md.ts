@@ -1,3 +1,4 @@
+import type { Locale } from "@validation/i18n";
 import { readFileSync } from "fs";
 
 const readFile = (key: string) => {
@@ -5,8 +6,8 @@ const readFile = (key: string) => {
   return JSON.parse(data);
 };
 
-export const getTitleAndSlugMaps = () => {
-  const slugToTitle = readFile("slugToTitle");
+export const getTitleAndSlugMaps = (locale: Locale) => {
+  const slugToTitle = readFile(`${locale}_slugToTitle`);
 
   return {
     slugToTitle,

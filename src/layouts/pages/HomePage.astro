@@ -1,15 +1,11 @@
 ---
 import Layout from '@layouts/Layout.astro';
 import { getArticles, type PostListing } from '@utils/md/readAndParse';
-import type { Locale } from '@validation/i18n';
 import { translations } from '@utils/i18n/translations';
 import ArticleCard from '@components/ArticleCard.astro';
+import { getLocale } from '@utils/i18n/main';
 
-export interface Props {
-  locale: Locale;
-}
-
-const { locale } = Astro.props;
+const locale = getLocale(Astro.currentLocale);
 
 let posts = await getArticles({ locale });
 posts = posts.slice(0, 3);

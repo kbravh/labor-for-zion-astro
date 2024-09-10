@@ -1,0 +1,42 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { getArticles, type PostListing } from '@utils/md/readAndParse';
+import type { Locale } from '@validation/i18n';
+import { translations } from '@utils/i18n/translations';
+import ArticleCard from '@components/ArticleCard.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+let posts = await getArticles({ locale });
+posts = posts.slice(0, 3);
+---
+
+<Layout title={translations[locale].meta.site}>
+  <main
+    class="container mx-auto max-w-[800px] flex flex-col items-center p-4 flex-grow gap-12"
+  >
+    <div>
+      <h1
+        class="text-5xl md:text-[5rem] leading-normal font-extrabold text-slate-700 dark:text-slate-200/90 text-balance"
+      >
+        {translations[locale].meta.site}
+      </h1>
+      <p>
+        {translations[locale].meta.description}
+      </p>
+    </div>
+
+    <section class="max-w-2xl">
+      <h2 class="text-slate-600 dark:text-slate-300 font-bold text-3xl">
+        {translations[locale].ui.recent}
+      </h2>
+      <div class="flex flex-col align-start gap-4 mt-2">
+        {posts.map((post) => <ArticleCard post={post} />)}
+      </div>
+    </section>
+  </main>
+</Layout>

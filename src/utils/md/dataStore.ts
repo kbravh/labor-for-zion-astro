@@ -1,6 +1,6 @@
-import { Locale, LOCALES } from "@validation/i18n";
+import { Locale, LOCALES } from "../../validation/i18n";
 import type { Backlink } from "./readAndParse";
-import { writeFile } from "@utils/file";
+import { writeFile } from "../file";
 
 type LocalizedData = {
   slugToTopic: Record<string, string> | undefined;
@@ -44,7 +44,7 @@ const createLocaleProxy = (locale: Locale, data: LocalizedData) => {
       } else {
         throw new Error(`Invalid data key: ${key.toString()}`);
       }
-    }
+    },
   });
 };
 
@@ -52,11 +52,14 @@ export const dataStore = new Proxy(rawData, {
   get: (target, locale) => {
     if (Locale.safeParse(locale).success) {
       if (!proxyCache[locale as Locale]) {
-        proxyCache[locale as Locale] = createLocaleProxy(locale as Locale, target[locale as Locale]);
+        proxyCache[locale as Locale] = createLocaleProxy(
+          locale as Locale,
+          target[locale as Locale],
+        );
       }
       return proxyCache[locale as Locale];
     } else {
       throw new Error(`Invalid locale: ${locale.toString()}`);
     }
-  }
+  },
 });

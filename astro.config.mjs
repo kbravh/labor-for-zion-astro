@@ -1,8 +1,9 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-// import { getLastUpdatedDateFromSlug } from "./src/utils/md/readAndParse.ts";
 import { basename } from "path";
+import { getLastUpdatedDateFromSlug } from "./src/utils/md/readAndParse";
+import {LOCALES} from "./src/validation/i18n";
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,29 +13,25 @@ export default defineConfig({
   i18n: {
     defaultLocale: "en",
     locales: ["en", "es"],
-    fallback: {
-      es: "en",
-    },
   },
   integrations: [
     tailwind(),
     sitemap({
       filter: (page) => page !== "https://laborforzion.com/views",
-      serialize: (item) => {
+      serialize: async (item) => {
         //Fetch the last modified date for articles
         if (/.*notes\/.+/.test(item.url)) {
-          console.log('url', item.url)
+          const locale = item.url.split("/").find(piece => LOCALES.includes(piece))
           const slug = basename(item.url);
-          // // const date = getLastUpdatedDateFromSlug(slug);
-          // if (!date) {
-          //   return item;
-          // } else {
-          //   return {
-          //     ...item,
-          //     lastmod: date.toUTCString(),
-          //   };
-          // }
-          return item;
+          const date = getLastUpdatedDateFromSlug(locale ?? "en", slug);
+          if (!date) {
+            return item;
+          } else {
+            return {
+              ...item,
+              lastmod: date.toUTCString(),
+            };
+          }
         }
       },
     }),

@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import path, { basename } from "path";
 import slugify from "slugify";
 import { BracketLink, Frontmatter } from "../../validation/md";
-import { LOCALES, type Locale } from "../../validation/i18n";
+import { type Locale } from "../../validation/i18n";
 import { dataStore } from "./dataStore";
 
 export const NOTES_PATH = path.join(process.cwd(), "notes");

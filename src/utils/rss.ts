@@ -14,6 +14,7 @@ import { readFileSync } from "fs";
 import matter from "gray-matter";
 import { Frontmatter } from "@validation/md";
 import type { Locale } from "@validation/i18n";
+import { translations } from "./i18n/translations";
 
 type GenerateRSSFeedArgs = {
   locale: Locale;
@@ -28,21 +29,28 @@ const md = new MarkdownIt({
   .use(MarkdownItAnchor)
   .use(MarkdownItFootnote);
 
-export const generateRssFeed = async ({ locale, site }: GenerateRSSFeedArgs) => {
+const isPostFeedItem = (post: any): post is RSSFeedItem => {
+  return !!post
+};
+
+export const generateRssFeed = async ({
+  locale,
+  site,
+}: GenerateRSSFeedArgs) => {
   const { titleToSlug } = await getTitleAndSlugMaps(locale);
-  return rss({
-    title: "Labor for Zion",
-    description:
-      "A collection of notes and talks centered around gospel topics.",
-    site: site ?? "https://laborforzion.com",
-    items: await Promise.all(
-      notePaths.toReversed().map(async (notePath): Promise<RSSFeedItem> => {
+  const posts = await Promise.all(
+    notePaths
+      .toReversed()
+      .map(async (notePath): Promise<RSSFeedItem | undefined> => {
         const source = readFileSync(notePath, "utf-8");
         const document = matter(source);
         const text = await addLinks(locale, titleToSlug, document.content);
         const content = md.render(text);
         const frontmatter = document.data;
         const parsedFrontmatter = Frontmatter.parse(frontmatter);
+        if (parsedFrontmatter.language !== locale) {
+          return undefined;
+        }
         return {
           content: sanitizeHtml(content),
           link: `/notes/${getSlugFromFilepath(notePath)}`,
@@ -51,8 +59,13 @@ export const generateRssFeed = async ({ locale, site }: GenerateRSSFeedArgs) => 
           description: parsedFrontmatter.description,
         };
       }),
-    ),
-    customData: `<language>en-US</language>`,
+  );
+  return rss({
+    title: translations[locale].meta.site,
+    description: translations[locale].meta.description,
+    site: site ?? "https://laborforzion.com",
+    items: posts.filter(isPostFeedItem),
+    customData: "<language>es</language>",
     stylesheet: "/pretty-feed-v3.xsl",
   });
 };

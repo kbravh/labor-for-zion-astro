@@ -1,0 +1,41 @@
+---
+import ArticleCard from '@components/ArticleCard.astro';
+import Main from '@components/layout/Main.astro';
+import PageWrapper from '@components/layout/PageWrapper.astro';
+import Pagination from '@components/layout/Pagination.astro';
+import PageTitle from '@components/typography/PageTitle.astro';
+import Layout from '@layouts/Layout.astro';
+import { getLocale } from '@utils/i18n/main';
+import { translations } from '@utils/i18n/translations';
+import { getNoteTopics, type PostListing } from '@utils/md/readAndParse';
+import type { Page } from 'astro';
+
+const locale = getLocale(Astro.currentLocale);
+
+const { slugToTopic } = await getNoteTopics(locale);
+
+export type Props = {
+  page: Page<PostListing>;
+  topicSlug: string;
+};
+
+const { page, topicSlug } = Astro.props;
+
+const topic = slugToTopic[topicSlug];
+---
+
+<Layout title=`${translations[locale].ui.notes_about}${topic}`>
+  <PageWrapper>
+    <PageTitle>{translations[locale].ui.notes_about}{topic}</PageTitle>
+    <Main>
+      <div class="flex flex-col gap-4 mt-4">
+        {page.data.map((post) => <ArticleCard post={post} />)}
+        <Pagination
+          current={page.currentPage}
+          prevUrl={page.url.prev}
+          nextUrl={page.url.next}
+        />
+      </div>
+    </Main>
+  </PageWrapper>
+</Layout>

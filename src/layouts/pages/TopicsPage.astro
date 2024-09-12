@@ -1,0 +1,31 @@
+---
+import Layout from '@layouts/Layout.astro';
+import MainWrapper from '@components/layout/Main.astro';
+import PageTitle from '@components/typography/PageTitle.astro';
+import { getNoteTopics } from '@utils/md/readAndParse';
+import HoverUnderline from '@components/interaction/HoverUnderline.astro';
+import { getLocale } from '@utils/i18n/main';
+import { translations } from '@utils/i18n/translations';
+
+const locale = getLocale(Astro.currentLocale)
+
+const { slugToTopic } = await getNoteTopics(locale);
+const topics = Object.entries(slugToTopic);
+---
+
+<Layout title={translations[locale].route['/topics']}>
+  <div class="flex flex-col items-center flex-grow mb-10">
+    <PageTitle>{translations[locale].route['/topics']}</PageTitle>
+    <MainWrapper>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {
+          topics.map(([slug, topic]) => (
+            <HoverUnderline>
+              <a href={`/topics/${slug}`}>{topic}</a>
+            </HoverUnderline>
+          ))
+        }
+      </div>
+    </MainWrapper>
+  </div>
+</Layout>

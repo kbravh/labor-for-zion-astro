@@ -5,6 +5,7 @@ export type UI =
   | "empty"
   | "menu"
   | "next"
+  | "notes_about"
   | "page"
   | "previous"
   | "recent"
@@ -25,6 +26,7 @@ export const uiMap: UIMap = {
       "This page hasn't been created yet! But if it has been mentioned somewhere else, you can see those references below.",
     menu: "Menu",
     next: "Next page",
+    notes_about: "Notes about: ",
     page: "Page",
     previous: "Previous page",
     recent: "Recent articles",
@@ -38,6 +40,7 @@ export const uiMap: UIMap = {
       "Esta página aún no se ha creado! Pero si ha sido mencionado en otro lado, podrás ver esas referencias aquí.",
     menu: "Menú",
     next: "Siguiente",
+    notes_about: "Notas sobre: ",
     page: "Página",
     previous: "Anterior",
     recent: "Artículos recientes",

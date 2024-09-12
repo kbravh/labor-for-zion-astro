@@ -59,6 +59,10 @@ export const getNoteTopics = async (locale: Locale): Promise<{
   for (const notePath of notePaths) {
     const source = await readFile(notePath, "utf-8");
     const frontmatter = Frontmatter.parse(matter(source).data);
+    // bounce early if the locale doesn't match
+    if (frontmatter.language !== locale) {
+      continue;
+    }
     for (const tag of frontmatter.tags ?? []) {
       newArticleTopics.add(tag);
       newSlugToTopic[slugify(tag, { lower: true })] = tag;

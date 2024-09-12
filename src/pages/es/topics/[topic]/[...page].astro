@@ -1,8 +1,9 @@
 ---
 import TopicPage from '@layouts/pages/TopicPage.astro';
+import { getLocale } from '@utils/i18n/main';
 import { topicGetStaticPaths } from '@utils/pageLoaders/topics';
 
-export const getStaticPaths = topicGetStaticPaths('en');
+export const getStaticPaths = topicGetStaticPaths("es");
 
 const { page } = Astro.props;
 const params = Astro.params;

@@ -1,0 +1,63 @@
+---
+import PageWrapper from '@components/layout/PageWrapper.astro';
+import PageTitle from '@components/typography/PageTitle.astro';
+import Prose from '@components/typography/Prose.astro';
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout title="Obsidian scripture vault">
+  <PageWrapper>
+    <main class="flex-grow max-w-3xl mx-auto">
+      <article>
+        <PageTitle>Obsidian Scripture vault</PageTitle>
+        <Prose>
+          <p>
+            The LDS Scriptures Obsidian vault is a collection of the scriptures
+            in Markdown format set up and ready to use in the notetaking app <a
+              href="https://obsidian.md"
+              target="_blank"
+              referrerpolicy="no-referrer">Obsidian</a
+            >.
+          </p>
+
+          <p>
+            Download the vault <a
+              download
+              href="/projects/lds-scriptures-obsidian-vault-1.0.0.zip">here</a
+            >!
+          </p>
+
+          <h2>Setup instructions</h2>
+          <p>Follow these instructions to set up the vault:</p>
+          <ol>
+            <li>Download the vault from the link above.</li>
+            <li>Unzip the folder.</li>
+            <li>
+              Open Obsidian and click the "Open folder as vault" button on the
+              right-hand side.
+            </li>
+            <li>Select the folder you just unzipped and click "Open".</li>
+            <li>
+              Wait while Obsidian indexes all of the files (it can take a couple
+              of minutes!). This will only happen this first time.
+            </li>
+            <li>Jump into notetaking!</li>
+          </ol>
+
+          <p>
+            Check out this video to learn how to create clusters, or scripture
+            excerpts, using a neat feature that I've added.
+          </p>
+
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/MVs1MFoKZLY"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </Prose>
+      </article>
+    </main>
+  </PageWrapper>
+</Layout>

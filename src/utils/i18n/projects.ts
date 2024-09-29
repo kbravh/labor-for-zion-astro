@@ -38,7 +38,7 @@ export const projectMap: ProjectMap = {
     vault: {
       title: "Bóveda de Obisidian de las escrituras",
       description:
-        "Toma nota de las escrituras en Obsidian, una aplicación que te ayudará a conectar tus ideas y pensar más profundamente sobre las escrituras.",
+        "Toma notas sobre las escrituras en Obsidian, una aplicación que te ayudará a conectar tus ideas y pensar más profundamente sobre las escrituras.",
     },
   },
 };

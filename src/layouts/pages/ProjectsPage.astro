@@ -10,6 +10,7 @@ import Grid from '@components/layout/Grid.astro';
 import H3 from '@components/typography/H3.astro';
 import Description from '@components/typography/Description.astro';
 import type { Project } from '@utils/i18n/projects';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const locale = getLocale(Astro.currentLocale);
 
@@ -20,17 +21,26 @@ type ProjectListing = {
   name: Project;
 };
 
-const projects: ProjectListing[] = [              {                                                 href: '/projects/obsidian-scripture-vault',     name: 'vault',                                },                                              {                                                 href: 'https://scripture.page',                 name: 'scriptly',                             },                                            ];
+const projects: ProjectListing[] = [
+  { href: '/projects/obsidian-scripture-vault', name: 'vault' },
+  { href: 'https://scripture.page', name: 'scriptly' },
+];
 ---
 
-<Layout title="Projects">
+<Layout title={translations[locale].route['/projects']}>
   <PageWrapper>
-    <PageTitle>Projects</PageTitle>
+    <PageTitle>{translations[locale].route['/projects']}</PageTitle>
     <Main>
       <Grid>
         {
           projects.map(({ href, name }) => (
-            <Link href={href}>
+            <Link
+              href={
+                href.startsWith('https')
+                  ? href
+                  : getRelativeLocaleUrl(locale, href)
+              }
+            >
               <article class="text-balance flex flex-col">
                 <div>
                   <H3>{translations[locale].project[name].title}</H3>

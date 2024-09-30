@@ -3,15 +3,19 @@ import type { PostListing } from '@utils/md/readAndParse';
 import Description from './typography/Description.astro';
 import H3 from './typography/H3.astro';
 import SupportText from './typography/SupportText.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getLocale } from '@utils/i18n/main';
 
 export interface Props {
   post: PostListing;
 }
 
+const locale = getLocale(Astro.currentLocale);
+
 const { post } = Astro.props;
 ---
 
-<a href={`/notes/${post.slug}`} class="group w-full">
+<a href={getRelativeLocaleUrl(locale, `/notes/${post.slug}`)} class="group w-full">
   <article class="flex flex-col max-w-[65ch]">
     <div>
       <H3>{post.frontmatter.title}</H3>

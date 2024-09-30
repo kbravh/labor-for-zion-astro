@@ -19,7 +19,7 @@ const { title, backlinks, slug, socialImage } = Astro.props;
 const locale = getLocale(Astro.currentLocale);
 ---
 
-<Layout {title} description={`A note about ${title}.`} {socialImage}>
+<Layout {title} description={`${translations[locale].ui.note_about} ${title}.`} {socialImage}>
   <main class="flex-grow max-w-3xl">
     <NoteHeader>
       <NoteTitle>{title}</NoteTitle>

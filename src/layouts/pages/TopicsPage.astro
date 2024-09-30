@@ -6,8 +6,9 @@ import { getNoteTopics } from '@utils/md/readAndParse';
 import HoverUnderline from '@components/interaction/HoverUnderline.astro';
 import { getLocale } from '@utils/i18n/main';
 import { translations } from '@utils/i18n/translations';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
-const locale = getLocale(Astro.currentLocale)
+const locale = getLocale(Astro.currentLocale);
 
 const { slugToTopic } = await getNoteTopics(locale);
 const topics = Object.entries(slugToTopic);
@@ -21,7 +22,9 @@ const topics = Object.entries(slugToTopic);
         {
           topics.map(([slug, topic]) => (
             <HoverUnderline>
-              <a href={`/topics/${slug}`}>{topic}</a>
+              <a href={getRelativeLocaleUrl(locale, `/topics/${slug}`)}>
+                {topic}
+              </a>
             </HoverUnderline>
           ))
         }

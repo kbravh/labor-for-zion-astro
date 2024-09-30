@@ -11,6 +11,7 @@ import { translations } from '@utils/i18n/translations';
 import NoteHeader from '@components/layout/NoteHeader.astro';
 import NoteTitle from '@components/typography/NoteTitle.astro';
 import Prose from '@components/typography/Prose.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
   slug: string;
@@ -74,7 +75,9 @@ const tags = frontmatter.tags?.map((tag) => ({
                         'bg-slate-300 dark:bg-slate-800 text-slate-900 dark:text-slate-100',
                       ]}
                     >
-                      <a href={`/topics/${slug}`}>{name}</a>
+                      <a href={getRelativeLocaleUrl(locale, `/topics/${slug}`)}>
+                        {name}
+                      </a>
                     </li>
                   ))}
                 </ul>

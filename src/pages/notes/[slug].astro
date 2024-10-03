@@ -44,7 +44,7 @@ const md = new MarkdownIt({
   .use(MarkdownItFootnote)
   .use(MarkdownItAnchor);
 
-const slugToPathMap = getSlugToPathMap(locale);
+const slugToPathMap = await getSlugToPathMap(locale);
 const { titleToSlug, slugToTitle } = await getTitleAndSlugMaps(locale);
 const titlesWithBacklinks = await getBacklinks(locale);
 

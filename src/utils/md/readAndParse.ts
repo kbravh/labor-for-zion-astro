@@ -137,7 +137,7 @@ export const getTitleAndSlugMaps = async (locale: Locale): Promise<{
  * Creates a map of slugs to their respective filepaths. This is necessary to
  * support nested filepaths.
  */
-export const getSlugToPathMap = async (locale: Locale): Record<string, string> => {
+export const getSlugToPathMap = async (locale: Locale): Promise<Record<string, string>> => {
   const { slugToPath } = dataStore[locale];
   if (slugToPath) {
     return slugToPath;

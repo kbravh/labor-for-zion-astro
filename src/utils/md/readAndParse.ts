@@ -361,7 +361,7 @@ export const getArticles = async (filter?: Filter): Promise<PostListing[]> => {
 };
 
 // Returns `updated` if defined, otherwise returns the initial publish date
-export const getLastUpdatedDateFromSlug = await (locale: Locale, slug: string): Date | undefined => {
+export const getLastUpdatedDateFromSlug = async (locale: Locale, slug: string): Promise<Date | undefined> => {
   const slugToPathMap = await getSlugToPathMap(locale);
   const path = slugToPathMap[slug];
   if (!path) {

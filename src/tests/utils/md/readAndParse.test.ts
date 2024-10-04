@@ -21,9 +21,10 @@ vi.mock("node:fs/promises", async () => {
   return memfs.fs.promises;
 });
 
+// the file system doesn't work with relative paths well
 vi.mock("@utils/md/consts", () => ({
   NOTES_PATH: "/notes",
-}))
+}));
 
 beforeEach(() => {
   // Reset the virtual file system before each test
@@ -152,16 +153,16 @@ describe("getNotePaths", () => {
 
 describe("getNoteTopics", () => {
   beforeEach(() => {
-    vol.fromJSON(testFiles)
-  })
+    vol.fromJSON(testFiles);
+  });
   it("should return an array of topics", async () => {
     const expected = {
       articleTopics: new Set(["Book of Mormon", "Jewish tradition"]),
       slugToTopic: {
         "book-of-mormon": "Book of Mormon",
         "jewish-tradition": "Jewish tradition",
-      }
-    }
-    expect(await getNoteTopics("en")).toEqual(expected)
-  })
-})
+      },
+    };
+    expect(await getNoteTopics("en")).toEqual(expected);
+  });
+});

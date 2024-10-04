@@ -64,7 +64,6 @@ export const getNoteTopics = async (locale: Locale): Promise<{
   for (const notePath of notePaths) {
     const source = await readFile(notePath, "utf-8");
     const rawFrontmatter = matter(source).data;
-    console.log(rawFrontmatter);
     const frontmatter = Frontmatter.parse(rawFrontmatter);
     // bounce early if the locale doesn't match
     if (frontmatter.language !== locale) {

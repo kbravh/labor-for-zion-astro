@@ -8,7 +8,7 @@ import {
   addLinks,
   getSlugFromFilepath,
   getTitleAndSlugMaps,
-  notePaths,
+  getNotePaths,
 } from "@utils/md/readAndParse";
 import { readFileSync } from "fs";
 import matter from "gray-matter";
@@ -38,6 +38,7 @@ export const generateRssFeed = async ({
   site,
 }: GenerateRSSFeedArgs) => {
   const { titleToSlug } = await getTitleAndSlugMaps(locale);
+  const notePaths = await getNotePaths();
   const posts = await Promise.all(
     notePaths
       .toReversed()

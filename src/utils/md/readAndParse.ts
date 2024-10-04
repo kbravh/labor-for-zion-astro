@@ -8,7 +8,6 @@ import { type Locale } from "../../validation/i18n";
 import { dataStore } from "./dataStore";
 import { NOTES_PATH } from "./consts";
 
-
 export const removeMdxExtension = (path: string) => path.replace(/\.mdx?$/, "");
 
 export type Backlink = { title: string; slug: string; excerpt: string | null };
@@ -40,13 +39,15 @@ export const getSlugFromFilepath = (path: string): string =>
 export const getSlugFromTitle = (title: string): string =>
   slugify(title, { lower: true });
 
-export const getNotePaths = async (path: string = NOTES_PATH) => walkPath(path)
+export const getNotePaths = async (path: string = NOTES_PATH) => walkPath(path);
 
 /**
  * Finds all tags that are included in the frontmatter of the articles.
  * Returns a map of tag slugs to tag names, and a set of unique tags.
  */
-export const getNoteTopics = async (locale: Locale): Promise<{
+export const getNoteTopics = async (
+  locale: Locale,
+): Promise<{
   slugToTopic: Record<string, string>;
   articleTopics: Set<string>;
 }> => {
@@ -89,7 +90,9 @@ export const getNoteTopics = async (locale: Locale): Promise<{
  * "Interactive Teaching MOC", the slug can be found through either.
  * Includes links that are mentioned but don't exist yet.
  */
-export const getTitleAndSlugMaps = async (locale: Locale): Promise<{
+export const getTitleAndSlugMaps = async (
+  locale: Locale,
+): Promise<{
   titleToSlug: Record<string, string>;
   slugToTitle: Record<string, string>;
 }> => {
@@ -105,7 +108,11 @@ export const getTitleAndSlugMaps = async (locale: Locale): Promise<{
   for (const article of notePaths) {
     const source = await readFile(article, "utf-8");
     const frontmatter = Frontmatter.parse(matter(source).data);
+    console.log("article", article);
     if (frontmatter.language !== locale) {
+      console.log(
+        `skipping because the frontmatter lang ${frontmatter.language} doesn't match the locale ${locale}`,
+      );
       continue;
     }
     titleMap[frontmatter.title] = getSlugFromFilepath(article);
@@ -135,7 +142,9 @@ export const getTitleAndSlugMaps = async (locale: Locale): Promise<{
  * Creates a map of slugs to their respective filepaths. This is necessary to
  * support nested filepaths.
  */
-export const getSlugToPathMap = async (locale: Locale): Promise<Record<string, string>> => {
+export const getSlugToPathMap = async (
+  locale: Locale,
+): Promise<Record<string, string>> => {
   const { slugToPath } = dataStore[locale];
   if (slugToPath) {
     return slugToPath;
@@ -256,12 +265,12 @@ const getBracketLinks =
 
 // Finds [[Link]] style note links
 export const getOutgoingLinks = getBracketLinks(
-  /(?:\w+\W+){0,10}(\[\[([^\[\]]+)\]\])(?:\W+\w+\W){0,10}/ig,
+  /(?:\w+\W+){0,10}(\[\[([^\[\]]+)\]\])(?:\W+\w+\W){0,10}/gi,
 );
 
 // Finds ![[Link]] style embed links
 export const getEmbedLinks = getBracketLinks(
-  /(?:\w+\W+){0,10}(!\[\[([^\[\]]+)\]\])(?:\W+\w+\W){0,10}/ig,
+  /(?:\w+\W+){0,10}(!\[\[([^\[\]]+)\]\])(?:\W+\w+\W){0,10}/gi,
 );
 
 export const cleanupExcerpt = ({
@@ -283,7 +292,9 @@ export const cleanupExcerpt = ({
 /**
  * Provides a map of titles and aliases to all backlinks from other files.
  */
-export const getBacklinks = async (locale: Locale): Promise<Record<string, Backlink[]>> => {
+export const getBacklinks = async (
+  locale: Locale,
+): Promise<Record<string, Backlink[]>> => {
   const { titlesWithBacklinks } = dataStore[locale];
 
   if (titlesWithBacklinks) {
@@ -359,7 +370,10 @@ export const getArticles = async (filter?: Filter): Promise<PostListing[]> => {
 };
 
 // Returns `updated` if defined, otherwise returns the initial publish date
-export const getLastUpdatedDateFromSlug = async (locale: Locale, slug: string): Promise<Date | undefined> => {
+export const getLastUpdatedDateFromSlug = async (
+  locale: Locale,
+  slug: string,
+): Promise<Date | undefined> => {
   const slugToPathMap = await getSlugToPathMap(locale);
   const path = slugToPathMap[slug];
   if (!path) {

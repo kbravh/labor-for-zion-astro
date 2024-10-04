@@ -45,16 +45,16 @@ export const generateRssFeed = async ({
       .map(async (notePath): Promise<RSSFeedItem | undefined> => {
         const source = readFileSync(notePath, "utf-8");
         const document = matter(source);
-        const text = await addLinks(locale, titleToSlug, document.content);
-        const content = md.render(text);
         const frontmatter = document.data;
         const parsedFrontmatter = Frontmatter.parse(frontmatter);
         if (parsedFrontmatter.language !== locale) {
           return undefined;
         }
+        const text = await addLinks(locale, titleToSlug, document.content);
+        const content = md.render(text);
         return {
           content: sanitizeHtml(content),
-          link: `/notes/${getSlugFromFilepath(notePath)}`,
+          link: `/es/notes/${getSlugFromFilepath(notePath)}`,
           title: parsedFrontmatter.title,
           pubDate: parsedFrontmatter.date,
           description: parsedFrontmatter.description,

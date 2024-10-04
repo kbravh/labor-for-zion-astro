@@ -39,7 +39,25 @@ export const getSlugFromFilepath = (path: string): string =>
 export const getSlugFromTitle = (title: string): string =>
   slugify(title, { lower: true });
 
-export const getNotePaths = async (path: string = NOTES_PATH) => walkPath(path);
+/**
+ * Returns an array of all file paths in the notes directory
+ * that match the provided locale, if provided.
+ * @param {Locale} locale - the locale to filter by
+ * @returns {Promise<string[]>} - an array of file paths
+ */
+export const getNotePaths = async (locale?: Locale): Promise<string[]> => {
+  const paths = await walkPath(NOTES_PATH);
+  if (!locale) {
+    return paths;
+  }
+  return paths.filter(path => {
+    const source = readFileSync(path, "utf-8");
+    const rawFrontmatter = matter(source).data;
+    const frontmatter = Frontmatter.parse(rawFrontmatter);
+    // bounce early if the locale doesn't match
+    return frontmatter.language === locale;
+  })
+}
 
 /**
  * Finds all tags that are included in the frontmatter of the articles.
@@ -61,15 +79,11 @@ export const getNoteTopics = async (
   const newSlugToTopic: Record<string, string> = {};
   const newArticleTopics = new Set<string>();
   // Loop through all articles and extract topic and frontmatter
-  const notePaths = await getNotePaths();
+  const notePaths = await getNotePaths(locale);
   for (const notePath of notePaths) {
     const source = await readFile(notePath, "utf-8");
     const rawFrontmatter = matter(source).data;
     const frontmatter = Frontmatter.parse(rawFrontmatter);
-    // bounce early if the locale doesn't match
-    if (frontmatter.language !== locale) {
-      continue;
-    }
     for (const tag of frontmatter.tags ?? []) {
       newArticleTopics.add(tag);
       newSlugToTopic[slugify(tag, { lower: true })] = tag;
@@ -104,17 +118,10 @@ export const getTitleAndSlugMaps = async (
   const titleMap: Record<string, string> = {};
   const slugMap: Record<string, string> = {};
   // this creates a map of all titles and aliases to their corresponding slug
-  const notePaths = await getNotePaths();
+  const notePaths = await getNotePaths(locale);
   for (const article of notePaths) {
     const source = await readFile(article, "utf-8");
     const frontmatter = Frontmatter.parse(matter(source).data);
-    console.log("article", article);
-    if (frontmatter.language !== locale) {
-      console.log(
-        `skipping because the frontmatter lang ${frontmatter.language} doesn't match the locale ${locale}`,
-      );
-      continue;
-    }
     titleMap[frontmatter.title] = getSlugFromFilepath(article);
     slugMap[getSlugFromFilepath(article)] = frontmatter.title;
     frontmatter.aliases?.forEach((alias) => {
@@ -151,7 +158,7 @@ export const getSlugToPathMap = async (
   }
 
   let map: Record<string, string> = {};
-  const notePaths = await getNotePaths();
+  const notePaths = await getNotePaths(locale);
   map = notePaths.reduce((accumulator, path) => {
     const slug = getSlugFromFilepath(path);
     accumulator[slug] = path;

@@ -38,7 +38,7 @@ export const generateRssFeed = async ({
   site,
 }: GenerateRSSFeedArgs) => {
   const { titleToSlug } = await getTitleAndSlugMaps(locale);
-  const notePaths = await getNotePaths();
+  const notePaths = await getNotePaths(locale);
   const posts = await Promise.all(
     notePaths
       .toReversed()
@@ -47,9 +47,6 @@ export const generateRssFeed = async ({
         const document = matter(source);
         const frontmatter = document.data;
         const parsedFrontmatter = Frontmatter.parse(frontmatter);
-        if (parsedFrontmatter.language !== locale) {
-          return undefined;
-        }
         const text = await addLinks(locale, titleToSlug, document.content);
         const content = md.render(text);
         return {

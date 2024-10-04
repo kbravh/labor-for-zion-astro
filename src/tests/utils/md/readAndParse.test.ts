@@ -5,6 +5,7 @@ import {
   getNoteTopics,
   getSlugFromFilepath,
   getSlugFromTitle,
+  getSlugToPathMap,
   getTitleAndSlugMaps,
   removeMdxExtension,
 } from "@utils/md/readAndParse";
@@ -30,6 +31,7 @@ vi.mock("@utils/md/consts", () => ({
 beforeEach(() => {
   // Reset the virtual file system before each test
   vol.reset();
+  vol.fromJSON(testFiles);
 });
 
 describe("removeMdxExtension", () => {
@@ -136,6 +138,7 @@ describe("getNotePaths", () => {
       "/notes/testFile3.mdx": "",
     };
 
+    vol.reset();
     vol.fromJSON(files, "/");
 
     const expected = [
@@ -144,10 +147,11 @@ describe("getNotePaths", () => {
       "/notes/testFile3.mdx",
     ];
 
-    expect(await getNotePaths("/notes")).toEqual(expected);
+    expect(await getNotePaths()).toEqual(expected);
   });
 
   it("should throw an error if the directory does not exist", async () => {
+    vol.reset();
     await expect(getNotePaths()).rejects.toThrowError();
   });
 });
@@ -194,3 +198,17 @@ describe("getTitleAndSlugMaps", () => {
     expect(results.titleToSlug).toEqual(expected.titleToSlug);
   });
 });
+
+describe("getSlugToPathMap", () => {
+  beforeEach(() => {
+    vol.fromJSON(testFiles);
+  })
+
+  it("should generate a map of slugs to file paths", async () => {
+    const expected = {
+      "and-my-father-dwelt-in-a-tent": "/notes/en/2024/01/and-my-father-dwelt-in-a-tent.md",
+    };
+    const results = await getSlugToPathMap("en");
+    expect(results).toEqual(expected);
+  });
+})

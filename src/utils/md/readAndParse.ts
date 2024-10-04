@@ -1,5 +1,5 @@
 import { readFile, readdir, stat } from "fs/promises";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import matter from "gray-matter";
 import path, { basename } from "path";
 import slugify from "slugify";
@@ -7,7 +7,7 @@ import { BracketLink, Frontmatter } from "../../validation/md";
 import { type Locale } from "../../validation/i18n";
 import { dataStore } from "./dataStore";
 
-export const NOTES_PATH = path.join(process.cwd(), "notes");
+export const NOTES_PATH = "notes";
 
 export const removeMdxExtension = (path: string) => path.replace(/\.mdx?$/, "");
 
@@ -17,6 +17,9 @@ export type Backlink = { title: string; slug: string; excerpt: string | null };
  * Walks down a path and recursively collects all of the filepaths
  */
 const walkPath = async (dir: string): Promise<string[]> => {
+  if (!existsSync(dir)) {
+    throw new Error(`Directory ${dir} does not exist`);
+  }
   const files = await readdir(dir);
   const promises = files.map(async (file) => {
     const filepath = path.join(dir, file);

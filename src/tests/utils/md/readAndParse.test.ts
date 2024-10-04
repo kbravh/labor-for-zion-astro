@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { fs, vol } from "memfs";
-import {removeMdxExtension} from "@utils/md/readAndParse";
+import {
+  getNotePaths,
+  getSlugFromFilepath,
+  getSlugFromTitle,
+  removeMdxExtension,
+} from "@utils/md/readAndParse";
 
 vi.mock("node:fs", async () => {
   const memfs = await vi.importActual<{ fs: typeof fs }>("memfs");
@@ -54,5 +59,87 @@ describe("removeMdxExtension", () => {
     const fileName = "test.file";
     const expected = "test.file";
     expect(removeMdxExtension(fileName)).toBe(expected);
+  });
+});
+
+describe("getSlugFromFilepath", () => {
+  it("should return the file name without the extension", () => {
+    const filePath = "/path/to/testFile.mdx";
+    const expected = "testFile";
+    expect(getSlugFromFilepath(filePath)).toBe(expected);
+  });
+
+  it("should return the file name without the extension with multiple dots", () => {
+    const filePath = "/path/to/test.file.mdx";
+    const expected = "test.file";
+    expect(getSlugFromFilepath(filePath)).toBe(expected);
+  });
+
+  it("should return the file name without the extension for .md files", () => {
+    const filePath = "/path/to/testFile.md";
+    const expected = "testFile";
+    expect(getSlugFromFilepath(filePath)).toBe(expected);
+  });
+
+  it("should return the file name without the extension for .md files with multiple dots", () => {
+    const filePath = "/path/to/test.file.md";
+    const expected = "test.file";
+    expect(getSlugFromFilepath(filePath)).toBe(expected);
+  });
+
+  it("should return the file name without the extension for files with no extension", () => {
+    const filePath = "/path/to/testFile";
+    const expected = "testFile";
+    expect(getSlugFromFilepath(filePath)).toBe(expected);
+  });
+
+  it("should return the file name without the extension for files with a dot in the name and no md(x) extension", () => {
+    const filePath = "/path/to/test.file";
+    const expected = "test.file";
+    expect(getSlugFromFilepath(filePath)).toBe(expected);
+  });
+});
+
+describe("getSlugFromTitle", () => {
+  it("should return the title in kebab case", () => {
+    const title = "This is a test title";
+    const expected = "this-is-a-test-title";
+    expect(getSlugFromTitle(title)).toBe(expected);
+  });
+
+  it("should return the title in kebab case with special characters", () => {
+    const title = "This is a test title$";
+    const expected = "this-is-a-test-titledollar";
+    expect(getSlugFromTitle(title)).toBe(expected);
+  });
+
+  it("should return the title in kebab case with numbers", () => {
+    const title = "This is a test title 123";
+    const expected = "this-is-a-test-title-123";
+    expect(getSlugFromTitle(title)).toBe(expected);
+  });
+});
+
+describe("getNotePaths", () => {
+  it("should return an array of file paths", async () => {
+    const files = {
+      "/notes/testFile1.mdx": "",
+      "/notes/testFile2.mdx": "",
+      "/notes/testFile3.mdx": "",
+    };
+
+    vol.fromJSON(files, "/");
+
+    const expected = [
+      "/notes/testFile1.mdx",
+      "/notes/testFile2.mdx",
+      "/notes/testFile3.mdx",
+    ];
+
+    expect(await getNotePaths()).toEqual(expected);
+  });
+
+  it("should throw an error if the directory does not exist", async () => {
+    await expect(getNotePaths()).rejects.toThrowError();
   });
 });

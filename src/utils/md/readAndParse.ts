@@ -105,6 +105,9 @@ export const getTitleAndSlugMaps = async (locale: Locale): Promise<{
   for (const article of notePaths) {
     const source = await readFile(article, "utf-8");
     const frontmatter = Frontmatter.parse(matter(source).data);
+    if (frontmatter.language !== locale) {
+      continue;
+    }
     titleMap[frontmatter.title] = getSlugFromFilepath(article);
     slugMap[getSlugFromFilepath(article)] = frontmatter.title;
     frontmatter.aliases?.forEach((alias) => {

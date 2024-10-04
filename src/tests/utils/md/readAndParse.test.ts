@@ -5,6 +5,7 @@ import {
   getNoteTopics,
   getSlugFromFilepath,
   getSlugFromTitle,
+  getTitleAndSlugMaps,
   removeMdxExtension,
 } from "@utils/md/readAndParse";
 import { testFiles } from "./testFiles";
@@ -164,5 +165,32 @@ describe("getNoteTopics", () => {
       },
     };
     expect(await getNoteTopics("en")).toEqual(expected);
+  });
+});
+
+describe("getTitleAndSlugMaps", () => {
+  beforeEach(() => {
+    vol.fromJSON(testFiles);
+  });
+  it("should generate a map of titles to slugs and slugs to titles", async () => {
+    const expected = {
+      slugToTitle: {
+        "and-my-father-dwelt-in-a-tent": "And My Father Dwelt in a Tent",
+        "1-nephi-1.2": "1 Nephi 1.2",
+        "1-nephi-2.15": "1 Nephi 2.15",
+        "1-nephi-3.16": "1 Nephi 3.16",
+        "john-11.35": "John 11.35",
+      },
+      titleToSlug: {
+        "1 Nephi 1.2": "1-nephi-1.2",
+        "1 Nephi 2.15": "1-nephi-2.15",
+        "1 Nephi 3.16": "1-nephi-3.16",
+        "And My Father Dwelt in a Tent": "and-my-father-dwelt-in-a-tent",
+        "John 11.35": "john-11.35",
+      },
+    };
+    const results = await getTitleAndSlugMaps("en");
+    expect(results.slugToTitle).toEqual(expected.slugToTitle);
+    expect(results.titleToSlug).toEqual(expected.titleToSlug);
   });
 });

@@ -42,8 +42,8 @@ export const getSlugFromTitle = (title: string): string =>
 /**
  * Returns an array of all file paths in the notes directory
  * that match the provided locale, if provided.
- * @param {Locale} locale - the locale to filter by
- * @returns {Promise<string[]>} - an array of file paths
+ * @param locale - the locale to filter by
+ * @returns an array of file paths
  */
 export const getNotePaths = async (locale?: Locale): Promise<string[]> => {
   const paths = await walkPath(NOTES_PATH);
@@ -62,6 +62,7 @@ export const getNotePaths = async (locale?: Locale): Promise<string[]> => {
 /**
  * Finds all tags that are included in the frontmatter of the articles.
  * Returns a map of tag slugs to tag names, and a set of unique tags.
+ * @param locale - The locale to filter by
  */
 export const getNoteTopics = async (
   locale: Locale,
@@ -103,6 +104,7 @@ export const getNoteTopics = async (
  * if the page "Interactive Teaching" has an alias of
  * "Interactive Teaching MOC", the slug can be found through either.
  * Includes links that are mentioned but don't exist yet.
+ * @param locale - The locale to filter by
  */
 export const getTitleAndSlugMaps = async (
   locale: Locale,
@@ -242,6 +244,8 @@ export const addLinks = async (
  * the link with brackets, its text, its alias, and an excerpt if it exists.
  * Takes a regex pattern to use to find bracket link matches. Returns
  * a new function that takes the mdx source.
+ * @param pattern - the regex pattern to match on
+ * @returns a function that takes the mdx source and returns an array of bracket links
  */
 const getBracketLinks =
   (pattern: RegExp) =>
@@ -270,16 +274,30 @@ const getBracketLinks =
     return links;
   };
 
-// Finds [[Link]] style note links
+/**
+ * Finds [[Link]] style note links.
+ * Will also match embed style links (![[Link]]).
+ * @param source - the source to search for links
+ * @returns an array of bracket links
+ */
 export const getOutgoingLinks = getBracketLinks(
   /(?:\w+\W+){0,10}(\[\[([^\[\]]+)\]\])(?:\W+\w+\W){0,10}/gi,
 );
 
-// Finds ![[Link]] style embed links
+/**
+ * Finds only ![[Link]] style embed links.
+ * @param source - the source to search for embed links
+ * @returns an array of bracket links
+ */
 export const getEmbedLinks = getBracketLinks(
   /(?:\w+\W+){0,10}(!\[\[([^\[\]]+)\]\])(?:\W+\w+\W){0,10}/gi,
 );
 
+/**
+ * Cleans up the excerpt by removing newlines and replacing the link with the alias if it exists.
+ * @param excerpt - the excerpt to clean up
+ * @param link - the link that was found
+ */
 export const cleanupExcerpt = ({
   excerpt,
   link,
@@ -298,6 +316,8 @@ export const cleanupExcerpt = ({
 
 /**
  * Provides a map of titles and aliases to all backlinks from other files.
+ * @param locale - the locale to filter by
+ * @returns a map of titles/aliases to backlinks
  */
 export const getBacklinks = async (
   locale: Locale,
@@ -310,7 +330,7 @@ export const getBacklinks = async (
   const map: Record<string, Backlink[]> = {};
   const { titleToSlug } = await getTitleAndSlugMaps(locale);
 
-  const notePaths = await getNotePaths();
+  const notePaths = await getNotePaths(locale);
   for (const articlePath of notePaths) {
     const source = await readFile(articlePath, "utf-8");
     const frontmatter = Frontmatter.parse(matter(source).data);

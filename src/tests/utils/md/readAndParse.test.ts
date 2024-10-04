@@ -1,8 +1,14 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { fs, vol } from "memfs";
 import {
+  addLinks,
+  cleanupExcerpt,
+  getArticles,
+  getBacklinks,
+  getEmbedLinks,
   getNotePaths,
   getNoteTopics,
+  getOutgoingLinks,
   getSlugFromFilepath,
   getSlugFromTitle,
   getSlugToPathMap,
@@ -202,13 +208,276 @@ describe("getTitleAndSlugMaps", () => {
 describe("getSlugToPathMap", () => {
   beforeEach(() => {
     vol.fromJSON(testFiles);
-  })
+  });
 
   it("should generate a map of slugs to file paths", async () => {
     const expected = {
-      "and-my-father-dwelt-in-a-tent": "/notes/en/2024/01/and-my-father-dwelt-in-a-tent.md",
+      "and-my-father-dwelt-in-a-tent":
+        "/notes/en/2024/01/and-my-father-dwelt-in-a-tent.md",
     };
     const results = await getSlugToPathMap("en");
     expect(results).toEqual(expected);
   });
+});
+
+describe("addLinks", () => {
+  it("should add links to references in the text", async () => {
+    const locale = "en";
+    const titleToSlug = {
+      "1 Nephi 1.2": "1-nephi-1.2",
+      "1 Nephi 2.15": "1-nephi-2.15",
+      "1 Nephi 3.16": "1-nephi-3.16",
+      "And My Father Dwelt in a Tent": "and-my-father-dwelt-in-a-tent",
+      "John 11.35": "john-11.35",
+    };
+    const text = `The most memorized Christian scripture is without a doubt "Jesus wept." ([[John 11.35]]). A very close second, at least among members of the Church, is "And my father dwelt in a tent" ([[1 Nephi 2.15]]). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
+    const expected = `The most memorized Christian scripture is without a doubt "Jesus wept." (<a href="/notes/john-11.35">John 11.35</a>). A very close second, at least among members of the Church, is "And my father dwelt in a tent" (<a href="/notes/1-nephi-2.15">1 Nephi 2.15</a>). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
+    expect(await addLinks(locale, titleToSlug, text)).toBe(expected);
+  });
+});
+
+describe("getOutgoingLinks", () => {
+  it("should return an array of outgoing links", async () => {
+    const text = `The most memorized Christian scripture is without a doubt "Jesus wept." ([[John 11.35]]). A very close second, at least among members of the Church, is "And my father dwelt in a tent" ([[1 Nephi 2.15]]). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
+    const expected = [
+      {
+        alias: undefined,
+        excerpt:
+          'most memorized Christian scripture is without a doubt "Jesus wept." (John 11.35). A',
+        link: "[[John 11.35]]",
+        title: "John 11.35",
+      },
+      {
+        alias: undefined,
+        excerpt:
+          'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While',
+        link: "[[1 Nephi 2.15]]",
+        title: "1 Nephi 2.15",
+      },
+    ];
+    expect(getOutgoingLinks(text)).toEqual(expected);
+  });
+  it("should return an empty array if there are no outgoing links", () => {
+    const text = `The most memorized Christian scripture is without a doubt "Jesus wept." A very close second, at least among members of the Church, is "And my father dwelt in a tent". While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
+    expect(getOutgoingLinks(text)).toEqual([]);
+  });
+  it("should provide the alias if present", () => {
+    const text = `The most memorized Christian scripture is without a doubt "Jesus wept." ([[John 11.35|Jesus wept]]). A very close second, at least among members of the Church, is "And my father dwelt in a tent" ([[1 Nephi 2.15]]). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
+    const expected = [
+      {
+        alias: "Jesus wept",
+        excerpt:
+          'most memorized Christian scripture is without a doubt "Jesus wept." (Jesus wept). A',
+        link: "[[John 11.35|Jesus wept]]",
+        title: "John 11.35",
+      },
+      {
+        alias: undefined,
+        excerpt:
+          'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While',
+        link: "[[1 Nephi 2.15]]",
+        title: "1 Nephi 2.15",
+      },
+    ];
+    expect(getOutgoingLinks(text)).toEqual(expected);
+  });
+});
+
+describe("getEmbedLinks", () => {
+  it("should return an array of embed links", async () => {
+    const text = `The most memorized Christian scripture is without a doubt "Jesus wept." (![[John 11.35]]). A very close second, at least among members of the Church, is "And my father dwelt in a tent" (![[1 Nephi 2.15]]). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
+    const expected = [
+      {
+        excerpt:
+          'most memorized Christian scripture is without a doubt "Jesus wept." (John 11.35). A',
+        link: "![[John 11.35]]",
+        title: "John 11.35",
+      },
+      {
+        excerpt:
+          'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While',
+        link: "![[1 Nephi 2.15]]",
+        title: "1 Nephi 2.15",
+      },
+    ];
+    expect(getEmbedLinks(text)).toEqual(expected);
+  });
+  it("should capture embed links with aliases", () => {
+    const text = `The most memorized Christian scripture is without a doubt "Jesus wept." (![[John 11.35|Jesus wept]]). A very close second, at least among members of the Church, is "And my father dwelt in a tent" (![[1 Nephi 2.15]]). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
+    const expected = [
+      {
+        alias: "Jesus wept",
+        excerpt:
+          'most memorized Christian scripture is without a doubt "Jesus wept." (Jesus wept). A',
+        link: "![[John 11.35|Jesus wept]]",
+        title: "John 11.35",
+      },
+      {
+        alias: undefined,
+        excerpt:
+          'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While',
+        link: "![[1 Nephi 2.15]]",
+        title: "1 Nephi 2.15",
+      },
+    ];
+    expect(getEmbedLinks(text)).toEqual(expected);
+  });
+  it("should not match regular bracket links", async () => {
+    const text = `The most memorized Christian scripture is without a doubt "Jesus wept." ([[John 11.35]]). A very close second, at least among members of the Church, is "And my father dwelt in a tent" ([[1 Nephi 2.15]]). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
+    expect(getEmbedLinks(text)).toEqual([]);
+  });
+  it("should return an empty array if there are no embed links", () => {
+    const text = `The most memorized Christian scripture is without a doubt "Jesus wept." A very close second, at least among members of the Church, is "And my father dwelt in a tent". While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
+    expect(getEmbedLinks(text)).toEqual([]);
+  });
+});
+
+describe("cleanupExcerpt", () => {
+  it("should remove the link from the excerpt", () => {
+    const excerpt = {
+      alias: undefined,
+      excerpt:
+        'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While',
+      link: "![[1 Nephi 2.15]]",
+      title: "1 Nephi 2.15",
+    };
+    const expected =
+      'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While';
+    expect(cleanupExcerpt(excerpt)).toBe(expected);
+  });
+  it("should remove the link from the excerpt with an alias", () => {
+    const excerpt = {
+      alias: "Jesus wept",
+      excerpt:
+        'most memorized Christian scripture is without a doubt "Jesus wept." (Jesus wept). A',
+      link: "![[John 11.35|Jesus wept]]",
+      title: "John 11.35",
+    };
+    const expected =
+      'most memorized Christian scripture is without a doubt "Jesus wept." (Jesus wept). A';
+    expect(cleanupExcerpt(excerpt)).toBe(expected);
+  });
+});
+
+describe("getBacklinks", () => {
+  it("should return an array of backlinks", async () => {
+    const expected = {
+      "1 Nephi 1.2": [
+        {
+          excerpt:
+            'learning of the Jews and the language of the Egyptians" (1 Nephi 1.2). His',
+          slug: "and-my-father-dwelt-in-a-tent",
+          title: "And My Father Dwelt in a Tent",
+        },
+      ],
+      "1 Nephi 2.15": [
+        {
+          excerpt:
+            'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While',
+          slug: "and-my-father-dwelt-in-a-tent",
+          title: "And My Father Dwelt in a Tent",
+        },
+      ],
+      "1 Nephi 3.16": [
+        {
+          excerpt:
+            'use the "gold and silver, and all manner of riches" (1 Nephi 3.16) to',
+          slug: "and-my-father-dwelt-in-a-tent",
+          title: "And My Father Dwelt in a Tent",
+        },
+      ],
+      "John 11.35": [
+        {
+          excerpt:
+            'most memorized Christian scripture is without a doubt "Jesus wept." (John 11.35). A',
+          slug: "and-my-father-dwelt-in-a-tent",
+          title: "And My Father Dwelt in a Tent",
+        },
+      ],
+    };
+    expect(await getBacklinks("en")).toEqual(expected);
+  });
+});
+
+describe("getArticles", () => {
+  it("should return an array of articles sorted by date", async () => {
+    expect(await getArticles()).toEqual([
+          {
+           "frontmatter":  {
+             "date": new Date("2024-06-12T15:40:16.967Z"),
+             "description": "¿Por qué Nefi sintió importante incluir este pequeño detalle acerca de su padre en su registro histórico?",
+             "language": "es",
+             "tags":  [
+               "Libro de Mormón",
+               "Tradición judía",
+             ],
+             "title": "Y Mi Padre Vivía en una Tienda",
+             "updated": new Date("2024-06-19T02:46:02.850Z"),
+           },
+           "slug": "y-mi-padre-vivía-en-una-tienda",
+         },
+          {
+           "frontmatter":  {
+             "date": new Date("2024-01-12T15:40:16.967Z"),
+             "description": "Why did Nephi feel it important to include this small detail about his father in his historical record?",
+             "language": "en",
+             "tags":  [
+               "Book of Mormon",
+               "Jewish tradition",
+             ],
+             "title": "And My Father Dwelt in a Tent",
+             "updated": new Date("2024-01-19T02:46:02.850Z"),
+           },
+           "slug": "and-my-father-dwelt-in-a-tent",
+         },
+       ]);
+  })
+  it("should filter articles by locale", async () => {
+    expect(await getArticles({locale: "en"})).toEqual([{
+      "frontmatter":  {
+        "date": new Date("2024-01-12T15:40:16.967Z"),
+        "description": "Why did Nephi feel it important to include this small detail about his father in his historical record?",
+        "language": "en",
+        "tags":  [
+          "Book of Mormon",
+          "Jewish tradition",
+        ],
+        "title": "And My Father Dwelt in a Tent",
+        "updated": new Date("2024-01-19T02:46:02.850Z"),
+      },
+      "slug": "and-my-father-dwelt-in-a-tent",
+    }]);
+  })
+  it("should filter articles by topic", async () => {
+    expect(await getArticles({topic: "Libro de Mormón"})).toEqual([{
+      "frontmatter":  {
+        "date": new Date("2024-06-12T15:40:16.967Z"),
+        "description": "¿Por qué Nefi sintió importante incluir este pequeño detalle acerca de su padre en su registro histórico?",
+        "language": "es",
+        "tags":  [
+          "Libro de Mormón",
+          "Tradición judía",
+        ],
+        "title": "Y Mi Padre Vivía en una Tienda",
+        "updated": new Date("2024-06-19T02:46:02.850Z"),
+      },
+      "slug": "y-mi-padre-vivía-en-una-tienda",
+    }]);
+  })
+  it("should filter articles by locale and topic", async () => {
+    expect(await getArticles({locale: "es", topic: "Libro de Mormón"})).toEqual([{
+      "frontmatter":  {
+        "date": new Date("2024-06-12T15:40:16.967Z"),
+        "description": "¿Por qué Nefi sintió importante incluir este pequeño detalle acerca de su padre en su registro histórico?",
+        "language": "es",
+        "tags":  [
+          "Libro de Mormón",
+          "Tradición judía",
+        ],
+        "title": "Y Mi Padre Vivía en una Tienda",
+        "updated": new Date("2024-06-19T02:46:02.850Z"),
+      },
+      "slug": "y-mi-padre-vivía-en-una-tienda",
+    }]);
+  })
 })

@@ -6,6 +6,7 @@ import {
   getArticles,
   getBacklinks,
   getEmbedLinks,
+  getLastUpdatedDateFromSlug,
   getNotePaths,
   getNoteTopics,
   getOutgoingLinks,
@@ -402,82 +403,90 @@ describe("getBacklinks", () => {
 describe("getArticles", () => {
   it("should return an array of articles sorted by date", async () => {
     expect(await getArticles()).toEqual([
-          {
-           "frontmatter":  {
-             "date": new Date("2024-06-12T15:40:16.967Z"),
-             "description": "¿Por qué Nefi sintió importante incluir este pequeño detalle acerca de su padre en su registro histórico?",
-             "language": "es",
-             "tags":  [
-               "Libro de Mormón",
-               "Tradición judía",
-             ],
-             "title": "Y Mi Padre Vivía en una Tienda",
-             "updated": new Date("2024-06-19T02:46:02.850Z"),
-           },
-           "slug": "y-mi-padre-vivía-en-una-tienda",
-         },
-          {
-           "frontmatter":  {
-             "date": new Date("2024-01-12T15:40:16.967Z"),
-             "description": "Why did Nephi feel it important to include this small detail about his father in his historical record?",
-             "language": "en",
-             "tags":  [
-               "Book of Mormon",
-               "Jewish tradition",
-             ],
-             "title": "And My Father Dwelt in a Tent",
-             "updated": new Date("2024-01-19T02:46:02.850Z"),
-           },
-           "slug": "and-my-father-dwelt-in-a-tent",
-         },
-       ]);
-  })
+      {
+        frontmatter: {
+          date: new Date("2024-06-12T15:40:16.967Z"),
+          description:
+            "¿Por qué Nefi sintió importante incluir este pequeño detalle acerca de su padre en su registro histórico?",
+          language: "es",
+          tags: ["Libro de Mormón", "Tradición judía"],
+          title: "Y Mi Padre Vivía en una Tienda",
+        },
+        slug: "y-mi-padre-vivía-en-una-tienda",
+      },
+      {
+        frontmatter: {
+          date: new Date("2024-01-12T15:40:16.967Z"),
+          description:
+            "Why did Nephi feel it important to include this small detail about his father in his historical record?",
+          language: "en",
+          tags: ["Book of Mormon", "Jewish tradition"],
+          title: "And My Father Dwelt in a Tent",
+          updated: new Date("2024-01-19T02:46:02.850Z"),
+        },
+        slug: "and-my-father-dwelt-in-a-tent",
+      },
+    ]);
+  });
   it("should filter articles by locale", async () => {
-    expect(await getArticles({locale: "en"})).toEqual([{
-      "frontmatter":  {
-        "date": new Date("2024-01-12T15:40:16.967Z"),
-        "description": "Why did Nephi feel it important to include this small detail about his father in his historical record?",
-        "language": "en",
-        "tags":  [
-          "Book of Mormon",
-          "Jewish tradition",
-        ],
-        "title": "And My Father Dwelt in a Tent",
-        "updated": new Date("2024-01-19T02:46:02.850Z"),
+    expect(await getArticles({ locale: "en" })).toEqual([
+      {
+        frontmatter: {
+          date: new Date("2024-01-12T15:40:16.967Z"),
+          description:
+            "Why did Nephi feel it important to include this small detail about his father in his historical record?",
+          language: "en",
+          tags: ["Book of Mormon", "Jewish tradition"],
+          title: "And My Father Dwelt in a Tent",
+          updated: new Date("2024-01-19T02:46:02.850Z"),
+        },
+        slug: "and-my-father-dwelt-in-a-tent",
       },
-      "slug": "and-my-father-dwelt-in-a-tent",
-    }]);
-  })
+    ]);
+  });
   it("should filter articles by topic", async () => {
-    expect(await getArticles({topic: "Libro de Mormón"})).toEqual([{
-      "frontmatter":  {
-        "date": new Date("2024-06-12T15:40:16.967Z"),
-        "description": "¿Por qué Nefi sintió importante incluir este pequeño detalle acerca de su padre en su registro histórico?",
-        "language": "es",
-        "tags":  [
-          "Libro de Mormón",
-          "Tradición judía",
-        ],
-        "title": "Y Mi Padre Vivía en una Tienda",
-        "updated": new Date("2024-06-19T02:46:02.850Z"),
+    expect(await getArticles({ topic: "Libro de Mormón" })).toEqual([
+      {
+        frontmatter: {
+          date: new Date("2024-06-12T15:40:16.967Z"),
+          description:
+            "¿Por qué Nefi sintió importante incluir este pequeño detalle acerca de su padre en su registro histórico?",
+          language: "es",
+          tags: ["Libro de Mormón", "Tradición judía"],
+          title: "Y Mi Padre Vivía en una Tienda",
+        },
+        slug: "y-mi-padre-vivía-en-una-tienda",
       },
-      "slug": "y-mi-padre-vivía-en-una-tienda",
-    }]);
-  })
+    ]);
+  });
   it("should filter articles by locale and topic", async () => {
-    expect(await getArticles({locale: "es", topic: "Libro de Mormón"})).toEqual([{
-      "frontmatter":  {
-        "date": new Date("2024-06-12T15:40:16.967Z"),
-        "description": "¿Por qué Nefi sintió importante incluir este pequeño detalle acerca de su padre en su registro histórico?",
-        "language": "es",
-        "tags":  [
-          "Libro de Mormón",
-          "Tradición judía",
-        ],
-        "title": "Y Mi Padre Vivía en una Tienda",
-        "updated": new Date("2024-06-19T02:46:02.850Z"),
+    expect(
+      await getArticles({ locale: "es", topic: "Libro de Mormón" }),
+    ).toEqual([
+      {
+        frontmatter: {
+          date: new Date("2024-06-12T15:40:16.967Z"),
+          description:
+            "¿Por qué Nefi sintió importante incluir este pequeño detalle acerca de su padre en su registro histórico?",
+          language: "es",
+          tags: ["Libro de Mormón", "Tradición judía"],
+          title: "Y Mi Padre Vivía en una Tienda",
+        },
+        slug: "y-mi-padre-vivía-en-una-tienda",
       },
-      "slug": "y-mi-padre-vivía-en-una-tienda",
-    }]);
-  })
-})
+    ]);
+  });
+});
+
+describe("getLastUpdatedFromSlug", () => {
+  it("should return the last updated date for a given slug", async () => {
+    expect(
+      await getLastUpdatedDateFromSlug("en", "and-my-father-dwelt-in-a-tent"),
+    ).toEqual(new Date("2024-01-19T02:46:02.850Z"));
+  });
+  it("should return the original date if there is no updated date", async () => {
+    expect(
+      await getLastUpdatedDateFromSlug("es", "y-mi-padre-vivía-en-una-tienda"),
+    ).toEqual(new Date("2024-06-12T15:40:16.967Z"));
+  });
+});

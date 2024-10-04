@@ -29,7 +29,7 @@ This argument is compelling and surely holds truth. However, if there's anything
 title: Y Mi Padre Vivía en una Tienda
 description: ¿Por qué Nefi sintió importante incluir este pequeño detalle acerca de su padre en su registro histórico?
 date: 2024-06-12T10:40:16.967392700-05:00
-updated: 2024-06-18T21:46:02.850159800-05:00
+updated:
 language: es
 tags:
   - Libro de Mormón

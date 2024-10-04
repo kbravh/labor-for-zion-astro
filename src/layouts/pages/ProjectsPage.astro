@@ -22,7 +22,14 @@ type ProjectListing = {
 };
 
 const projects: ProjectListing[] = [
-  { href: '/projects/obsidian-scripture-vault', name: 'vault' },
+  ...(locale === 'en' ?
+    [
+      {
+        href: '/projects/obsidian-scripture-vault',
+        name: 'vault',
+      } as ProjectListing,
+    ]
+  : []),
   { href: 'https://scripture.page', name: 'scriptly' },
 ];
 ---
@@ -36,9 +43,9 @@ const projects: ProjectListing[] = [
           projects.map(({ href, name }) => (
             <Link
               href={
-                href.startsWith('https')
-                  ? href
-                  : getRelativeLocaleUrl(locale, href)
+                href.startsWith('https') ? href : (
+                  getRelativeLocaleUrl(locale, href)
+                )
               }
             >
               <article class="text-balance flex flex-col">

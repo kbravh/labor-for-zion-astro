@@ -37,15 +37,13 @@ export const getSlugFromFilepath = (path: string): string =>
 export const getSlugFromTitle = (title: string): string =>
   slugify(title, { lower: true });
 
-export const notePaths = await walkPath(NOTES_PATH);
-
-let notePaths_memo;
+let notePaths: string[] | undefined;
 export const getNotePaths = async () => {
-	if (notePaths_memo) {
-		return notePaths_memo
+	if (notePaths) {
+		return notePaths
 	}
-	notePaths_memo = await walkPath(NOTES_PATH);
-	return notePaths_memo;
+	notePaths = await walkPath(NOTES_PATH);
+	return notePaths;
 }
 
 /**

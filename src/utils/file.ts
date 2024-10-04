@@ -14,7 +14,7 @@ export const writeFile = (key: string | symbol, data: unknown) => {
 
   // create the path if it doesn't exist
   if (!existsSync("data")) {
-    mkdirSync("data");
+    mkdirSync("data", {recursive: true});
   }
 
   // erase the old file and create a new one

@@ -23,7 +23,7 @@ export default defineConfig({
         if (/.*notes\/.+/.test(item.url)) {
           const locale = item.url.split("/").find(piece => LOCALES.includes(piece))
           const slug = basename(item.url);
-          const date = getLastUpdatedDateFromSlug(locale ?? "en", slug);
+          const date = await getLastUpdatedDateFromSlug(locale ?? "en", slug);
           if (!date) {
             return item;
           } else {

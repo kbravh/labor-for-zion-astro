@@ -36,7 +36,17 @@ export const getSlugFromFilepath = (path: string): string =>
 
 export const getSlugFromTitle = (title: string): string =>
   slugify(title, { lower: true });
+
 export const notePaths = await walkPath(NOTES_PATH);
+
+let notePaths_memo;
+export const getNotePaths = async () => {
+	if (notePaths_memo) {
+		return notePaths_memo
+	}
+	notePaths_memo = await walkPath(NOTES_PATH);
+	return notePaths_memo;
+}
 
 /**
  * Finds all tags that are included in the frontmatter of the articles.
@@ -56,6 +66,7 @@ export const getNoteTopics = async (locale: Locale): Promise<{
   const newSlugToTopic: Record<string, string> = {};
   const newArticleTopics = new Set<string>();
   // Loop through all articles and extract topic and frontmatter
+  const notePaths = await getNotePaths();
   for (const notePath of notePaths) {
     const source = await readFile(notePath, "utf-8");
     const frontmatter = Frontmatter.parse(matter(source).data);
@@ -95,6 +106,7 @@ export const getTitleAndSlugMaps = async (locale: Locale): Promise<{
   const titleMap: Record<string, string> = {};
   const slugMap: Record<string, string> = {};
   // this creates a map of all titles and aliases to their corresponding slug
+  const notePaths = await getNotePaths();
   for (const article of notePaths) {
     const source = await readFile(article, "utf-8");
     const frontmatter = Frontmatter.parse(matter(source).data);
@@ -125,14 +137,14 @@ export const getTitleAndSlugMaps = async (locale: Locale): Promise<{
  * Creates a map of slugs to their respective filepaths. This is necessary to
  * support nested filepaths.
  */
-export const getSlugToPathMap = (locale: Locale): Record<string, string> => {
+export const getSlugToPathMap = async (locale: Locale): Promise<Record<string, string>> => {
   const { slugToPath } = dataStore[locale];
   if (slugToPath) {
     return slugToPath;
   }
 
   let map: Record<string, string> = {};
-
+  const notePaths = await getNotePaths();
   map = notePaths.reduce((accumulator, path) => {
     const slug = getSlugFromFilepath(path);
     accumulator[slug] = path;
@@ -160,7 +172,7 @@ export const addLinks = async (
   // Replace embed links with content first
   let embedLinks = getEmbedLinks(source);
   let firstEmbed = true;
-  const slugToPathMap = getSlugToPathMap(locale);
+  const slugToPathMap = await getSlugToPathMap(locale);
   do {
     for (const { link, title } of embedLinks) {
       const slug = titleToSlug[title];
@@ -282,6 +294,7 @@ export const getBacklinks = async (locale: Locale): Promise<Record<string, Backl
   const map: Record<string, Backlink[]> = {};
   const { titleToSlug } = await getTitleAndSlugMaps(locale);
 
+  const notePaths = await getNotePaths();
   for (const articlePath of notePaths) {
     const source = await readFile(articlePath, "utf-8");
     const frontmatter = Frontmatter.parse(matter(source).data);
@@ -320,6 +333,7 @@ interface Filter {
 export const getArticles = async (filter?: Filter): Promise<PostListing[]> => {
   let posts: PostListing[] = [];
   // Loop through all articles and extract slug and frontmatter
+  const notePaths = await getNotePaths();
   for (const articlePath of notePaths) {
     const source = await readFile(articlePath, "utf-8");
     const frontmatter = matter(source).data;
@@ -347,8 +361,8 @@ export const getArticles = async (filter?: Filter): Promise<PostListing[]> => {
 };
 
 // Returns `updated` if defined, otherwise returns the initial publish date
-export const getLastUpdatedDateFromSlug = (locale: Locale, slug: string): Date | undefined => {
-  const slugToPathMap = getSlugToPathMap(locale);
+export const getLastUpdatedDateFromSlug = async (locale: Locale, slug: string): Promise<Date | undefined> => {
+  const slugToPathMap = await getSlugToPathMap(locale);
   const path = slugToPathMap[slug];
   if (!path) {
     return;

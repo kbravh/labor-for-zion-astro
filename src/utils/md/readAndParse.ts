@@ -1,13 +1,13 @@
 import { readFile, readdir, stat } from "fs/promises";
-import { existsSync, readdirSync, readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import matter from "gray-matter";
 import path, { basename } from "path";
 import slugify from "slugify";
 import { BracketLink, Frontmatter } from "../../validation/md";
 import { type Locale } from "../../validation/i18n";
 import { dataStore } from "./dataStore";
+import { NOTES_PATH } from "./consts";
 
-export const NOTES_PATH = "notes";
 
 export const removeMdxExtension = (path: string) => path.replace(/\.mdx?$/, "");
 
@@ -63,7 +63,9 @@ export const getNoteTopics = async (locale: Locale): Promise<{
   const notePaths = await getNotePaths();
   for (const notePath of notePaths) {
     const source = await readFile(notePath, "utf-8");
-    const frontmatter = Frontmatter.parse(matter(source).data);
+    const rawFrontmatter = matter(source).data;
+    console.log(rawFrontmatter);
+    const frontmatter = Frontmatter.parse(rawFrontmatter);
     // bounce early if the locale doesn't match
     if (frontmatter.language !== locale) {
       continue;

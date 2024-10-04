@@ -2,10 +2,12 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { fs, vol } from "memfs";
 import {
   getNotePaths,
+  getNoteTopics,
   getSlugFromFilepath,
   getSlugFromTitle,
   removeMdxExtension,
 } from "@utils/md/readAndParse";
+import { testFiles } from "./testFiles";
 
 vi.mock("node:fs", async () => {
   const memfs = await vi.importActual<{ fs: typeof fs }>("memfs");
@@ -18,6 +20,10 @@ vi.mock("node:fs/promises", async () => {
   );
   return memfs.fs.promises;
 });
+
+vi.mock("@utils/md/consts", () => ({
+  NOTES_PATH: "/notes",
+}))
 
 beforeEach(() => {
   // Reset the virtual file system before each test
@@ -123,16 +129,16 @@ describe("getSlugFromTitle", () => {
 describe("getNotePaths", () => {
   it("should return an array of file paths", async () => {
     const files = {
+      "/notes/dir/testFile2.mdx": "",
       "/notes/testFile1.mdx": "",
-      "/notes/testFile2.mdx": "",
       "/notes/testFile3.mdx": "",
     };
 
     vol.fromJSON(files, "/");
 
     const expected = [
+      "/notes/dir/testFile2.mdx",
       "/notes/testFile1.mdx",
-      "/notes/testFile2.mdx",
       "/notes/testFile3.mdx",
     ];
 
@@ -143,3 +149,19 @@ describe("getNotePaths", () => {
     await expect(getNotePaths()).rejects.toThrowError();
   });
 });
+
+describe("getNoteTopics", () => {
+  beforeEach(() => {
+    vol.fromJSON(testFiles)
+  })
+  it("should return an array of topics", async () => {
+    const expected = {
+      articleTopics: new Set(["Book of Mormon", "Jewish tradition"]),
+      slugToTopic: {
+        "book-of-mormon": "Book of Mormon",
+        "jewish-tradition": "Jewish tradition",
+      }
+    }
+    expect(await getNoteTopics("en")).toEqual(expected)
+  })
+})

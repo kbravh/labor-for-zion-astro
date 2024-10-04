@@ -10,7 +10,7 @@ export const Frontmatter = z.object({
     // so if we get the epoch, we'll replace it  with undefined
     .transform((date) => (!!date.getTime() ? date : undefined))
     .optional(),
-  language: z.enum(["en"]),
+  language: z.enum(["en", "es"]),
   aliases: z.string().array().optional(),
   tags: z.string().array().optional(),
 });

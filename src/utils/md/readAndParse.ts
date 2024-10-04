@@ -1,5 +1,5 @@
 import { readFile, readdir, stat } from "fs/promises";
-import { existsSync, readFileSync } from "fs";
+import { existsSync, readdirSync, readFileSync } from "fs";
 import matter from "gray-matter";
 import path, { basename } from "path";
 import slugify from "slugify";
@@ -40,14 +40,7 @@ export const getSlugFromFilepath = (path: string): string =>
 export const getSlugFromTitle = (title: string): string =>
   slugify(title, { lower: true });
 
-let notePaths: string[] | undefined;
-export const getNotePaths = async () => {
-	if (notePaths) {
-		return notePaths
-	}
-	notePaths = await walkPath(NOTES_PATH);
-	return notePaths;
-}
+export const getNotePaths = async (path: string = NOTES_PATH) => walkPath(path)
 
 /**
  * Finds all tags that are included in the frontmatter of the articles.

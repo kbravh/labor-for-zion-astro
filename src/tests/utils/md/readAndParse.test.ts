@@ -136,7 +136,7 @@ describe("getNotePaths", () => {
       "/notes/testFile3.mdx",
     ];
 
-    expect(await getNotePaths()).toEqual(expected);
+    expect(await getNotePaths("/notes")).toEqual(expected);
   });
 
   it("should throw an error if the directory does not exist", async () => {

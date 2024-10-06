@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Frontmatter } from "@validation/md";
+import { BracketLink, Frontmatter } from "@validation/md";
 
 const example = {
   title: "Be Humble as Christ Was",
@@ -13,7 +13,7 @@ const example = {
   }
 }
 
-describe("frontmatter", () => {
+describe("Frontmatter", () => {
   it("parses valid frontmatter", () => {
     expect(Frontmatter.parse(example)).toEqual({
       ...example,
@@ -59,5 +59,44 @@ describe("frontmatter", () => {
     expect(() => Frontmatter.parse({
       ...example, updated: "not a date"
     })).toThrow();
+  })
+})
+
+const exampleBracketLink = {
+ title: "Christ's first miracle",
+ link: "[[Christ's first miracle]]",
+ excerpt: "This can be most clearly seen during Christ's first miracle at the wedding feast"
+}
+
+describe("bracketLink", () => {
+  it("parses a valid bracket link", () => {
+   expect(BracketLink.parse(exampleBracketLink)).toEqual(exampleBracketLink); 
+  })
+  it("parses a bracket link with an alias", () => {
+    expect(BracketLink.parse({
+      ...exampleBracketLink, 
+      alias: "turning water into wine"
+    })).toEqual({
+      ...exampleBracketLink, 
+      alias: "turning water into wine"
+    }); 
+  })
+  it("throws on missing title", () => {
+    expect(() => BracketLink.parse({
+      ...exampleBracketLink,
+      title: undefined
+    })).toThrow()
+  })
+  it("throws on missing link", () => {
+    expect(() => BracketLink.parse({
+      ...exampleBracketLink,
+      link: undefined
+    })).toThrow()
+  })
+  it("throws on missing excerpt", () => {
+    expect(() => BracketLink.parse({
+      ...exampleBracketLink,
+      excerpt: undefined
+    })).toThrow()
   })
 })

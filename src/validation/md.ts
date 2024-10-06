@@ -13,6 +13,10 @@ export const Frontmatter = z.object({
   language: z.enum(["en", "es"]),
   aliases: z.string().array().optional(),
   tags: z.string().array().optional(),
+  translations: z.object({
+    en: z.string().optional(),
+    es: z.string().optional(),
+  }).optional(),
 });
 
 export type Frontmatter = z.infer<typeof Frontmatter>;

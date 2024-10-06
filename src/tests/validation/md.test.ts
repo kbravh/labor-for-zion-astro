@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BracketLink, Frontmatter } from "@validation/md";
+import { BracketLink, Frontmatter, Heading } from "@validation/md";
 
 const example = {
   title: "Be Humble as Christ Was",
@@ -97,6 +97,36 @@ describe("bracketLink", () => {
     expect(() => BracketLink.parse({
       ...exampleBracketLink,
       excerpt: undefined
+    })).toThrow()
+  })
+})
+
+const exampleHeading = {
+  id: "christlike-prayer",
+  text: "Christlike Prayer",
+  level: 2
+}
+
+describe("Heading", () => {
+  it("parses a valid heading", () => {
+    expect(Heading.parse(exampleHeading)).toEqual(exampleHeading)
+  })
+  it("throws on missing id", () => {
+    expect(() => Heading.parse({
+      ...exampleHeading,
+      id: undefined
+    })).toThrow()
+  })
+  it("throws on missing text", () => {
+    expect(() => Heading.parse({
+      ...exampleHeading,
+      text: undefined
+    })).toThrow()
+  })
+  it("throws on invalid heading level", () => {
+    expect(() => Heading.parse({
+      ...exampleHeading,
+      level: 7
     })).toThrow()
   })
 })

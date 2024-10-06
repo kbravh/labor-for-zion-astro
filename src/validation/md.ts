@@ -40,7 +40,7 @@ export const Heading = z.object({
   // the text of the heading
   text: z.string(),
   // the level of the heading
-  level: z.number(),
+  level: z.number().positive().max(6),
 });
 
 export type Heading = z.infer<typeof Heading>;

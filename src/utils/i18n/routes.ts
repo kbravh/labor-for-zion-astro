@@ -2,6 +2,7 @@ import type { Locale } from "@validation/i18n";
 
 export type Route = "/" | "/about" | "/notes" | "/topics" | "/projects";
 
+// these routes are used to populate the nav
 export const routes: Route[] = ["/", "/notes", "/projects", "/about"];
 
 type RouteMap = {

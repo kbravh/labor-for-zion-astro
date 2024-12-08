@@ -19,11 +19,14 @@ const strings = {
   site: translations[locale].meta.site,
   description: translations[locale].meta.description,
 };
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
 <html lang={locale} class="h-full dark:bg-slate-900 dark:text-slate-200">
   <head>
+    <link rel="canonical" href={canonicalURL} />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />

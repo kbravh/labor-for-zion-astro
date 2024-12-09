@@ -7,6 +7,8 @@ language: es
 tags:
   - Humildad
   - Oración
+translations:
+  en: be-humble-as-christ-was
 ---
 
 Uno de los atributos de Cristo es la humildad. Vemos este atributo encarnado por los Santos en las escrituras, y también por el Salvador mismo. Para mejor entender cómo desarrollar la humildad, primero aprenderemos qué es la humildad. Luego, veremos una herramienta que podemos utilizar para poner la humildad en práctica.

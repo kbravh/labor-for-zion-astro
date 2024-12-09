@@ -7,6 +7,8 @@ language: en
 tags:
   - Humility
   - Prayer
+translations:
+  es: ser-humilde-como-cristo-lo-fue
 ---
 
 One of the attributes of Christ is humility. We can see this personified by Saints in the scriptures, as well as by the Savior himself. To better understand how we can develop humility ourselves, let's first learn what humility is, then look at a tool we can use to put our learnings into practice.

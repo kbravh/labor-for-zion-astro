@@ -1,12 +1,14 @@
 import type { Locale } from "@validation/i18n";
-import { routeMap, type Route } from "./routes";
-import { uiMap, type UI } from "./ui";
-import { metaMap, type Meta } from "./meta";
-import { projectMap, type Project } from "./projects";
-import { localizationMap, type Localization } from "./localization";
+import { routeMap } from "./routes";
+import { uiMap } from "./ui";
+import { metaMap } from "./meta";
+import { projectMap } from "./projects";
+import { localeMap } from "./locales";
+import { localizationMap } from "./localization";
 
 type Translations = {
   [k in Locale]: {
+    locale: (typeof localeMap)[Locale];
     localization: (typeof localizationMap)[Locale];
     meta: (typeof metaMap)[Locale];
     project: (typeof projectMap)[Locale];
@@ -17,6 +19,7 @@ type Translations = {
 
 export const translations: Translations = {
   en: {
+    locale: localeMap.en,
     localization: localizationMap.en,
     meta: metaMap.en,
     ui: uiMap.en,
@@ -24,6 +27,7 @@ export const translations: Translations = {
     project: projectMap.en,
   },
   es: {
+    locale: localeMap.es,
     localization: localizationMap.es,
     meta: metaMap.es,
     ui: uiMap.es,

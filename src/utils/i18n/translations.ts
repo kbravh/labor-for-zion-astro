@@ -7,24 +7,11 @@ import { localizationMap, type Localization } from "./localization";
 
 type Translations = {
   [k in Locale]: {
-    localization: {
-      [k in Localization]: string
-    }
-    meta: {
-      [k in Meta]: string;
-    };
-    project: {
-      [k in Project]: {
-        title: string;
-        description: string;
-      };
-    };
-    route: {
-      [k in Route]: string;
-    };
-    ui: {
-      [k in UI]: string;
-    };
+    localization: (typeof localizationMap)[Locale];
+    meta: (typeof metaMap)[Locale];
+    project: (typeof projectMap)[Locale];
+    route: (typeof routeMap)[Locale];
+    ui: (typeof uiMap)[Locale];
   };
 };
 

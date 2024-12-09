@@ -6,6 +6,7 @@ import { routes } from '@utils/i18n/routes';
 import { translations } from '@utils/i18n/translations';
 import { getLocale } from '@utils/i18n/main';
 import { getAbsoluteLocaleUrl } from 'astro:i18n';
+import LanguageSwitcher from './LanguageSwitcher.astro';
 
 const locale = getLocale(Astro.currentLocale);
 ---
@@ -25,7 +26,7 @@ const locale = getLocale(Astro.currentLocale);
   </Link>
   <!-- large menu -->
   <nav class="hidden sm:block text-slate-700 dark:text-slate-300 text-lg">
-    <ul class="flex list-none gap-6">
+    <ul class="flex list-none gap-6 items-center">
       {
         routes.map((route) => (
           <li>
@@ -37,11 +38,13 @@ const locale = getLocale(Astro.currentLocale);
           </li>
         ))
       }
+      <!-- <LanguageSwitcher /> -->
     </ul>
   </nav>
 
   <!-- mobile menu -->
-  <div class="sm:hidden block">
+  <div class="sm:hidden flex gap-6">
+    <!-- <LanguageSwitcher /> -->
     <details
       class:list={[
         'flex items-center rounded',

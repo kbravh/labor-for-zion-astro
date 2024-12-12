@@ -1,6 +1,6 @@
 import type { Locale } from "@validation/i18n";
 
-export type Route = "/" | "/about" | "/notes" | "/topics" | "/projects";
+export type Route = "/" | "/about" | "/notes" | "/topics" | "/projects" | "404";
 
 // these routes are used to populate the nav
 export const routes: Route[] = ["/", "/notes", "/projects", "/about"];
@@ -18,6 +18,7 @@ export const routeMap: RouteMap = {
     "/topics": "Topics",
     "/projects": "Projects",
     "/about": "About",
+    "404": "404 Not Found"
   },
   es: {
     "/": "Inicio",
@@ -25,5 +26,6 @@ export const routeMap: RouteMap = {
     "/topics": "Temas",
     "/projects": "Proyectos",
     "/about": "Acerca de",
+    "404": "404 No encontrado"
   },
 };

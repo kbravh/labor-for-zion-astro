@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import Footer from "@components/layout/Footer.astro";
 import Header from "@components/layout/Header.astro";
 import HitCounterWebComponent from "@components/HitCounter/HitCounterWebComponent.astro";
@@ -45,7 +45,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     {socialImage ? <meta property="og:image" content={socialImage} /> : ""}
     <link rel="icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body
     class:list={[

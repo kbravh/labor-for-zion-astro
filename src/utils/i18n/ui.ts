@@ -13,7 +13,8 @@ export type UI =
   | "translation"
   | "rss"
   | "toc"
-  | "views";
+  | "views"
+  | "404";
 
 export type UIMap = {
   [k in Locale]: {
@@ -37,6 +38,7 @@ export const uiMap: UIMap = {
     translation: "Read this article in",
     toc: "Table of Contents",
     views: "Page views",
+    ["404"]: "Oops! That page doesn't exist.",
   },
   es: {
     backlinks: "Páginas que mencionan esta nota:",
@@ -53,5 +55,6 @@ export const uiMap: UIMap = {
     translation: "Leer este artículo en",
     toc: "Índice",
     views: "Vistas de página",
+    ["404"]: "¡Vaya! Esa página no existe.",
   },
 } as const;

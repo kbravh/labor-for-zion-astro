@@ -6,6 +6,19 @@ import { translations } from '@utils/i18n/translations';
 const locale = getLocale(Astro.currentLocale);
 ---
 
-<Layout title={translations[locale].route[404]}>
-  
+<Layout title={translations[locale].route["404"]}>
+  <main
+    class="container mx-auto max-w-[800px] flex flex-col items-center p-4 flex-grow gap-12"
+  >
+    <div>
+      <h1
+        class="text-5xl md:text-[5rem] leading-normal font-extrabold text-slate-700 dark:text-slate-200/90 text-balance"
+      >
+        {translations[locale].route["404"]}
+      </h1>
+      <p>
+        {translations[locale].ui["404"]}
+      </p>
+    </div>
+  </main>
 </Layout>

@@ -5,15 +5,19 @@ import { basename } from "path";
 import { getLastUpdatedDateFromSlug } from "./src/utils/md/readAndParse";
 import {LOCALES} from "./src/validation/i18n";
 
+import node from "@astrojs/node";
+
 // https://astro.build/config
 export default defineConfig({
   site: import.meta.env.PROD
     ? "https://laborforzion.com"
     : "http://localhost:4321",
+
   i18n: {
     defaultLocale: "en",
     locales: ["en", "es"],
   },
+
   integrations: [
     tailwind(),
     sitemap({
@@ -36,4 +40,8 @@ export default defineConfig({
       },
     }),
   ],
+
+  adapter: node({
+    mode: "standalone",
+  }),
 });

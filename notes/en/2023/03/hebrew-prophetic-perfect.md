@@ -14,9 +14,9 @@ The Hebrew prophetic perfect is a remarkable grammatical feature found in Hebrew
 
 Let's delve into some scriptural examples to better grasp this concept.
 
-First, let's consider a classic scripture often cited during the Christmas season. In Isaiah 9:6, Isaiah proclaims, "for unto us a child is born." It's important to remember that Isaiah penned these words over 600 years before Christ's birth! His unwavering certainty in the prophecy's fulfillment led him to use the past tense.
+First, let's consider a classic scripture often cited during the Christmas season. In [[Isaiah 9.6]], Isaiah proclaims, "for unto us a child is born." It's important to remember that Isaiah penned these words over 600 years before Christ's birth! His unwavering certainty in the prophecy's fulfillment led him to use the past tense.
 
-The Book of Mormon also offers examples of the Hebrew prophetic perfect. In 1 Nephi 5:5, after acquiring the plates of brass from Laban, Lehi declares, "I have obtained a land of promise." Though Lehi and his family were journeying through the desert near Jerusalem, years away from boarding a ship to the promised land, he spoke as if they had already arrived.
+The Book of Mormon also offers examples of the Hebrew prophetic perfect. In [[1 Nephi 5.5]], after acquiring the plates of brass from Laban, Lehi declares, "I have obtained a land of promise." Though Lehi and his family were journeying through the desert near Jerusalem, years away from boarding a ship to the promised land, he spoke as if they had already arrived.
 
 In addition to providing intriguing scriptures for analysis, these examples also support the Hebraic roots of the Book of Mormon peoples.
 

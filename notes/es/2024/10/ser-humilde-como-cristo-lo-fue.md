@@ -31,7 +31,7 @@ Podemos encontrar otros ejemplos de cómo Cristo se somete a la voluntad de Dios
 
 > Venga tu reino. Hágase tu voluntad, como en el cielo, así también en la tierra. ([[Mateo 6.10]])
 
-Mientras Cristo está sufriendo en el Jardín de Getsemaní por nuestros pecados, dolores y aflicciones, pide a Dios que termine ese sufrimiento y "pase de mí esta copa; pero no sea como yo quiero, sino como tú" ([[Mateo 26:39]]).
+Mientras Cristo está sufriendo en el Jardín de Getsemaní por nuestros pecados, dolores y aflicciones, pide a Dios que termine ese sufrimiento y "pase de mí esta copa; pero no sea como yo quiero, sino como tú" ([[Mateo 26.39]]).
 
 Someterse a la voluntad de Dios es probablemente el atributo más importante de la humildad, del cual se derivan todos los demás.
 
@@ -49,20 +49,20 @@ Al observar el ministerio de Cristo, un hilo constante fue la oración. Cristo s
 
 Podemos aprender del profeta Nefi mientras reflexiona sobre la muerte de su padre Lehi. Menciona algo interesante sobre la oración:
 
-> Sí, sé que Dios dará liberalmente a quien pida. Sí, mi Dios me dará, si no pido impropiamente. Por lo tanto, elevaré hacia ti mi voz; sí, clamaré a ti, mi Dios, roca de mi rectitud. He aquí, mi voz ascenderá para siempre hacia ti, mi roca y mi Dios sempiterno. Amén. ([[2 Nefi 4:35]])
+> Sí, sé que Dios dará liberalmente a quien pida. Sí, mi Dios me dará, si no pido impropiamente. Por lo tanto, elevaré hacia ti mi voz; sí, clamaré a ti, mi Dios, roca de mi rectitud. He aquí, mi voz ascenderá para siempre hacia ti, mi roca y mi Dios sempiterno. Amén. ([[2 Nefi 4.35]])
 
 "Dios me dará, _si no pido impropiamente_". Aquí tenemos un consejo para buenas oraciones. Pedir mal simplemente significa pedir por cosas incorrectas. Entonces, ¿cómo podemos saber cómo pedir las cosas correctas? Podemos encontrar una respuesta a eso mucho más adelante en el Libro de Mormón, cuando Cristo visita a los nefitas después de su resurrección.
 
 ## No pedir impropiamente
 En el libro de 3 Nefi, Cristo y los nefitas están orando después de ser ministrados por ángeles. Cristo se aparta para orar en privado y luego regresa para orar nuevamente con los discípulos.
 
-> Y aconteció que cuando Jesús hubo orado así al Padre, volvió a sus discípulos, y he aquí, continuaban orando a él sin cesar; y no multiplicaban muchas palabras, porque les era manifestado lo que debían suplicar, y estaban llenos de anhelo. ([[3 Nefi 19:24]])
+> Y aconteció que cuando Jesús hubo orado así al Padre, volvió a sus discípulos, y he aquí, continuaban orando a él sin cesar; y no multiplicaban muchas palabras, porque les era manifestado lo que debían suplicar, y estaban llenos de anhelo. ([[3 Nefi 19.24]])
 
 ¡Aquí hay algo interesante! "No multiplicaron muchas palabras, porque les era manifestado lo que debían suplicar". Los discípulos estaban en sintonía con el Espíritu, y el Espíritu les indicó por qué debían orar.
 
 Este verdadero orden de oración significa que nuestra voluntad está alineada con la voluntad de Dios. Cristo nos da una clave de esto en el versículo anterior:
 
-> "te ruego ... que crean en mí, para que yo sea en ellos como tú, Padre, eres en mí, para que seamos uno" ([[3 Nefi 19:23]]).
+> "te ruego ... que crean en mí, para que yo sea en ellos como tú, Padre, eres en mí, para que seamos uno" ([[3 Nefi 19.23]]).
 
 Entonces, cuando estamos en sintonía con el Espíritu, estamos en sintonía con Dios. El Espíritu nos impulsará a orar por lo que Dios querría.
 
@@ -70,10 +70,10 @@ Podemos ver este principio en acción en el libro de Enós. Enós se dirige al d
 
 Dios le responde, diciendo:
 
-> Tus padres también me han solicitado esto; y les será concedido según su fe; porque su fe fue semejante a la tuya. ([[Enós 1:18]])
+> Tus padres también me han solicitado esto; y les será concedido según su fe; porque su fe fue semejante a la tuya. ([[Enós 1.18]])
 
 ¿Qué podemos aprender de la respuesta de Dios? "Mira, Enós, tus padres ya han pedido esto, y yo ya iba a hacerlo. Realmente no necesitabas perder tiempo pidiendo." ¡Para nada! Esta es en realidad una respuesta increíblemente especial. Dios está diciendo: "Enós, has pedido lo mismo que tus padres fieles me pidieron. Ellos querían lo que yo quiero. Ellos eran uno conmigo, y _tú también lo eres_."
 
 ## Conclusión
 
-Alinearnos con la voluntad de Dios requiere humildad. Debemos admitir y aceptar que Su plan es mejor que el nuestro, y debemos estar dispuestos a hacer cambios en nuestras vidas y seguir lo que el Señor nos manda. Ser humildes es para nuestro beneficio, no para el de Dios. Él quiere bendecirnos. Solo necesitamos pedir esas bendiciones que tiene reservadas para nosotros, las cuales el Espíritu nos impulsará a pedir. Y al escuchar al Espíritu, seremos guiados y purificados por él a lo largo de nuestras vidas hasta que "le [veamos] tal como es" ([[1 Juan 3:2]], [[Moroni 7:48]]).
+Alinearnos con la voluntad de Dios requiere humildad. Debemos admitir y aceptar que Su plan es mejor que el nuestro, y debemos estar dispuestos a hacer cambios en nuestras vidas y seguir lo que el Señor nos manda. Ser humildes es para nuestro beneficio, no para el de Dios. Él quiere bendecirnos. Solo necesitamos pedir esas bendiciones que tiene reservadas para nosotros, las cuales el Espíritu nos impulsará a pedir. Y al escuchar al Espíritu, seremos guiados y purificados por él a lo largo de nuestras vidas hasta que "le [veamos] tal como es" ([[1 Juan 3.2]], [[Moroni 7.48]]).

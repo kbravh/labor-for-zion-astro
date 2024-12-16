@@ -5,8 +5,6 @@ import { basename } from "path";
 import { getLastUpdatedDateFromSlug } from "./src/utils/md/readAndParse";
 import {LOCALES} from "./src/validation/i18n";
 
-import node from "@astrojs/node";
-
 // https://astro.build/config
 export default defineConfig({
   site: import.meta.env.PROD
@@ -40,8 +38,4 @@ export default defineConfig({
       },
     }),
   ],
-
-  adapter: node({
-    mode: "standalone",
-  }),
 });

@@ -39,6 +39,8 @@
       const logResponse = await actions.logPageView({
         slug: this.slug,
         locale: this.locale,
+        ...this.getUTMTags(),
+        ...this.getViewerInfo(),
       });
       if (logResponse.error) {
         console.error(logResponse.error);
@@ -57,6 +59,35 @@
 
     displayCount(count: number) {
       this.textContent = `${this.displayText}: ${count}`;
+    }
+
+    getUTMTags() {
+      const url = new URL(window.location.href);
+      const utmSource = url.searchParams.get('utm_source');
+      const source = url.searchParams.get('source');
+      const ref = url.searchParams.get('ref');
+      const utmMedium = url.searchParams.get('utm_medium');
+      const medium = url.searchParams.get('medium');
+      const utmCampaign = url.searchParams.get('utm_campaign');
+      const campaign = url.searchParams.get('campaign');
+      const utmContent = url.searchParams.get('utm_content');
+      const content = url.searchParams.get('content');
+      const utmTerm = url.searchParams.get('utm_term');
+      const term = url.searchParams.get('term');
+      return {
+        utmSource: utmSource ?? source ?? ref,
+        utmMedium: utmMedium ?? medium,
+        utmCampaign: utmCampaign ?? campaign,
+        utmContent: utmContent ?? content,
+        utmTerm: utmTerm ?? term,
+      };
+    }
+
+    getViewerInfo() {
+      return {
+        referrer: document.referrer,
+        screenResolution: `${window.screen.width}x${window.screen.height}`,
+      };
     }
   }
 

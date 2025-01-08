@@ -14,15 +14,17 @@ datasource db {
 }
 
 model Analytics {
-  id          String  @id @default(cuid())
-  slug        String
-  locale      String
-  utm_source  String?
-  utm_medium  String?
-  utm_campaign String?
-  utm_content String?
-  utm_term    String?
-  timestamp   DateTime @default(now())
+  id               String   @id @default(cuid())
+  slug             String
+  locale           String
+  utm_source       String?
+  utm_medium       String?
+  utm_campaign     String?
+  utm_content      String?
+  utm_term         String?
+  referrer         String?
+  screenResolution String?
+  timestamp        DateTime @default(now())
 
   @@index([slug, locale])
 }

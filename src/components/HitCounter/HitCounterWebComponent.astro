@@ -1,4 +1,10 @@
+---
+
+---
+
 <script>
+  import { actions } from 'astro:actions';
+
   class HitCounter extends HTMLElement {
     displayText: string | null | undefined;
     locale: string | null | undefined;
@@ -19,24 +25,34 @@
     }
 
     async fetchAndDisplayCount() {
+      if (!this.slug || !this.locale) {
+        console.error('Hit counter: missing data attributes');
+        return;
+      }
+
       if (process.env.NODE_ENV === 'development') {
+        console.info(`Hit counter: ${this.slug} - ${this.locale}`);
         this.displayCount(1123);
         return;
       }
 
-      try {
-        const response = await fetch(
-          `https://api.laborforzion.com/log-view?slug=${this.slug}&locale=${this.locale}`,
-        );
-        if (!response.ok) {
-          console.error('Network response was not ok');
-          return;
-        }
-        const data = await response.json();
-        this.displayCount(data.count);
-      } catch (error) {
-        console.error('Fetch error:', error);
+      const logResponse = await actions.logPageView({
+        slug: this.slug,
+        locale: this.locale,
+      });
+      if (logResponse.error) {
+        console.error(logResponse.error);
+        return;
       }
+      const countResponse = await actions.getPageViews({
+        slug: this.slug,
+        locale: this.locale,
+      });
+      if (countResponse.error) {
+        console.error(countResponse.error);
+        return;
+      }
+      this.displayCount(countResponse.data);
     }
 
     displayCount(count: number) {

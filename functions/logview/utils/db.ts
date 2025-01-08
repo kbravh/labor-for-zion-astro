@@ -5,7 +5,13 @@ if (!MONGODB_URI) {
   throw new Error("Define the MONGODB_URI environment variable");
 }
 
-export const logPageView = async (slug: string): Promise<number> => {
+export const logPageView = async ({
+  slug,
+  locale,
+}: {
+  slug: string;
+  locale: string;
+}): Promise<number> => {
   const client = new MongoClient(MONGODB_URI, {
     serverApi: {
       strict: true,

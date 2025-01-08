@@ -1,5 +1,5 @@
 ---
-import Layout from "@layouts/Layout.astro";
+import Layout from '@layouts/Layout.astro';
 ---
 
 <Layout title="Labor for Zion">
@@ -28,22 +28,21 @@ import Layout from "@layouts/Layout.astro";
   };
 
   const fetchPageViews = async () => {
-    const response = await fetch("https://api.laborforzion.com/fetch-views");
+    const response = await fetch('https://api.laborforzion.com/fetch-views');
     const data = await response.json();
     return data;
   };
 
-  const pageViewsContainer = document.getElementById("page-views");
-  if (!pageViewsContainer) return;
+  const pageViewsContainer = document.getElementById('page-views');
+  if (pageViewsContainer) {
+    pageViewsContainer.innerHTML = '<p>Loading page views...</p>';
 
-  pageViewsContainer.innerHTML = "<p>Loading page views...</p>";
-
-  fetchPageViews()
-    .then((data) => {
-      // create a table of page views
-      const table = document.createElement("table");
-      table.classList.add("table-auto");
-      table.innerHTML = `
+    fetchPageViews()
+      .then((data) => {
+        // create a table of page views
+        const table = document.createElement('table');
+        table.classList.add('table-auto');
+        table.innerHTML = `
         <caption>Page views</caption>
         <thead>
           <tr>
@@ -62,14 +61,15 @@ import Layout from "@layouts/Layout.astro";
               </tr>
             `,
             )
-            .join("")}
+            .join('')}
         </tbody>
       `;
-      pageViewsContainer.innerHTML = "";
-      pageViewsContainer.appendChild(table);
-    })
-    .catch((error) => {
-      console.error("Unable to fetch page views", error);
-      pageViewsContainer.innerHTML = "<p>Unable to fetch page views</p>";
-    });
+        pageViewsContainer.innerHTML = '';
+        pageViewsContainer.appendChild(table);
+      })
+      .catch((error) => {
+        console.error('Unable to fetch page views', error);
+        pageViewsContainer.innerHTML = '<p>Unable to fetch page views</p>';
+      });
+  }
 </script>

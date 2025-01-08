@@ -60,7 +60,7 @@ export const handler = async (
       };
     }
 
-    const count = await logPageView(slug);
+    const count = await logPageView({slug, locale});
     return {
       statusCode: 200,
       body: JSON.stringify({ count }),

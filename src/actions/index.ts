@@ -1,6 +1,8 @@
-import { defineAction } from "astro:actions";
+import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { PrismaClient } from "@prisma/client";
+import { isValidLocale } from "@validation/i18n";
+import { getTitleAndSlugMaps } from "@utils/md/readAndParse";
 
 const prisma = new PrismaClient();
 
@@ -15,7 +17,26 @@ export const server = {
       utm_content: z.string().optional(),
       utm_term: z.string().optional(),
     }),
-    handler: async (data) => prisma.analytics.create({ data }),
+    handler: async (data) => {
+      if (!isValidLocale(data.locale)) {
+        throw new ActionError({
+          code: "BAD_REQUEST",
+          message: "Not a valid locale",
+        });
+      }
+
+      const { slugToTitle } = await getTitleAndSlugMaps(data.locale);
+      const set = new Set(Object.keys(slugToTitle));
+
+      if (!set.has(data.slug)) {
+        throw new ActionError({
+          code: "BAD_REQUEST",
+          message: "Slug not found",
+        });
+      }
+
+      return prisma.analytics.create({ data });
+    },
   }),
   getPageViews: defineAction({
     input: z.object({

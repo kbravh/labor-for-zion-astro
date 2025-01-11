@@ -1,0 +1,53 @@
+---
+import 'media-chrome';
+import 'hls-video-element';
+import 'media-chrome/menu';
+
+type Props = {
+  src: string;
+  aspectRatio?: string;
+}
+
+const {src, aspectRatio} = Astro.props;
+---
+
+<div class="player">
+      <media-controller>
+        <hls-video
+          {src}
+          slot="media"
+          crossorigin
+          muted
+        ></hls-video>
+        <media-rendition-menu hidden anchor="auto"></media-rendition-menu>
+
+        <media-loading-indicator
+          slot="centered-chrome"
+          noautohide
+        ></media-loading-indicator>
+        <media-control-bar>
+          <media-play-button></media-play-button>
+          <media-seek-backward-button></media-seek-backward-button>
+          <media-seek-forward-button></media-seek-forward-button>
+          <media-mute-button></media-mute-button>
+          <media-volume-range></media-volume-range>
+          <media-time-range></media-time-range>
+          <media-time-display showduration remaining></media-time-display>
+          <media-playback-rate-button></media-playback-rate-button>
+          <media-fullscreen-button></media-fullscreen-button>
+          <!-- <media-airplay-button></media-airplay-button> -->
+          <media-rendition-menu-button></media-rendition-menu-button>
+        </media-control-bar>
+      </media-controller>
+    </div>
+
+    <style>
+      .player {
+        aspect-ratio: {aspectRatio ?? "4/3"}
+        width: 900px;
+        border: 1px solid #ccc;
+        media-controller {
+          width: 100%;
+        }
+      }
+    </style>

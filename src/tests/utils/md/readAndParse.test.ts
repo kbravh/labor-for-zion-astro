@@ -17,6 +17,7 @@ import {
   removeMdxExtension,
 } from "@utils/md/readAndParse";
 import { testFiles } from "./testFiles";
+import { normalize } from "path";
 
 vi.mock("node:fs", async () => {
   const memfs = await vi.importActual<{ fs: typeof fs }>("memfs");
@@ -152,7 +153,7 @@ describe("getNotePaths", () => {
       "/notes/dir/testFile2.mdx",
       "/notes/testFile1.mdx",
       "/notes/testFile3.mdx",
-    ];
+    ].map(normalize);
 
     expect(await getNotePaths()).toEqual(expected);
   });
@@ -214,7 +215,7 @@ describe("getSlugToPathMap", () => {
   it("should generate a map of slugs to file paths", async () => {
     const expected = {
       "and-my-father-dwelt-in-a-tent":
-        "/notes/en/2024/01/and-my-father-dwelt-in-a-tent.md",
+        normalize("/notes/en/2024/01/and-my-father-dwelt-in-a-tent.md"),
     };
     const results = await getSlugToPathMap("en");
     expect(results).toEqual(expected);
@@ -282,6 +283,26 @@ describe("getOutgoingLinks", () => {
     ];
     expect(getOutgoingLinks(text)).toEqual(expected);
   });
+  it.skip("should parse sequential links", () => {
+    const text = 'we will be guided and purified by it throughout our lives until "we shall see [God] as he is" ([[1 John 3.2]], [[Moroni 7.48]]).';
+    const expected = [
+      {
+        alias: undefined,
+        excerpt:
+          'our lives until "we shall see [God] as he is" (1 John 3.2, Moroni',
+        link: "[[1 John 3.2]]",
+        title: "1 John 3.2",
+      },
+      {
+        alias: undefined,
+        excerpt:
+          'we will be guided and purified by it throughout our lives until "we shall see [God] as he is" (1 John 3.2, Moroni 7.48)',
+        link: "[[Moroni 7.48]]",
+        title: "Moroni 7.48",
+      },
+    ];
+    expect(getOutgoingLinks(text)).toEqual(expected);
+  })
 });
 
 describe("getEmbedLinks", () => {

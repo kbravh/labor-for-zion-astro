@@ -1,7 +1,7 @@
 import { readFile, readdir, stat } from "fs/promises";
 import { existsSync, readFileSync } from "fs";
 import matter from "gray-matter";
-import path, { basename } from "path";
+import path, { basename, normalize } from "path";
 import slugify from "slugify";
 import { BracketLink, Frontmatter } from "../../validation/md";
 import { type Locale } from "../../validation/i18n";
@@ -56,7 +56,7 @@ export const getNotePaths = async (locale?: Locale): Promise<string[]> => {
     const frontmatter = Frontmatter.parse(rawFrontmatter);
     // bounce early if the locale doesn't match
     return frontmatter.language === locale;
-  })
+  }).map(normalize);
 }
 
 /**
@@ -161,9 +161,9 @@ export const getSlugToPathMap = async (
 
   let map: Record<string, string> = {};
   const notePaths = await getNotePaths(locale);
-  map = notePaths.reduce((accumulator, path) => {
-    const slug = getSlugFromFilepath(path);
-    accumulator[slug] = path;
+  map = notePaths.reduce((accumulator, filePath) => {
+    const slug = getSlugFromFilepath(filePath);
+    accumulator[slug] = normalize(filePath);
     return accumulator;
   }, map);
 

@@ -70,16 +70,16 @@ const exampleBracketLink = {
 
 describe("bracketLink", () => {
   it("parses a valid bracket link", () => {
-   expect(BracketLink.parse(exampleBracketLink)).toEqual(exampleBracketLink); 
+   expect(BracketLink.parse(exampleBracketLink)).toEqual(exampleBracketLink);
   })
   it("parses a bracket link with an alias", () => {
     expect(BracketLink.parse({
-      ...exampleBracketLink, 
+      ...exampleBracketLink,
       alias: "turning water into wine"
     })).toEqual({
-      ...exampleBracketLink, 
+      ...exampleBracketLink,
       alias: "turning water into wine"
-    }); 
+    });
   })
   it("throws on missing title", () => {
     expect(() => BracketLink.parse({

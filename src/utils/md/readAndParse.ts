@@ -50,14 +50,16 @@ export const getNotePaths = async (locale?: Locale): Promise<string[]> => {
   if (!locale) {
     return paths;
   }
-  return paths.filter(path => {
-    const source = readFileSync(path, "utf-8");
-    const rawFrontmatter = matter(source).data;
-    const frontmatter = Frontmatter.parse(rawFrontmatter);
-    // bounce early if the locale doesn't match
-    return frontmatter.language === locale;
-  }).map(normalize);
-}
+  return paths
+    .filter((path) => {
+      const source = readFileSync(path, "utf-8");
+      const rawFrontmatter = matter(source).data;
+      const frontmatter = Frontmatter.parse(rawFrontmatter);
+      // bounce early if the locale doesn't match
+      return frontmatter.language === locale;
+    })
+    .map(normalize);
+};
 
 /**
  * Finds all tags that are included in the frontmatter of the articles.
@@ -244,34 +246,45 @@ export const addLinks = async (
  * the link with brackets, its text, its alias, and an excerpt if it exists.
  * Takes a regex pattern to use to find bracket link matches. Returns
  * a new function that takes the mdx source.
- * @param pattern - the regex pattern to match on
- * @returns a function that takes the mdx source and returns an array of bracket links
  */
 const getBracketLinks =
-  (pattern: RegExp) =>
+  (regex: RegExp) =>
   (source: string): BracketLink[] => {
-    const links: BracketLink[] = [];
-    const outgoingLinks = [...source.matchAll(pattern)];
-    for (const outgoingLink of outgoingLinks) {
-      if (!outgoingLink[0]) {
-        console.error("A match was not found in the outgoing link result.");
-        continue;
-      }
-      // if we found a match, we should have capturing groups
-      // but we have to keep typescript happy and ensure they're defined
-      const [excerpt, link, text] = outgoingLink;
-      if (!link || !text) {
-        continue;
-      }
-      const [title = "", alias] = text?.split("|");
-      links.push({
+    const matches = [];
+    let match;
+
+    while ((match = regex.exec(source)) !== null) {
+      const link = match[0]; // Entire bracket link including brackets
+      const content = match[1]; // Content inside the brackets
+
+      // Split content into title and alias
+      const [title, alias] = content.split("|");
+
+      // Get context around the bracket link
+      const startIndex = match.index;
+      const endIndex = regex.lastIndex;
+
+      const before = source.slice(0, startIndex).trim();
+      const after = source.slice(endIndex).trim();
+
+      // Extract approximately 10 words before and 5 after
+      const beforeWords = before.split(/\s+/);
+      const afterWords = after.split(/\s+/);
+
+      const contextBefore = beforeWords.slice(-10).join(" ");
+      const contextAfter = afterWords.slice(0, 5).join(" ");
+
+      const excerpt =
+        `${contextBefore} ${alias ?? title} ${contextAfter}`.trim();
+
+      matches.push({
         link,
         title,
-        alias,
-        excerpt: cleanupExcerpt({ excerpt, link, title, alias }),
+        ...(alias ? { alias } : {}),
+        excerpt,
       });
     }
-    return links;
+    return matches;
   };
 
 /**
@@ -280,18 +293,14 @@ const getBracketLinks =
  * @param source - the source to search for links
  * @returns an array of bracket links
  */
-export const getOutgoingLinks = getBracketLinks(
-  /(?:\w+\W+){0,10}(\[\[([^\[\]]+)\]\])(?:\W+\w+\W){0,10}/gi,
-);
+export const getOutgoingLinks = getBracketLinks(/\[\[([^\]]+)\]\]/g);
 
 /**
  * Finds only ![[Link]] style embed links.
  * @param source - the source to search for embed links
  * @returns an array of bracket links
  */
-export const getEmbedLinks = getBracketLinks(
-  /(?:\w+\W+){0,10}(!\[\[([^\[\]]+)\]\])(?:\W+\w+\W){0,10}/gi,
-);
+export const getEmbedLinks = getBracketLinks(/!\[\[([^\]]+)\]\]/g);
 
 /**
  * Cleans up the excerpt by removing newlines and replacing the link with the alias if it exists.

@@ -243,16 +243,14 @@ describe("getOutgoingLinks", () => {
     const text = `The most memorized Christian scripture is without a doubt "Jesus wept." ([[John 11.35]]). A very close second, at least among members of the Church, is "And my father dwelt in a tent" ([[1 Nephi 2.15]]). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
     const expected = [
       {
-        alias: undefined,
         excerpt:
-          'most memorized Christian scripture is without a doubt "Jesus wept." (John 11.35). A',
+          'memorized Christian scripture is without a doubt "Jesus wept." ( John 11.35 ). A very close second,',
         link: "[[John 11.35]]",
         title: "John 11.35",
       },
       {
-        alias: undefined,
         excerpt:
-          'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While',
+          'Church, is "And my father dwelt in a tent" ( 1 Nephi 2.15 ). While it\'s a convenient',
         link: "[[1 Nephi 2.15]]",
         title: "1 Nephi 2.15",
       },
@@ -269,34 +267,32 @@ describe("getOutgoingLinks", () => {
       {
         alias: "Jesus wept",
         excerpt:
-          'most memorized Christian scripture is without a doubt "Jesus wept." (Jesus wept). A',
+          'memorized Christian scripture is without a doubt "Jesus wept." ( Jesus wept ). A very close second,',
         link: "[[John 11.35|Jesus wept]]",
         title: "John 11.35",
       },
       {
         alias: undefined,
         excerpt:
-          'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While',
+          'Church, is "And my father dwelt in a tent" ( 1 Nephi 2.15 ). While it\'s a convenient',
         link: "[[1 Nephi 2.15]]",
         title: "1 Nephi 2.15",
       },
     ];
     expect(getOutgoingLinks(text)).toEqual(expected);
   });
-  it.skip("should parse sequential links", () => {
+  it("should parse sequential links", () => {
     const text = 'we will be guided and purified by it throughout our lives until "we shall see [God] as he is" ([[1 John 3.2]], [[Moroni 7.48]]).';
     const expected = [
       {
-        alias: undefined,
         excerpt:
-          'our lives until "we shall see [God] as he is" (1 John 3.2, Moroni',
+          'lives until "we shall see [God] as he is" ( 1 John 3.2 , [[Moroni 7.48]]).',
         link: "[[1 John 3.2]]",
         title: "1 John 3.2",
       },
       {
-        alias: undefined,
         excerpt:
-          'we will be guided and purified by it throughout our lives until "we shall see [God] as he is" (1 John 3.2, Moroni 7.48)',
+          '"we shall see [God] as he is" ([[1 John 3.2]], Moroni 7.48 ).',
         link: "[[Moroni 7.48]]",
         title: "Moroni 7.48",
       },
@@ -311,13 +307,13 @@ describe("getEmbedLinks", () => {
     const expected = [
       {
         excerpt:
-          'most memorized Christian scripture is without a doubt "Jesus wept." (John 11.35). A',
+          'memorized Christian scripture is without a doubt "Jesus wept." ( John 11.35 ). A very close second,',
         link: "![[John 11.35]]",
         title: "John 11.35",
       },
       {
         excerpt:
-          'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While',
+          'Church, is "And my father dwelt in a tent" ( 1 Nephi 2.15 ). While it\'s a convenient',
         link: "![[1 Nephi 2.15]]",
         title: "1 Nephi 2.15",
       },
@@ -330,14 +326,14 @@ describe("getEmbedLinks", () => {
       {
         alias: "Jesus wept",
         excerpt:
-          'most memorized Christian scripture is without a doubt "Jesus wept." (Jesus wept). A',
+          'memorized Christian scripture is without a doubt "Jesus wept." ( Jesus wept ). A very close second,',
         link: "![[John 11.35|Jesus wept]]",
         title: "John 11.35",
       },
       {
         alias: undefined,
         excerpt:
-          'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While',
+          'Church, is "And my father dwelt in a tent" ( 1 Nephi 2.15 ). While it\'s a convenient',
         link: "![[1 Nephi 2.15]]",
         title: "1 Nephi 2.15",
       },
@@ -387,7 +383,7 @@ describe("getBacklinks", () => {
       "1 Nephi 1.2": [
         {
           excerpt:
-            'learning of the Jews and the language of the Egyptians" (1 Nephi 1.2). His',
+            'of the Jews and the language of the Egyptians" ( 1 Nephi 1.2 ). His family also had',
           slug: "and-my-father-dwelt-in-a-tent",
           title: "And My Father Dwelt in a Tent",
         },
@@ -395,7 +391,7 @@ describe("getBacklinks", () => {
       "1 Nephi 2.15": [
         {
           excerpt:
-            'the Church, is "And my father dwelt in a tent" (1 Nephi 2.15). While',
+            'Church, is "And my father dwelt in a tent" ( 1 Nephi 2.15 ). While it\'s a convenient',
           slug: "and-my-father-dwelt-in-a-tent",
           title: "And My Father Dwelt in a Tent",
         },
@@ -403,7 +399,7 @@ describe("getBacklinks", () => {
       "1 Nephi 3.16": [
         {
           excerpt:
-            'use the "gold and silver, and all manner of riches" (1 Nephi 3.16) to',
+            'the "gold and silver, and all manner of riches" ( 1 Nephi 3.16 ) to purchase the brass',
           slug: "and-my-father-dwelt-in-a-tent",
           title: "And My Father Dwelt in a Tent",
         },
@@ -411,7 +407,7 @@ describe("getBacklinks", () => {
       "John 11.35": [
         {
           excerpt:
-            'most memorized Christian scripture is without a doubt "Jesus wept." (John 11.35). A',
+            'memorized Christian scripture is without a doubt "Jesus wept." ( John 11.35 ). A very close second,',
           slug: "and-my-father-dwelt-in-a-tent",
           title: "And My Father Dwelt in a Tent",
         },

@@ -1,0 +1,109 @@
+---
+
+---
+
+<script>
+  import 'media-chrome';
+  import 'hls-video-element';
+  import 'media-chrome/menu';
+
+  class MediaPlayer extends HTMLElement {
+    static get observedAttributes() {
+      return ['aspectratio'];
+    }
+
+    playerDiv: HTMLDivElement;
+    hlsVideo: HTMLElement;
+
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+
+      const style = document.createElement('style');
+      style.textContent = `
+      .player {
+        width: 900px;
+        border: 1px solid #ccc;
+      }
+      media-controller {
+        width: 100%;
+      }
+    `;
+
+      const playerDiv = document.createElement('div');
+      this.playerDiv = playerDiv;
+      playerDiv.classList.add('player');
+
+      const mediaController = document.createElement('media-controller');
+
+      const hlsVideo = document.createElement('hls-video');
+      this.hlsVideo = hlsVideo;
+      hlsVideo.setAttribute('slot', 'media');
+      hlsVideo.setAttribute('crossorigin', '');
+
+      const renditionMenu = document.createElement('media-rendition-menu');
+      renditionMenu.setAttribute('hidden', '');
+      renditionMenu.setAttribute('anchor', 'auto');
+
+      const loadingIndicator = document.createElement(
+        'media-loading-indicator',
+      );
+      loadingIndicator.setAttribute('slot', 'centered-chrome');
+      loadingIndicator.setAttribute('noautohide', '');
+
+      const controlBar = document.createElement('media-control-bar');
+      controlBar.innerHTML = `
+      <media-play-button></media-play-button>
+      <media-seek-backward-button></media-seek-backward-button>
+      <media-seek-forward-button></media-seek-forward-button>
+      <media-mute-button></media-mute-button>
+      <media-volume-range></media-volume-range>
+      <media-time-range></media-time-range>
+      <media-time-display showduration remaining></media-time-display>
+      <media-playback-rate-button></media-playback-rate-button>
+      <media-fullscreen-button></media-fullscreen-button>
+      <!-- <media-airplay-button></media-airplay-button> -->
+      <media-rendition-menu-button></media-rendition-menu-button>
+    `;
+
+      mediaController.appendChild(hlsVideo);
+      mediaController.appendChild(renditionMenu);
+      mediaController.appendChild(loadingIndicator);
+      mediaController.appendChild(controlBar);
+
+      playerDiv.appendChild(mediaController);
+
+      this.shadowRoot?.append(style, playerDiv);
+    }
+
+    connectedCallback() {
+      this.updateAspectRatio();
+      this.updateSource();
+
+      // Observe changes to child nodes to update the source if needed
+      const observer = new MutationObserver(() => this.updateSource());
+      observer.observe(this, { childList: true, subtree: true });
+    }
+
+    attributeChangedCallback(name: string) {
+      if (name === 'aspectratio') {
+        this.updateAspectRatio();
+      }
+    }
+
+    updateAspectRatio() {
+      const aspectRatio = this.getAttribute('aspectratio') || '16 / 9';
+      this.playerDiv.style.aspectRatio = aspectRatio;
+    }
+
+    updateSource() {
+      const source = this.querySelector('source');
+      if (source) {
+        const src = source.getAttribute('src');
+        if (src) this.hlsVideo.setAttribute('src', src);
+      }
+    }
+  }
+
+  customElements.define('media-player', MediaPlayer);
+</script>

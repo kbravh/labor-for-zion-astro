@@ -7,7 +7,7 @@
   import 'hls-video-element';
   import 'media-chrome/menu';
 
-  class MediaPlayer extends HTMLElement {
+  class VideoPlayer extends HTMLElement {
     static get observedAttributes() {
       return ['aspectratio'];
     }
@@ -22,7 +22,7 @@
       const style = document.createElement('style');
       style.textContent = `
       .player {
-        width: 900px;
+        width: 100%;
         border: 1px solid #ccc;
       }
       media-controller {
@@ -105,5 +105,5 @@
     }
   }
 
-  customElements.define('media-player', MediaPlayer);
+  customElements.define('video-player', VideoPlayer);
 </script>

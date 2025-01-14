@@ -80,7 +80,3 @@ What do we take from God's answer? "Look, Enos, your fathers have already asked 
 ## Conclusion
 
 Aligning ourselves to God's will requires humility. We must admit and accept that His plan is better than ours, and we must be ready to make changes in our lives and follow what the Lord commands us. Being humble is for _our_ benefit, not God's. He wants to bless us. We just need to ask for those blessings He has in store, which the Spirit will prompt us to ask for. And as we listen to the Spirit, we will be guided and purified by it throughout our lives until "we shall see [God] as he is" ([[1 John 3.2]], [[Moroni 7.48]]).
-
-<video-player>
-  <source src="https://lfz.reposit.dev/videos/nivacle_hymn/master.m3u8" />
-</video-player>

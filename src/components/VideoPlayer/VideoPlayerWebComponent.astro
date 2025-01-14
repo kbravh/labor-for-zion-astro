@@ -23,10 +23,49 @@
       style.textContent = `
       .player {
         width: 100%;
-        border: 1px solid #ccc;
       }
-      media-controller {
-        width: 100%;
+
+      /* Since our breakpoints implementation is a "mobile-first" approach, we'll hide the "desktop only" items by default */
+      media-controller .desktop-only {
+        --media-control-display: none;
+      }
+
+      /* Then, when the <media-controller> size is larger, we'll show the "desktop only" components and hide the "mobile only" ones */
+      media-controller[breakpointmd] .desktop-only {
+        --media-control-display: unset;
+      }
+
+      media-controller[breakpointmd] .mobile-only {
+        --media-control-display: none;
+      }
+
+      media-controller [slot='centered-chrome'] {
+        border-radius: 10px;
+        --media-control-padding: 2px;
+        --media-control-height: 40px;
+        background: var(--media-secondary-color);
+      }
+
+      media-controller [slot='centered-chrome'] > * {
+        --media-secondary-color: none;
+      }
+
+      media-controller [slot='centered-chrome'] > :first-child {
+        border-radius: 10px 0px 0px 10px;
+      }
+
+      media-controller [slot='centered-chrome'] > :last-child {
+        border-radius: 0px 10px 10px 0px;
+      }
+
+      /* Do not show the volume range unless volume control is available (e.g. many mobile devices require device-level control for volume) */
+      media-volume-range[mediavolumeunavailable] {
+        display: none;
+      }
+
+      /* Do not show the captions button if there are no captions for the media */
+      media-captions-button:not([mediasubtitleslist]) {
+        display: none;
       }
     `;
 
@@ -45,30 +84,32 @@
       renditionMenu.setAttribute('hidden', '');
       renditionMenu.setAttribute('anchor', 'auto');
 
-      const loadingIndicator = document.createElement(
-        'media-loading-indicator',
-      );
-      loadingIndicator.setAttribute('slot', 'centered-chrome');
-      loadingIndicator.setAttribute('noautohide', '');
+      const mobileControls = document.createElement('div');
+      mobileControls.setAttribute('slot', 'centered-chrome');
+      mobileControls.classList.add('mobile-only');
+      mobileControls.innerHTML = `
+      <media-seek-backward-button></media-seek-backward-button>
+      <media-play-button></media-play-button>
+      <media-seek-forward-button></media-seek-forward-button>
+      `;
 
       const controlBar = document.createElement('media-control-bar');
       controlBar.innerHTML = `
-      <media-play-button></media-play-button>
-      <media-seek-backward-button></media-seek-backward-button>
-      <media-seek-forward-button></media-seek-forward-button>
+      <media-play-button class="desktop-only"></media-play-button>
+      <media-seek-backward-button class="desktop-only"></media-seek-backward-button>
+      <media-seek-forward-button class="desktop-only"></media-seek-forward-button>
       <media-mute-button></media-mute-button>
       <media-volume-range></media-volume-range>
+      <media-time-display></media-time-display>
       <media-time-range></media-time-range>
-      <media-time-display showduration remaining></media-time-display>
       <media-playback-rate-button></media-playback-rate-button>
-      <media-fullscreen-button></media-fullscreen-button>
-      <!-- <media-airplay-button></media-airplay-button> -->
-      <media-rendition-menu-button></media-rendition-menu-button>
+      <media-captions-button></media-captions-button>
+      <media-airplay-button></media-airplay-button>
     `;
 
       mediaController.appendChild(hlsVideo);
       mediaController.appendChild(renditionMenu);
-      mediaController.appendChild(loadingIndicator);
+      mediaController.appendChild(mobileControls);
       mediaController.appendChild(controlBar);
 
       playerDiv.appendChild(mediaController);

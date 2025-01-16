@@ -21,7 +21,7 @@ export default defineConfig({
   integrations: [
     tailwind(),
     sitemap({
-      filter: (page) => page !== "https://laborforzion.com/views",
+      filter: (page) => page !== "https://laborforzion.com/quiz",
       serialize: async (item) => {
         //Fetch the last modified date for articles
         if (/.*notes\/.+/.test(item.url)) {

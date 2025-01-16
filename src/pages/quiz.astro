@@ -1,0 +1,74 @@
+---
+export const prerender = false;
+
+import Layout from '@layouts/Layout.astro';
+
+let state: 'new' | 'correct' | 'incorrect' = 'new';
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  const word = formData.get('word');
+  if (typeof word === 'string' && word.trim().toLowerCase() === 'joseph') {
+    state = 'correct';
+  } else {
+    state = 'incorrect';
+  }
+}
+---
+
+<Layout title="Río Blanco Quiz">
+  <main class="h-full">
+    <h2 class="text-base/7 font-semibold">The First Vision</h2>
+    {
+      state === 'correct' && (
+        <>
+          <p>Correct!</p>
+          <p>The code is 729</p>
+        </>
+      )
+    }
+    {state === 'incorrect' && <p>Try again!</p>}
+    {
+      ['new', 'incorrect'].includes(state) && (
+        <form
+          method="POST"
+          class="container mx-auto max-w-[800px] flex flex-col items-center p-4 flex-grow gap-12"
+        >
+          <div class="space-y-12">
+            <div class="border-b pb-12">
+              <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8">
+                <label for="word" class="" class="block text-sm/6 font-medium">
+                  What was the first word that God said to Joseph Smith in the
+                  first vision?
+                </label>
+                <div class="mt-2">
+                  <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-emerald-600">
+                    <input
+                      type="text"
+                      name="word"
+                      id="word"
+                      class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6 rounded-md"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 flex items-center justify-end gap-x-6">
+                <button
+                  type="submit"
+                  class="rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                >
+                  Submit
+                </button>
+              </div>
+
+              <details>
+                <summary>Hint</summary>
+                <p>Joseph Smith History 1:17</p>
+              </details>
+            </div>
+          </div>
+        </form>
+      )
+    }
+  </main>
+</Layout>

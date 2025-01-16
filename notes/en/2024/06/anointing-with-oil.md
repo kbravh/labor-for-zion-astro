@@ -27,10 +27,10 @@ In Hebrew culture, hosts would anoint the head of honored guests with olive oil 
 
 The Pharisee, by not offering this anointing to Christ, is denying him a common courtesy of the time and showing that he does not value Christ's company.
 
-On a deeper, more significant level, one of Jesus' titles is "The Messiah", which means "The Annointed One". "Christ" also means the same thing; Messiah is Aramaic, Christ is Greek. Christ was anointed by our Heavenly Father to be the Savior of mankind.
+On a deeper, more significant level, one of Jesus' titles is "The Messiah", which means "The Anointed One". "Christ" also means the same thing; Messiah is Aramaic, Christ is Greek. Christ was anointed by our Heavenly Father to be the Savior of mankind.
 
 ## Modern day anointings
 
 Today, in the church, we use anointings in a couple of situations. The first is when we anoint someone before a blessing of health. The second is when we are anointed in the temple.
 
-Whenever we are annointed with oil in the temple, Christ is welcoming us as honored guests into his home. We become "anointed ones", tied to the symbolism of becoming [[Obadiah 1.21 1|saviors on mount Zion]].
+Whenever we are anointed with oil in the temple, Christ is welcoming us as honored guests into his home. We become "anointed ones", tied to the symbolism of becoming [[Obadiah 1.21 1|saviors on mount Zion]].

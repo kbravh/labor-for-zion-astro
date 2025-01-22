@@ -51,7 +51,7 @@ export const generateRssFeed = async ({
         const content = md.render(text);
         return {
           content: sanitizeHtml(content),
-          link: `/es/notes/${getSlugFromFilepath(notePath)}`,
+          link: `/${locale}/notes/${getSlugFromFilepath(notePath)}`,
           title: parsedFrontmatter.title,
           pubDate: parsedFrontmatter.date,
           description: parsedFrontmatter.description,
@@ -63,7 +63,7 @@ export const generateRssFeed = async ({
     description: translations[locale].meta.description,
     site: site ?? "https://laborforzion.com",
     items: posts.filter(isPostFeedItem),
-    customData: "<language>es</language>",
-    stylesheet: "/pretty-feed-v3.xsl",
+    customData: `<language>${locale}</language>`,
+    // stylesheet: "/pretty-feed-v3.xsl",
   });
 };

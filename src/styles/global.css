@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@config "../../tailwind.config.cjs";
+
+:root {
+    --heading-font: "Munken Sans", sans-serif;
+    --body-font: "Atkinson Hyperlegible", sans-serif;
+}

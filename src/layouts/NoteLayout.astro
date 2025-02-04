@@ -48,12 +48,12 @@ const tags = frontmatter.tags?.map((tag) => ({
   {socialImage}
 >
   <main class="mb-10">
-    <article class="grid grid-cols-1 md:grid-cols-[1fr,_300px] gap-x-14">
+    <article class="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-x-14">
       <NoteHeader>
         <NoteTitle>{frontmatter.title}</NoteTitle>
         {
           frontmatter.description && (
-            <p class="text-[clamp(1rem,_5vw,_1.5rem)] font-body">
+            <p class="text-[clamp(1rem,_5vw,_1.5rem)] font-(--body-font)">
               {frontmatter.description}
             </p>
           )

@@ -9,7 +9,7 @@ const { className } = Astro.props;
 <span
   class:list={[
     "cursor-pointer transition-all motion-reduce:transition-none duration-300",
-    "bg-left-bottom bg-gradient-to-br bg-hidden-link hover:bg-shown-link bg-no-repeat",
+    "bg-left-bottom bg-gradient-to-br [background-size:0px_3px] hover:[background-size:100%_3px] bg-no-repeat",
     "from-emerald-700 to-emerald-900 dark:from-emerald-500 dark:to-emerald-300",
     "max-w-[fit-content]",
     className,

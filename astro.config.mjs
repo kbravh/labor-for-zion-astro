@@ -1,11 +1,12 @@
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 import { basename } from "path";
 import { getLastUpdatedDateFromSlug } from "./src/utils/md/readAndParse";
 import {LOCALES} from "./src/validation/i18n";
 
 import node from "@astrojs/node";
+
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,7 +20,6 @@ export default defineConfig({
   },
 
   integrations: [
-    tailwind(),
     sitemap({
       filter: (page) => page !== "https://laborforzion.com/quiz",
       serialize: async (item) => {
@@ -44,4 +44,8 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

@@ -5,6 +5,7 @@ import Header from "@components/layout/Header.astro";
 import HitCounterWebComponent from "@components/HitCounter/HitCounterWebComponent.astro";
 import { getLocale } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
+import "../styles/global.css";
 
 export interface Props {
   title: string;
@@ -58,30 +59,44 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <slot />
     <Footer />
     <style is:global>
+      @reference "../styles/global.css";
+
       @font-face {
-        font-family: "Atkinson Hyperlegible";
-        src: url("https://assets.laborforzion.com/fonts/AtkinsonRegular.woff2") format("woff2");
+        font-family: "Munken Sans";
+        src: url("https://assets.laborforzion.com/fonts/MunkenSans.woff2")
+          format("woff2");
         font-weight: normal;
         font-style: normal;
         font-display: swap;
       }
       @font-face {
         font-family: "Atkinson Hyperlegible";
-        src: url("https://assets.laborforzion.com/fonts/AtkinsonBold.woff2") format("woff2");
+        src: url("https://assets.laborforzion.com/fonts/AtkinsonRegular.woff2")
+          format("woff2");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Atkinson Hyperlegible";
+        src: url("https://assets.laborforzion.com/fonts/AtkinsonBold.woff2")
+          format("woff2");
         font-weight: bold;
         font-style: normal;
         font-display: swap;
       }
       @font-face {
         font-family: "Atkinson Hyperlegible";
-        src: url("https://assets.laborforzion.com/fonts/AtkinsonItalic.woff2") format("woff2");
+        src: url("https://assets.laborforzion.com/fonts/AtkinsonItalic.woff2")
+          format("woff2");
         font-weight: normal;
         font-style: italic;
         font-display: swap;
       }
       @font-face {
         font-family: "Atkinson Hyperlegible";
-        src: url("https://assets.laborforzion.com/fonts/AtkinsonBoldItalic.woff2") format("woff2");
+        src: url("https://assets.laborforzion.com/fonts/AtkinsonBoldItalic.woff2")
+          format("woff2");
         font-weight: bold;
         font-style: italic;
         font-display: swap;
@@ -89,14 +104,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
       @font-face {
         font-family: "Munken Sans";
-        src: url("https://assets.laborforzion.com/fonts/MunkenSansRegular.woff2") format("woff2");
+        src: url("https://assets.laborforzion.com/fonts/MunkenSansRegular.woff2")
+          format("woff2");
         font-weight: normal;
         font-style: normal;
         font-display: swap;
       }
       @font-face {
         font-family: "Munken Sans";
-        src: url("https://assets.laborforzion.com/fonts/MunkenSansBold.woff2") format("woff2");
+        src: url("https://assets.laborforzion.com/fonts/MunkenSansBold.woff2")
+          format("woff2");
         font-weight: bold;
         font-style: normal;
         font-display: swap;
@@ -104,6 +121,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
       /* https://developer.mozilla.org/en-US/docs/Web/CSS/::target-text */
       ::target-text {
+        /* background-color: var(--bg-emerald-900);
+        color: var(--emerald-50); */
+
         @apply bg-emerald-900 text-emerald-50;
         @apply dark:text-emerald-900 dark:bg-emerald-50;
       }

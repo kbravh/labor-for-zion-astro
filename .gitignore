@@ -27,3 +27,6 @@ coverage/
 # Video transcoding
 video_input/
 video_output/
+
+# windsurf rules
+.windsurfrules

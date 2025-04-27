@@ -36,7 +36,7 @@ const upload = async (pathToDir: string) => {
     const filepath = resolve(pathToDir, file);
     try {
       await runCommand(
-        `npx wrangler r2 object put ${uploadLocation}/${file} --file ${filepath}`,
+        `npx wrangler r2 object put ${uploadLocation}/${file} --file ${filepath} --remote`,
       );
     } catch (error) {
       console.error(error);

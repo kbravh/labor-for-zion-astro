@@ -1,9 +1,9 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import { getArticles, type PostListing } from '@utils/md/readAndParse';
-import { translations } from '@utils/i18n/translations';
-import ArticleCard from '@components/ArticleCard.astro';
-import { getLocale } from '@utils/i18n/main';
+import ArticleCard from "@components/ArticleCard.astro";
+import Layout from "@layouts/Layout.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
+import { type PostListing, getArticles } from "@utils/md/readAndParse";
 
 const locale = getLocale(Astro.currentLocale);
 

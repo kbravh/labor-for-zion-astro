@@ -1,23 +1,23 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import Main from '@components/layout/Main.astro';
-import ArticleCard from '@components/ArticleCard.astro';
-import PageTitle from '@components/typography/PageTitle.astro';
-import Pagination from '@components/layout/Pagination.astro';
-import { translations } from '@utils/i18n/translations';
-import { getLocale } from '@utils/i18n/main';
-import type { Page } from 'astro';
-import type { PostListing } from '@utils/md/readAndParse';
-import PageWrapper from '@components/layout/PageWrapper.astro';
-import RSSLink from '@components/interaction/RSSLink.astro';
+import ArticleCard from "@components/ArticleCard.astro";
+import RSSLink from "@components/interaction/RSSLink.astro";
+import Main from "@components/layout/Main.astro";
+import PageWrapper from "@components/layout/PageWrapper.astro";
+import Pagination from "@components/layout/Pagination.astro";
+import PageTitle from "@components/typography/PageTitle.astro";
+import Layout from "@layouts/Layout.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
+import type { PostListing } from "@utils/md/readAndParse";
+import type { Page } from "astro";
 
 const locale = getLocale(Astro.currentLocale);
 
 export interface Props {
-  page: Page<PostListing>;
+	page: Page<PostListing>;
 }
 
-const {page} = Astro.props;
+const { page } = Astro.props;
 ---
 
 <Layout title={translations[locale].route['/notes']}>

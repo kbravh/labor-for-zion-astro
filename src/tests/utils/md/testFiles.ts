@@ -1,5 +1,5 @@
 export const testFiles = {
-  "/notes/en/2024/01/and-my-father-dwelt-in-a-tent.md": `---
+	"/notes/en/2024/01/and-my-father-dwelt-in-a-tent.md": `---
 title: And My Father Dwelt in a Tent
 description: Why did Nephi feel it important to include this small detail about his father in his historical record?
 date: 2024-01-12T10:40:16.967392700-05:00
@@ -25,7 +25,7 @@ A commonly cited answer is that Nephi wanted to show the sacrifices that his fam
 
 This argument is compelling and surely holds truth. However, if there's anything we can learn about the scriptures, it's that the Lord is never content to let a story only have a single layer of meaning.
 `,
-  "/notes/es/2024/06/y-mi-padre-vivía-en-una-tienda.md": `---
+	"/notes/es/2024/06/y-mi-padre-vivía-en-una-tienda.md": `---
 title: Y Mi Padre Vivía en una Tienda
 description: ¿Por qué Nefi sintió importante incluir este pequeño detalle acerca de su padre en su registro histórico?
 date: 2024-06-12T10:40:16.967392700-05:00

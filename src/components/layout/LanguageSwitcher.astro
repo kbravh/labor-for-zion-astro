@@ -1,14 +1,14 @@
 ---
-import { translations } from '@utils/i18n/translations';
-import { getLocale } from '@utils/i18n/main';
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import Link from '@components/interaction/Link.astro';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Link from "@components/interaction/Link.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
 
 const locale = getLocale(Astro.currentLocale);
 // We have to remove the locale if it's here. Otherwise, we get into
 // odd situations where the language switcher will try to take you to
 // /es/es/about
-const url = Astro.url.pathname.replace('/es', '');
+const url = Astro.url.pathname.replace("/es", "");
 ---
 
 <details

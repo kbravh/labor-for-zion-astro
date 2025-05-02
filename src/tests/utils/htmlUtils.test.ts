@@ -1,11 +1,11 @@
 import { getHeadings } from "@utils/htmlUtils";
 import { Heading } from "@validation/md";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 
 describe("HTML Utilities", () => {
-  describe("getHeadings", () => {
-    it("parses headings correctly", () => {
-      const html = `
+	describe("getHeadings", () => {
+		it("parses headings correctly", () => {
+			const html = `
       <div>
         <h1 id="title">Title</h1>
         <h2>No ID</h2>
@@ -16,7 +16,7 @@ describe("HTML Utilities", () => {
         <h6 id="6">Level 6</h6>
       </div>
       `;
-      expect(getHeadings(html)).toMatchInlineSnapshot(`
+			expect(getHeadings(html)).toMatchInlineSnapshot(`
         [
           {
             "id": "title",
@@ -50,6 +50,6 @@ describe("HTML Utilities", () => {
           },
         ]
       `);
-    });
-  });
+		});
+	});
 });

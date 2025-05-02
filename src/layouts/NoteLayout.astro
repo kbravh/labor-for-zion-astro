@@ -1,33 +1,33 @@
 ---
-import type { Backlink } from '@utils/md/readAndParse';
-import Backlinks from '@components/layout/Backlinks.astro';
-import Layout from './Layout.astro';
-import type { Frontmatter, Heading } from '@validation/md';
-import TableOfContents from '@components/layout/TableOfContents.astro';
-import HeadingObserver from '@components/layout/HeadingObserver.astro';
-import slugify from 'slugify';
-import { getLocale } from '@utils/i18n/main';
-import { translations } from '@utils/i18n/translations';
-import NoteHeader from '@components/layout/NoteHeader.astro';
-import NoteTitle from '@components/typography/NoteTitle.astro';
-import Prose from '@components/typography/Prose.astro';
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import HoverUnderline from '@components/interaction/HoverUnderline.astro';
-import Link from '@components/interaction/Link.astro';
-import type { Locale } from '@validation/i18n';
-import VideoPlayer from '@components/VideoPlayer/VideoPlayerWebComponent.astro';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import VideoPlayer from "@components/VideoPlayer/VideoPlayerWebComponent.astro";
+import HoverUnderline from "@components/interaction/HoverUnderline.astro";
+import Link from "@components/interaction/Link.astro";
+import Backlinks from "@components/layout/Backlinks.astro";
+import HeadingObserver from "@components/layout/HeadingObserver.astro";
+import NoteHeader from "@components/layout/NoteHeader.astro";
+import TableOfContents from "@components/layout/TableOfContents.astro";
+import NoteTitle from "@components/typography/NoteTitle.astro";
+import Prose from "@components/typography/Prose.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
+import type { Backlink } from "@utils/md/readAndParse";
+import type { Locale } from "@validation/i18n";
+import type { Frontmatter, Heading } from "@validation/md";
+import slugify from "slugify";
+import Layout from "./Layout.astro";
 
 interface Props {
-  slug: string;
-  content: string;
-  frontmatter: Frontmatter;
-  backlinks: Backlink[];
-  headings: Heading[];
-  socialImage: string;
+	slug: string;
+	content: string;
+	frontmatter: Frontmatter;
+	backlinks: Backlink[];
+	headings: Heading[];
+	socialImage: string;
 }
 
 const { slug, frontmatter, backlinks, content, headings, socialImage } =
-  Astro.props;
+	Astro.props;
 
 const translationMap = frontmatter?.translations ?? {};
 
@@ -37,8 +37,8 @@ delete translationMap[locale];
 const availableTranslations = Object.entries(translationMap);
 
 const tags = frontmatter.tags?.map((tag) => ({
-  name: tag,
-  slug: slugify(tag, { lower: true }),
+	name: tag,
+	slug: slugify(tag, { lower: true }),
 }));
 ---
 

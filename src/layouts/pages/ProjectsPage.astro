@@ -1,36 +1,36 @@
 ---
-import Main from '@components/layout/Main.astro';
-import PageTitle from '@components/typography/PageTitle.astro';
-import Layout from '@layouts/Layout.astro';
-import Link from '@components/interaction/Link.astro';
-import { getLocale } from '@utils/i18n/main';
-import { translations } from '@utils/i18n/translations';
-import PageWrapper from '@components/layout/PageWrapper.astro';
-import Grid from '@components/layout/Grid.astro';
-import H3 from '@components/typography/H3.astro';
-import Description from '@components/typography/Description.astro';
-import type { Project } from '@utils/i18n/projects';
-import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Link from "@components/interaction/Link.astro";
+import Grid from "@components/layout/Grid.astro";
+import Main from "@components/layout/Main.astro";
+import PageWrapper from "@components/layout/PageWrapper.astro";
+import Description from "@components/typography/Description.astro";
+import H3 from "@components/typography/H3.astro";
+import PageTitle from "@components/typography/PageTitle.astro";
+import Layout from "@layouts/Layout.astro";
+import { getLocale } from "@utils/i18n/main";
+import type { Project } from "@utils/i18n/projects";
+import { translations } from "@utils/i18n/translations";
 
 const locale = getLocale(Astro.currentLocale);
 
 type ProjectListing = {
-  // Link to project
-  href: string;
-  // Slug used for translations
-  name: Project;
+	// Link to project
+	href: string;
+	// Slug used for translations
+	name: Project;
 };
 
 const projects: ProjectListing[] = [
-  ...(locale === 'en' ?
-    [
-      {
-        href: '/projects/obsidian-scripture-vault',
-        name: 'vault',
-      } as ProjectListing,
-    ]
-  : []),
-  { href: 'https://scripture.page', name: 'scriptly' },
+	...(locale === "en"
+		? [
+				{
+					href: "/projects/obsidian-scripture-vault",
+					name: "vault",
+				} as ProjectListing,
+			]
+		: []),
+	{ href: "https://scripture.page", name: "scriptly" },
 ];
 ---
 

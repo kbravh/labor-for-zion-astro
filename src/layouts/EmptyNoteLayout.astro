@@ -1,18 +1,18 @@
 ---
-import type { Backlink } from '@utils/md/readAndParse';
-import Backlinks from '@components/layout/Backlinks.astro';
-import Layout from './Layout.astro';
-import { getLocale } from '@utils/i18n/main';
-import { translations } from '@utils/i18n/translations';
-import Prose from '@components/typography/Prose.astro';
-import NoteTitle from '@components/typography/NoteTitle.astro';
-import NoteHeader from '@components/layout/NoteHeader.astro';
+import Backlinks from "@components/layout/Backlinks.astro";
+import NoteHeader from "@components/layout/NoteHeader.astro";
+import NoteTitle from "@components/typography/NoteTitle.astro";
+import Prose from "@components/typography/Prose.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
+import type { Backlink } from "@utils/md/readAndParse";
+import Layout from "./Layout.astro";
 
 interface Props {
-  slug: string;
-  title: string;
-  backlinks: Backlink[];
-  socialImage: string;
+	slug: string;
+	title: string;
+	backlinks: Backlink[];
+	socialImage: string;
 }
 
 const { title, backlinks, slug, socialImage } = Astro.props;

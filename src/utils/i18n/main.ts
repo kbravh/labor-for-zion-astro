@@ -6,12 +6,12 @@ import { Locale } from "@validation/i18n";
  * @returns Locale
  */
 export const getLocale = (locale: string | undefined): Locale => {
-  if (!locale) {
-    throw new Error("No locale found");
-  }
-  const parsed = Locale.safeParse(locale);
-  if (!parsed.success) {
-    throw new Error(`Locale ${locale} not supported`);
-  }
-  return parsed.data;
+	if (!locale) {
+		throw new Error("No locale found");
+	}
+	const parsed = Locale.safeParse(locale);
+	if (!parsed.success) {
+		throw new Error(`Locale ${locale} not supported`);
+	}
+	return parsed.data;
 };

@@ -1,12 +1,12 @@
 ---
-import type { Backlink } from "@utils/md/readAndParse";
-import Link from "../interaction/Link.astro";
-import HoverUnderline from "../interaction/HoverUnderline.astro";
 import { getLocale } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
+import type { Backlink } from "@utils/md/readAndParse";
+import HoverUnderline from "../interaction/HoverUnderline.astro";
+import Link from "../interaction/Link.astro";
 
 interface Props {
-  backlinks: Backlink[];
+	backlinks: Backlink[];
 }
 
 const { backlinks } = Astro.props;

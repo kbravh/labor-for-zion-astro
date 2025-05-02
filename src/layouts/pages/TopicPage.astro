@@ -1,22 +1,22 @@
 ---
-import ArticleCard from '@components/ArticleCard.astro';
-import Main from '@components/layout/Main.astro';
-import PageWrapper from '@components/layout/PageWrapper.astro';
-import Pagination from '@components/layout/Pagination.astro';
-import PageTitle from '@components/typography/PageTitle.astro';
-import Layout from '@layouts/Layout.astro';
-import { getLocale } from '@utils/i18n/main';
-import { translations } from '@utils/i18n/translations';
-import { getNoteTopics, type PostListing } from '@utils/md/readAndParse';
-import type { Page } from 'astro';
+import ArticleCard from "@components/ArticleCard.astro";
+import Main from "@components/layout/Main.astro";
+import PageWrapper from "@components/layout/PageWrapper.astro";
+import Pagination from "@components/layout/Pagination.astro";
+import PageTitle from "@components/typography/PageTitle.astro";
+import Layout from "@layouts/Layout.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
+import { type PostListing, getNoteTopics } from "@utils/md/readAndParse";
+import type { Page } from "astro";
 
 const locale = getLocale(Astro.currentLocale);
 
 const { slugToTopic } = await getNoteTopics(locale);
 
 export type Props = {
-  page: Page<PostListing>;
-  topicSlug: string;
+	page: Page<PostListing>;
+	topicSlug: string;
 };
 
 const { page, topicSlug } = Astro.props;

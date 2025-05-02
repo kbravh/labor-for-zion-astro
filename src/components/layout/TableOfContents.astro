@@ -1,11 +1,11 @@
 ---
-import type { Heading } from '@validation/md';
-import Link from '../interaction/Link.astro';
-import { getLocale } from '@utils/i18n/main';
-import { translations } from '@utils/i18n/translations';
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
+import type { Heading } from "@validation/md";
+import Link from "../interaction/Link.astro";
 
 interface Props {
-  headings: Heading[];
+	headings: Heading[];
 }
 
 const { headings } = Astro.props;

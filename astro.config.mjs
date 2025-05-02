@@ -1,8 +1,8 @@
-import { defineConfig } from "astro/config";
+import { basename } from "node:path";
 import sitemap from "@astrojs/sitemap";
-import { basename } from "path";
+import { defineConfig } from "astro/config";
 import { getLastUpdatedDateFromSlug } from "./src/utils/md/readAndParse";
-import {LOCALES} from "./src/validation/i18n";
+import { LOCALES } from "./src/validation/i18n";
 
 import node from "@astrojs/node";
 
@@ -10,42 +10,43 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: import.meta.env.PROD
-    ? "https://laborforzion.com"
-    : "http://localhost:4321",
+	site: import.meta.env.PROD
+		? "https://laborforzion.com"
+		: "http://localhost:4321",
 
-  i18n: {
-    defaultLocale: "en",
-    locales: ["en", "es"],
-  },
+	i18n: {
+		defaultLocale: "en",
+		locales: ["en", "es"],
+	},
 
-  integrations: [
-    sitemap({
-      filter: (page) => page !== "https://laborforzion.com/quiz",
-      serialize: async (item) => {
-        //Fetch the last modified date for articles
-        if (/.*notes\/.+/.test(item.url)) {
-          const locale = item.url.split("/").find(piece => LOCALES.includes(piece))
-          const slug = basename(item.url);
-          const date = await getLastUpdatedDateFromSlug(locale ?? "en", slug);
-          if (!date) {
-            return item;
-          } else {
-            return {
-              ...item,
-              lastmod: date.toUTCString(),
-            };
-          }
-        }
-      },
-    }),
-  ],
+	integrations: [
+		sitemap({
+			filter: (page) => page !== "https://laborforzion.com/quiz",
+			serialize: async (item) => {
+				//Fetch the last modified date for articles
+				if (/.*notes\/.+/.test(item.url)) {
+					const locale = item.url
+						.split("/")
+						.find((piece) => LOCALES.includes(piece));
+					const slug = basename(item.url);
+					const date = await getLastUpdatedDateFromSlug(locale ?? "en", slug);
+					if (!date) {
+						return item;
+					}
+					return {
+						...item,
+						lastmod: date.toUTCString(),
+					};
+				}
+			},
+		}),
+	],
 
-  adapter: node({
-    mode: "standalone",
-  }),
+	adapter: node({
+		mode: "standalone",
+	}),
 
-  vite: {
-    plugins: [tailwindcss()],
-  },
+	vite: {
+		plugins: [tailwindcss()],
+	},
 });

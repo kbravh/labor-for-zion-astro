@@ -3,19 +3,19 @@
  * list split into the specified number of sub-groups.
  */
 export const splitArray = <T>(groups: number, items: T[]): T[][] => {
-  if (groups < 1) {
-    throw new Error("Group must be 1 or greater");
-  }
-  const collection: T[][] = [];
-  let counter = 0;
+	if (groups < 1) {
+		throw new Error("Group must be 1 or greater");
+	}
+	const collection: T[][] = [];
+	let counter = 0;
 
-  // Split into sub-arrays using modulo and columns
-  while (counter < groups) {
-    const set = items.filter((_, i) => i % groups === counter);
-    collection.push(set);
-    counter++;
-  }
-  return collection;
+	// Split into sub-arrays using modulo and columns
+	while (counter < groups) {
+		const set = items.filter((_, i) => i % groups === counter);
+		collection.push(set);
+		counter++;
+	}
+	return collection;
 };
 
 /**
@@ -23,17 +23,16 @@ export const splitArray = <T>(groups: number, items: T[]): T[][] => {
  * a key. Deduplicates the array based on the specified key.
  */
 export const dedupeArray = <T>(
-  array: T[],
-  keySelector: (item: T) => any,
+	array: T[],
+	keySelector: (item: T) => unknown,
 ): T[] => {
-  const seen = new Set();
-  return array.filter((item) => {
-    const key = keySelector(item);
-    if (seen.has(key)) {
-      return false;
-    } else {
-      seen.add(key);
-      return true;
-    }
-  });
+	const seen = new Set();
+	return array.filter((item) => {
+		const key = keySelector(item);
+		if (seen.has(key)) {
+			return false;
+		}
+		seen.add(key);
+		return true;
+	});
 };

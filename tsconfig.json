@@ -1,15 +1,15 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@components/*": ["src/components/*"],
-      "@data/*": ["src/data/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@utils/*": ["src/utils/*"],
-      "@validation/*": ["src/validation/*"]
-    }
-  }
+	"extends": "astro/tsconfigs/strict",
+	"include": [".astro/types.d.ts", "**/*"],
+	"exclude": ["dist"],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@components/*": ["src/components/*"],
+			"@data/*": ["src/data/*"],
+			"@layouts/*": ["src/layouts/*"],
+			"@utils/*": ["src/utils/*"],
+			"@validation/*": ["src/validation/*"]
+		}
+	}
 }

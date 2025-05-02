@@ -1,11 +1,11 @@
 ---
-import HoverUnderline from '../interaction/HoverUnderline.astro';
-import Logo from '../Logo.astro';
-import Link from '../interaction/Link.astro';
-import { routes } from '@utils/i18n/routes';
-import { translations } from '@utils/i18n/translations';
-import { getLocale } from '@utils/i18n/main';
-import { getAbsoluteLocaleUrl } from 'astro:i18n';
+import { getAbsoluteLocaleUrl } from "astro:i18n";
+import { getLocale } from "@utils/i18n/main";
+import { routes } from "@utils/i18n/routes";
+import { translations } from "@utils/i18n/translations";
+import Logo from "../Logo.astro";
+import HoverUnderline from "../interaction/HoverUnderline.astro";
+import Link from "../interaction/Link.astro";
 // import LanguageSwitcher from './LanguageSwitcher.astro';
 
 const locale = getLocale(Astro.currentLocale);

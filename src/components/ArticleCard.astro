@@ -1,13 +1,13 @@
 ---
-import type { PostListing } from '@utils/md/readAndParse';
-import Description from './typography/Description.astro';
-import H3 from './typography/H3.astro';
-import SupportText from './typography/SupportText.astro';
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import { getLocale } from '@utils/i18n/main';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { getLocale } from "@utils/i18n/main";
+import type { PostListing } from "@utils/md/readAndParse";
+import Description from "./typography/Description.astro";
+import H3 from "./typography/H3.astro";
+import SupportText from "./typography/SupportText.astro";
 
 export interface Props {
-  post: PostListing;
+	post: PostListing;
 }
 
 const locale = getLocale(Astro.currentLocale);

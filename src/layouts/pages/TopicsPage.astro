@@ -1,12 +1,12 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import MainWrapper from '@components/layout/Main.astro';
-import PageTitle from '@components/typography/PageTitle.astro';
-import { getNoteTopics } from '@utils/md/readAndParse';
-import HoverUnderline from '@components/interaction/HoverUnderline.astro';
-import { getLocale } from '@utils/i18n/main';
-import { translations } from '@utils/i18n/translations';
-import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import HoverUnderline from "@components/interaction/HoverUnderline.astro";
+import MainWrapper from "@components/layout/Main.astro";
+import PageTitle from "@components/typography/PageTitle.astro";
+import Layout from "@layouts/Layout.astro";
+import { getLocale } from "@utils/i18n/main";
+import { translations } from "@utils/i18n/translations";
+import { getNoteTopics } from "@utils/md/readAndParse";
 
 const locale = getLocale(Astro.currentLocale);
 

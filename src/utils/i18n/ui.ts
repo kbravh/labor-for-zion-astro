@@ -10,6 +10,7 @@ export type UI =
 	| "page"
 	| "previous"
 	| "recent"
+	| "see_more"
 	| "translation"
 	| "rss"
 	| "toc"
@@ -34,6 +35,7 @@ export const uiMap: UIMap = {
 		page: "Page",
 		previous: "Previous page",
 		recent: "Recent articles",
+		see_more: "See more",
 		rss: "Grab the RSS Feed",
 		translation: "Read this article in",
 		toc: "Table of Contents",
@@ -52,6 +54,7 @@ export const uiMap: UIMap = {
 		previous: "Anterior",
 		recent: "Artículos recientes",
 		rss: "Fuente RSS",
+		see_more: "Ver más",
 		translation: "Leer este artículo en",
 		toc: "Índice",
 		views: "Vistas de página",

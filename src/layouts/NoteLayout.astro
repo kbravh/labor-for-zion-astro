@@ -1,6 +1,5 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import VideoPlayer from "@components/VideoPlayer/VideoPlayerWebComponent.astro";
 import HoverUnderline from "@components/interaction/HoverUnderline.astro";
 import Link from "@components/interaction/Link.astro";
 import Backlinks from "@components/layout/Backlinks.astro";
@@ -28,6 +27,14 @@ interface Props {
 
 const { slug, frontmatter, backlinks, content, headings, socialImage } =
 	Astro.props;
+
+// dynamically load video player component since it is large
+let VideoPlayer: ((_props: Record<string, unknown>) => unknown) | undefined;
+if (content.includes("<video-player>")) {
+	VideoPlayer = await import(
+		"@components/VideoPlayer/VideoPlayerWebComponent.astro"
+	).then((mod) => mod.default);
+}
 
 const translationMap = frontmatter?.translations ?? {};
 
@@ -152,6 +159,6 @@ const tags = frontmatter.tags?.map((tag) => ({
     data-display-text={translations[locale].ui.views}
     data-locale={locale}
     data-slug={slug}></hit-counter>
-  <VideoPlayer />
+  {VideoPlayer && <VideoPlayer />}
   <HeadingObserver />
 </Layout>

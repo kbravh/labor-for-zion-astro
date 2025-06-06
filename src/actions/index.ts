@@ -1,10 +1,8 @@
 import { ActionError, defineAction } from "astro:actions";
+import { Analytics, and, count, db, eq } from "astro:db";
 import { z } from "astro:schema";
-import { PrismaClient } from "@prisma/client";
 import { getTitleAndSlugMaps } from "@utils/md/readAndParse";
 import { isValidLocale } from "@validation/i18n";
-
-const prisma = new PrismaClient();
 
 export const server = {
 	logPageView: defineAction({
@@ -37,7 +35,7 @@ export const server = {
 				});
 			}
 
-			return prisma.analytics.create({ data });
+			return db.insert(Analytics).values(data);
 		},
 	}),
 	getPageViews: defineAction({
@@ -45,12 +43,13 @@ export const server = {
 			slug: z.string(),
 			locale: z.string(),
 		}),
-		handler: async ({ slug, locale }) =>
-			prisma.analytics.count({
-				where: {
-					slug,
-					locale,
-				},
-			}),
+		handler: async ({ slug, locale }) => {
+			const result = await db
+				.select({ count: count() })
+				.from(Analytics)
+				.where(and(eq(Analytics.slug, slug), eq(Analytics.locale, locale)));
+
+			return result[0]?.count ?? 0;
+		},
 	}),
 };

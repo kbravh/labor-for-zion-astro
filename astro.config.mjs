@@ -8,6 +8,8 @@ import node from "@astrojs/node";
 
 import tailwindcss from "@tailwindcss/vite";
 
+import db from "@astrojs/db";
+
 // https://astro.build/config
 export default defineConfig({
 	site: import.meta.env.PROD
@@ -40,6 +42,7 @@ export default defineConfig({
 				}
 			},
 		}),
+		db(),
 	],
 
 	adapter: node({

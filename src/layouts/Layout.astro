@@ -25,7 +25,7 @@ const strings = {
 };
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const hreflangURLs = generateHreflangTags(availableTranslations ?? []);
+const hreflangTags = generateHreflangTags(availableTranslations ?? []);
 ---
 
 <!doctype html>
@@ -50,7 +50,7 @@ const hreflangURLs = generateHreflangTags(availableTranslations ?? []);
     {socialImage ? <meta property="og:image" content={socialImage} /> : ""}
     <link rel="icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <Fragment set:html={hreflangURLs.join("\n")} />
+    <Fragment set:html={hreflangTags.join("\n")} />
     <ClientRouter />
   </head>
   <body

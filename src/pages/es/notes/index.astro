@@ -3,12 +3,16 @@ import NotesIndex from "@layouts/pages/NotesPage.astro";
 import { getArticles } from "@utils/md/readAndParse";
 import type { GetStaticPaths } from "astro";
 
-export const getStaticPaths = (async ({ paginate }) => {
+export const getStaticPaths = (async () => {
 	const posts = await getArticles({ locale: "es" });
-	return paginate(posts, { pageSize: 5 });
+	return posts.map((post) => ({
+		params: {
+			page: post.slug,
+		},
+	}));
 }) satisfies GetStaticPaths;
 
-const { page } = Astro.props;
+const posts = await getArticles({ locale: "es" });
 ---
 
-<NotesIndex {page} />
+<NotesIndex {posts} />

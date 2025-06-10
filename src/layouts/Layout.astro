@@ -6,14 +6,17 @@ import Header from "@components/layout/Header.astro";
 import { getLocale } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
 import "../styles/global.css";
+import { generateHreflangTags } from "@utils/seo";
+import type { Locale } from "@validation/i18n";
 
 export interface Props {
 	title: string;
 	description?: string;
 	socialImage?: string;
+	availableTranslations?: [Locale, string][];
 }
 
-const { title, description, socialImage } = Astro.props;
+const { title, description, socialImage, availableTranslations } = Astro.props;
 const locale = getLocale(Astro.currentLocale);
 
 const strings = {
@@ -22,6 +25,7 @@ const strings = {
 };
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const hreflangTags = generateHreflangTags(availableTranslations ?? []);
 ---
 
 <!doctype html>
@@ -46,6 +50,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     {socialImage ? <meta property="og:image" content={socialImage} /> : ""}
     <link rel="icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <Fragment set:html={hreflangTags.join("\n")} />
     <ClientRouter />
   </head>
   <body

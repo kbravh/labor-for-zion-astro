@@ -1,11 +1,12 @@
 ---
-
+// This component is a hit counter. I've renamed it because my ad-blocker
+// was blocking it outright. So, `CloseEncounterOfTheSecondKind` it is.
 ---
 
 <script>
   import { actions } from 'astro:actions';
 
-  class HitCounter extends HTMLElement {
+  class CloseEncounterOfTheSecondKind extends HTMLElement {
     displayText: string | null | undefined;
     locale: string | null | undefined;
     slug: string | null | undefined;
@@ -32,8 +33,6 @@
 
       if (process.env.NODE_ENV === 'development') {
         console.info(`Hit counter: ${this.slug} - ${this.locale}`);
-        this.displayCount(1123);
-        return;
       }
 
       const logResponse = await actions.logPageView({
@@ -46,15 +45,7 @@
         console.error(logResponse.error);
         return;
       }
-      const countResponse = await actions.getPageViews({
-        slug: this.slug,
-        locale: this.locale,
-      });
-      if (countResponse.error) {
-        console.error(countResponse.error);
-        return;
-      }
-      this.displayCount(countResponse.data);
+      this.displayCount(logResponse.data.count);
     }
 
     displayCount(count: number) {
@@ -86,10 +77,10 @@
     getViewerInfo() {
       return {
         referrer: document.referrer,
-        screenResolution: `${window.screen.width}x${window.screen.height}`,
+        screen_resolution: `${window.screen.width}x${window.screen.height}`,
       };
     }
   }
 
-  customElements.define('hit-counter', HitCounter);
+  customElements.define('close-encounter', CloseEncounterOfTheSecondKind);
 </script>

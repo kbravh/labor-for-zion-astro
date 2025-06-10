@@ -28,8 +28,5 @@ coverage/
 video_input/
 video_output/
 
-# Prisma generated client
-prisma/src/generated/
-
 # windsurf rules
 .windsurfrules

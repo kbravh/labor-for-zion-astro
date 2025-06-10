@@ -29,10 +29,10 @@ const locale = getLocale(Astro.currentLocale);
 
       <p>{translations[locale].ui.empty}</p>
       {!!backlinks.length && <Backlinks backlinks={backlinks} />}
-      <hit-counter
+      <close-encounter
         data-display-text={translations[locale].ui.views}
         data-locale={locale}
-        data-slug={slug}></hit-counter>
+        data-slug={slug}></close-encounter>
     </Prose>
   </main>
 </Layout>

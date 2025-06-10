@@ -6,11 +6,16 @@ import PageTitle from "@components/typography/PageTitle.astro";
 import Layout from "@layouts/Layout.astro";
 import { getLocale } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
+import { LOCALES, type Locale } from "@validation/i18n";
 
 const locale = getLocale(Astro.currentLocale);
+
+const availableTranslations = LOCALES.filter(
+	(locale) => locale !== Astro.currentLocale,
+).map((locale) => [locale as Locale, "/about"] as [Locale, string]);
 ---
 
-<Layout title={translations[locale].route['/about']}>
+<Layout title={translations[locale].route['/about']} availableTranslations={availableTranslations}>
   <PageWrapper>
     <PageTitle>{translations[locale].route['/about']}</PageTitle>
     <Main>

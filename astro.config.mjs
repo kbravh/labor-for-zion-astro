@@ -1,11 +1,11 @@
 import { basename } from "node:path";
-import sitemap from "@astrojs/sitemap";
-import node from "@astrojs/node";
 import db from "@astrojs/db";
-import { defineConfig } from "astro/config";
+import node from "@astrojs/node";
+import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, envField } from "astro/config";
 import { getLastUpdatedDateFromSlug } from "./src/utils/md/readAndParse";
 import { LOCALES } from "./src/validation/i18n";
-import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,6 +16,19 @@ export default defineConfig({
 	i18n: {
 		defaultLocale: "en",
 		locales: ["en", "es"],
+	},
+
+	env: {
+		schema: {
+			ASTRO_DB_REMOTE_URL: envField.string({
+				context: "server",
+				access: "secret",
+			}),
+			ASTRO_DB_APP_TOKEN: envField.string({
+				context: "server",
+				access: "secret",
+			}),
+		},
 	},
 
 	integrations: [

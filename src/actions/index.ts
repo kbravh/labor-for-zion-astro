@@ -1,5 +1,5 @@
 import { ActionError, defineAction } from "astro:actions";
-import { Analytics, and, count, db, eq } from "astro:db";
+import { Analytics, and, count, db, eq, sql } from "astro:db";
 import { z } from "astro:schema";
 import { getTitleAndSlugMaps } from "@utils/md/readAndParse";
 import { isValidLocale } from "@validation/i18n";
@@ -35,8 +35,15 @@ export const server = {
 				});
 			}
 
-			await db.insert(Analytics).values(data);
-			return;
+			// Insert the analytics data and get the page view count in one operation
+			const result = await db
+				.insert(Analytics)
+				.values(data)
+				.returning({
+					count: sql`(SELECT COUNT(*) FROM ${Analytics} WHERE ${Analytics.slug} = ${data.slug} AND ${Analytics.locale} = ${data.locale})`,
+				});
+
+			return { count: Number(result[0]?.count) || 0 };
 		},
 	}),
 	getPageViews: defineAction({

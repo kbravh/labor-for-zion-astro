@@ -2,7 +2,7 @@
 
 ## Analytics
 
-Analytics are handled by the `<hit-counter>`. It counts individual page views and utm tags. Data is stored in the Coolify postgres database `laborforzion`.
+Analytics are handled by the `<close-encounter>` web component. It counts individual page views and utm tags. Data is stored in the [Turso database `labor-for-zion`](https://app.turso.tech/kbravh/databases/labor-for-zion).
 
 ## Static assets
 

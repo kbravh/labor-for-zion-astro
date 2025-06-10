@@ -35,7 +35,8 @@ export const server = {
 				});
 			}
 
-			return db.insert(Analytics).values(data);
+			await db.insert(Analytics).values(data);
+			return;
 		},
 	}),
 	getPageViews: defineAction({

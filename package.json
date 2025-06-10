@@ -9,7 +9,7 @@
 	"scripts": {
 		"dev": "astro dev",
 		"start": "node ./dist/server/entry.mjs",
-		"build": "astro build",
+		"build": "astro build --remote",
 		"preview": "astro preview",
 		"astro": "astro",
 		"check": "npx @biomejs/biome check --write",

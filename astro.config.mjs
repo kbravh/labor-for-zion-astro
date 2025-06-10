@@ -1,14 +1,11 @@
 import { basename } from "node:path";
 import sitemap from "@astrojs/sitemap";
+import node from "@astrojs/node";
+import db from "@astrojs/db";
 import { defineConfig } from "astro/config";
 import { getLastUpdatedDateFromSlug } from "./src/utils/md/readAndParse";
 import { LOCALES } from "./src/validation/i18n";
-
-import node from "@astrojs/node";
-
 import tailwindcss from "@tailwindcss/vite";
-
-import db from "@astrojs/db";
 
 // https://astro.build/config
 export default defineConfig({

@@ -15,7 +15,7 @@ export const server = {
 			utm_content: z.string().optional(),
 			utm_term: z.string().optional(),
 			referrer: z.string().optional(),
-			screenResolution: z.string().optional(),
+			screen_resolution: z.string().optional(),
 		}),
 		handler: async (data) => {
 			if (!isValidLocale(data.locale)) {

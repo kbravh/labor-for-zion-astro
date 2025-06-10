@@ -113,7 +113,7 @@ export default async function seed() {
 		utm_content?: string | null;
 		utm_term?: string | null;
 		referrer?: string | null;
-		screenResolution?: string;
+		screen_resolution?: string;
 		timestamp: Date;
 	};
 
@@ -136,7 +136,7 @@ export default async function seed() {
 					locale,
 					...randomUTM(),
 					referrer: randomReferrer(),
-					screenResolution: randomScreenResolution(),
+					screen_resolution: randomScreenResolution(),
 					timestamp: randomDate(),
 				});
 			}

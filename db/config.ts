@@ -11,7 +11,7 @@ const Analytics = defineTable({
 		utm_content: column.text({ optional: true }),
 		utm_term: column.text({ optional: true }),
 		referrer: column.text({ optional: true }),
-		screenResolution: column.text({ optional: true }),
+		screen_resolution: column.text({ optional: true }),
 		timestamp: column.date({ default: NOW }),
 	},
 	indexes: [{ on: ["slug", "locale"] }],

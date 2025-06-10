@@ -19,7 +19,8 @@
 		"upgrade": "npx npm-check-updates -i --format group",
 		"upgrade:astro": "npx @astrojs/upgrade",
 		"video:transcode": "tsx node ./scripts/transcode.ts",
-		"video:upload": "tsx node ./scripts/upload.ts"
+		"video:upload": "tsx node ./scripts/upload.ts",
+		"db:push": "npm run astro db push -- --remote"
 	},
 	"dependencies": {
 		"@astrojs/db": "^0.15.0",

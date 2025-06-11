@@ -11,7 +11,6 @@ import Layout from "@layouts/Layout.astro";
 import { getAvailableTranslations, getLocale } from "@utils/i18n/main";
 import type { Project } from "@utils/i18n/projects";
 import { translations } from "@utils/i18n/translations";
-import { LOCALES, type Locale } from "@validation/i18n";
 
 const locale = getLocale(Astro.currentLocale);
 const availableTranslations = getAvailableTranslations(locale, "/projects");
@@ -34,10 +33,6 @@ const projects: ProjectListing[] = [
 		: []),
 	{ href: "https://scripture.page", name: "scriptly" },
 ];
-
-const availableTranslations = LOCALES.filter(
-	(locale) => locale !== Astro.currentLocale,
-).map((locale) => [locale as Locale, "/projects"] as [Locale, string]);
 ---
 
 <Layout title={translations[locale].route['/projects']} availableTranslations={availableTranslations}>

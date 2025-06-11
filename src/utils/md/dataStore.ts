@@ -9,6 +9,7 @@ type LocalizedData = {
 	slugToTitle: Record<string, string> | undefined;
 	slugToPath: Record<string, string> | undefined;
 	titlesWithBacklinks: Record<string, Backlink[]> | undefined;
+	translationMap: Record<string, Partial<Record<Locale, string>>> | undefined;
 };
 
 type RawData = Record<Locale, LocalizedData>;
@@ -21,6 +22,7 @@ const rawData: RawData = LOCALES.reduce((acc, locale) => {
 		slugToTitle: undefined,
 		slugToPath: undefined,
 		titlesWithBacklinks: undefined,
+		translationMap: undefined,
 	};
 	return acc;
 }, {} as RawData);

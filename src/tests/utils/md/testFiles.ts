@@ -8,6 +8,8 @@ language: en
 tags:
   - Book of Mormon
   - Jewish tradition
+translations:
+  es: y-mi-padre-vivía-en-una-tienda
 ---
 The most memorized Christian scripture is without a doubt "Jesus wept." ([[John 11.35]]). A very close second, at least among members of the Church, is "And my father dwelt in a tent" ([[1 Nephi 2.15]]). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?
 
@@ -34,6 +36,8 @@ language: es
 tags:
   - Libro de Mormón
   - Tradición judía
+translations:
+  en: and-my-father-dwelt-in-a-tent
 ---
 El versículo cristiano más memorizado es sin duda "Jesús lloró." ([[Juan 11.35]]). Un segundo muy cercano, al menos entre los miembros de la Iglesia, es "Y mi padre vivía en una tienda" ([[1 Nefi 2.15]]). Aunque es un versículo conveniente de memorizar, plantea una pregunta interesante: ¿por qué Nefi sintió la necesidad de incluir este detalle al mirar hacia atrás en sus experiencias y escribir este registro después de tantos años?
 

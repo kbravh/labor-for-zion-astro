@@ -13,6 +13,7 @@ import {
 	getSlugFromTitle,
 	getSlugToPathMap,
 	getTitleAndSlugMaps,
+	getTranslationMap,
 	removeMdxExtension,
 } from "@utils/md/readAndParse";
 import { type fs, vol } from "memfs";
@@ -430,6 +431,9 @@ describe("getArticles", () => {
 					language: "es",
 					tags: ["Libro de Mormón", "Tradición judía"],
 					title: "Y Mi Padre Vivía en una Tienda",
+					translations: {
+						en: "and-my-father-dwelt-in-a-tent",
+					},
 				},
 				slug: "y-mi-padre-vivía-en-una-tienda",
 			},
@@ -441,6 +445,9 @@ describe("getArticles", () => {
 					language: "en",
 					tags: ["Book of Mormon", "Jewish tradition"],
 					title: "And My Father Dwelt in a Tent",
+					translations: {
+						es: "y-mi-padre-vivía-en-una-tienda",
+					},
 					updated: new Date("2024-01-19T02:46:02.850Z"),
 				},
 				slug: "and-my-father-dwelt-in-a-tent",
@@ -457,6 +464,9 @@ describe("getArticles", () => {
 					language: "en",
 					tags: ["Book of Mormon", "Jewish tradition"],
 					title: "And My Father Dwelt in a Tent",
+					translations: {
+						es: "y-mi-padre-vivía-en-una-tienda",
+					},
 					updated: new Date("2024-01-19T02:46:02.850Z"),
 				},
 				slug: "and-my-father-dwelt-in-a-tent",
@@ -473,6 +483,9 @@ describe("getArticles", () => {
 					language: "es",
 					tags: ["Libro de Mormón", "Tradición judía"],
 					title: "Y Mi Padre Vivía en una Tienda",
+					translations: {
+						en: "and-my-father-dwelt-in-a-tent",
+					},
 				},
 				slug: "y-mi-padre-vivía-en-una-tienda",
 			},
@@ -490,6 +503,9 @@ describe("getArticles", () => {
 					language: "es",
 					tags: ["Libro de Mormón", "Tradición judía"],
 					title: "Y Mi Padre Vivía en una Tienda",
+					translations: {
+						en: "and-my-father-dwelt-in-a-tent",
+					},
 				},
 				slug: "y-mi-padre-vivía-en-una-tienda",
 			},
@@ -507,5 +523,31 @@ describe("getLastUpdatedFromSlug", () => {
 		expect(
 			await getLastUpdatedDateFromSlug("es", "y-mi-padre-vivía-en-una-tienda"),
 		).toEqual(new Date("2024-06-12T15:40:16.967Z"));
+	});
+});
+
+describe("getTranslationMap", () => {
+	beforeEach(() => {
+		vol.fromJSON(testFiles);
+	});
+
+	it("should return a map of article slugs to their translations for English locale", async () => {
+		const expected = {
+			"and-my-father-dwelt-in-a-tent": {
+				es: "y-mi-padre-vivía-en-una-tienda"
+			}
+		};
+		const result = await getTranslationMap("en");
+		expect(result).toEqual(expected);
+	});
+
+	it("should return a map of article slugs to their translations for Spanish locale", async () => {
+		const expected = {
+			"y-mi-padre-vivía-en-una-tienda": {
+				en: "and-my-father-dwelt-in-a-tent"
+			}
+		};
+		const result = await getTranslationMap("es");
+		expect(result).toEqual(expected);
 	});
 });

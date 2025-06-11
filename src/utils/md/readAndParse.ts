@@ -416,3 +416,38 @@ export const getLastUpdatedDateFromSlug = async (
 	const lastUpdated = updated || date;
 	return lastUpdated;
 };
+
+/**
+ * For a given locale, creates a map of article slugs to their available translations in other locales.
+ * For example, if an English article "be-humble-like-christ-was" has a Spanish translation 
+ * "ser-humilde-como-cristo-lo-fue", the output map will include:
+ * { "be-humble-like-christ-was": { "es": "ser-humilde-como-cristo-lo-fue" } }
+ * @param locale - The source locale to find articles from
+ * @returns A record mapping source slugs to their translated slugs by locale
+ */
+export const getTranslationMap = async (locale: Locale): Promise<Record<string, Partial<Record<Locale, string>>>> => {
+	const { translationMap } = dataStore[locale];
+	if (translationMap) {
+		return translationMap;
+	}
+
+	const slugToPathMap = await getSlugToPathMap(locale);
+	const newTranslationMap: Record<string, Partial<Record<Locale, string>>> = {};
+	for (const [slug, path] of Object.entries(slugToPathMap)) {
+		const source = readFileSync(path, "utf-8");
+		const frontmatter = matter(source).data;
+		const parsedFrontmatter = Frontmatter.parse(frontmatter);
+		// Only process articles in the requested locale
+		if (parsedFrontmatter.language === locale) {
+			// Initialize the translation map entry for this slug
+			newTranslationMap[slug] = {};
+			// Add each translation to the map
+			for (const [targetLocale, translatedSlug] of Object.entries(parsedFrontmatter.translations ?? {})) {
+				newTranslationMap[slug][targetLocale as Locale] = translatedSlug;
+			}
+		}
+	}
+
+	dataStore[locale].translationMap = newTranslationMap;
+	return dataStore[locale].translationMap;
+};

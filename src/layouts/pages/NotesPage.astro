@@ -8,6 +8,7 @@ import Layout from "@layouts/Layout.astro";
 import { getAvailableTranslations, getLocale } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
 import type { PostListing } from "@utils/md/readAndParse";
+import { LOCALES, type Locale } from "@validation/i18n";
 
 const locale = getLocale(Astro.currentLocale);
 const availableTranslations = getAvailableTranslations(locale, "/notes");
@@ -17,6 +18,10 @@ export interface Props {
 }
 
 const { posts } = Astro.props;
+
+const availableTranslations = LOCALES.filter(
+	(locale) => locale !== Astro.currentLocale,
+).map((locale) => [locale as Locale, "/notes"] as [Locale, string]);
 ---
 
 <Layout title={translations[locale].route['/notes']} availableTranslations={availableTranslations}>

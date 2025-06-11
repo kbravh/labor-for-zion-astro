@@ -1,4 +1,4 @@
-import { getAvailableTranslations, getLocale } from "@utils/i18n/main";
+import { getLocale, getavailableLocalizations } from "@utils/i18n/main";
 import type { Locale } from "@validation/i18n";
 import { describe, expect, expectTypeOf, it } from "vitest";
 
@@ -31,30 +31,30 @@ describe("i18n utilities", () => {
 		});
 	});
 
-	describe("getAvailableTranslations", () => {
+	describe("getavailableLocalizations", () => {
 		// Runtime tests
 		it("returns translations for all other locales", () => {
 			// When current locale is English, should return Spanish
-			const enResult = getAvailableTranslations("en", "/test-path");
+			const enResult = getavailableLocalizations("en", "/test-path");
 			expect(enResult).toEqual([["es", "/test-path"]]);
 
 			// When current locale is Spanish, should return English
-			const esResult = getAvailableTranslations("es", "/test-path");
+			const esResult = getavailableLocalizations("es", "/test-path");
 			expect(esResult).toEqual([["en", "/test-path"]]);
 		});
 
 		it("returns empty array if the current locale is invalid", () => {
 			// @ts-expect-error Testing with invalid locale
-			expect(getAvailableTranslations(undefined, "/test-path")).toEqual([]);
+			expect(getavailableLocalizations(undefined, "/test-path")).toEqual([]);
 		});
 
 		it("uses the provided path for each locale", () => {
-			const result = getAvailableTranslations("en", "/custom-path");
+			const result = getavailableLocalizations("en", "/custom-path");
 			expect(result).toEqual([["es", "/custom-path"]]);
 		});
 
 		it("can handle root path", () => {
-			const result = getAvailableTranslations("en", "/");
+			const result = getavailableLocalizations("en", "/");
 			expect(result).toEqual([["es", "/"]]);
 		});
 	});

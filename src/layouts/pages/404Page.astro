@@ -1,13 +1,13 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import { getAvailableTranslations, getLocale } from "@utils/i18n/main";
+import { getLocale, getavailableLocalizations } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
 
 const locale = getLocale(Astro.currentLocale);
-const availableTranslations = getAvailableTranslations(locale, "/404");
+const availableLocalizations = getavailableLocalizations(locale, "/404");
 ---
 
-<Layout title={translations[locale].route["404"]} availableTranslations={availableTranslations}>
+<Layout title={translations[locale].route["404"]} availableLocalizations={availableLocalizations}>
   <main
     class="container mx-auto max-w-[800px] flex flex-col items-center p-4 flex-grow gap-12"
   >

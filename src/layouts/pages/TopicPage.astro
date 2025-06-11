@@ -5,13 +5,13 @@ import PageWrapper from "@components/layout/PageWrapper.astro";
 import Pagination from "@components/layout/Pagination.astro";
 import PageTitle from "@components/typography/PageTitle.astro";
 import Layout from "@layouts/Layout.astro";
-import { getAvailableTranslations, getLocale } from "@utils/i18n/main";
+import { getLocale, getavailableLocalizations } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
 import { type PostListing, getNoteTopics } from "@utils/md/readAndParse";
 import type { Page } from "astro";
 
 const locale = getLocale(Astro.currentLocale);
-const availableTranslations = getAvailableTranslations(locale, "/notes");
+const availableLocalizations = getavailableLocalizations(locale, "/notes");
 
 const { slugToTopic } = await getNoteTopics(locale);
 
@@ -25,7 +25,7 @@ const { page, topicSlug } = Astro.props;
 const topic = slugToTopic[topicSlug];
 ---
 
-<Layout title={`${translations[locale].ui.notes_about}${topic}`} availableTranslations={availableTranslations}>
+<Layout title={`${translations[locale].ui.notes_about}${topic}`} availableLocalizations={availableLocalizations}>
   <PageWrapper>
     <PageTitle>{translations[locale].ui.notes_about}{topic}</PageTitle>
     <Main>

@@ -22,7 +22,7 @@ export const getLocale = (locale: string | undefined): Locale => {
  * @param path - The path to generate translations for
  * @returns Array of [locale, path] tuples for available translations
  */
-export const getAvailableTranslations = (
+export const getavailableLocalizations = (
 	currentLocale: Locale,
 	path: string,
 ): [Locale, string][] => {
@@ -33,4 +33,13 @@ export const getAvailableTranslations = (
 	return LOCALES.filter((locale) => locale !== currentLocale).map(
 		(locale) => [locale, path] as [Locale, string],
 	);
+};
+
+export const getLocaleUrl = async (
+	locale: Locale,
+	path: string,
+): Promise<string> => {
+	if (!path.includes("notes")) {
+		return path;
+	}
 };

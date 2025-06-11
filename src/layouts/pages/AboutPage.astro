@@ -4,15 +4,15 @@ import Main from "@components/layout/Main.astro";
 import PageWrapper from "@components/layout/PageWrapper.astro";
 import PageTitle from "@components/typography/PageTitle.astro";
 import Layout from "@layouts/Layout.astro";
-import { getAvailableTranslations, getLocale } from "@utils/i18n/main";
+import { getLocale, getavailableLocalizations } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
 import { LOCALES, type Locale } from "@validation/i18n";
 
 const locale = getLocale(Astro.currentLocale);
-const availableTranslations = getAvailableTranslations(locale, "/about");
+const availableLocalizations = getavailableLocalizations(locale, "/about");
 ---
 
-<Layout title={translations[locale].route['/about']} availableTranslations={availableTranslations}>
+<Layout title={translations[locale].route['/about']} availableLocalizations={availableLocalizations}>
   <PageWrapper>
     <PageTitle>{translations[locale].route['/about']}</PageTitle>
     <Main>

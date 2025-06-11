@@ -13,10 +13,10 @@ export interface Props {
 	title: string;
 	description?: string;
 	socialImage?: string;
-	availableTranslations?: [Locale, string][];
+	availableLocalizations?: [Locale, string][];
 }
 
-const { title, description, socialImage, availableTranslations } = Astro.props;
+const { title, description, socialImage, availableLocalizations } = Astro.props;
 const locale = getLocale(Astro.currentLocale);
 
 const strings = {
@@ -25,7 +25,7 @@ const strings = {
 };
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const hreflangTags = generateHreflangTags(availableTranslations ?? []);
+const hreflangTags = generateHreflangTags(availableLocalizations ?? []);
 ---
 
 <!doctype html>

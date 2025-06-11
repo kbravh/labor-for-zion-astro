@@ -6,7 +6,7 @@ import { translations } from "@utils/i18n/translations";
 import Logo from "../Logo.astro";
 import HoverUnderline from "../interaction/HoverUnderline.astro";
 import Link from "../interaction/Link.astro";
-// import LanguageSwitcher from './LanguageSwitcher.astro';
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 
 const locale = getLocale(Astro.currentLocale);
 ---
@@ -38,13 +38,13 @@ const locale = getLocale(Astro.currentLocale);
           </li>
         ))
       }
-      <!-- <LanguageSwitcher /> -->
+      <LanguageSwitcher />
     </ul>
   </nav>
 
   <!-- mobile menu -->
   <div class="sm:hidden flex gap-6">
-    <!-- <LanguageSwitcher /> -->
+    <LanguageSwitcher />
     <details
       class:list={[
         'flex items-center rounded',

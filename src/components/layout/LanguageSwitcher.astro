@@ -3,12 +3,16 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import Link from "@components/interaction/Link.astro";
 import { getLocale } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
+import { LOCALES } from "@validation/i18n";
 
 const locale = getLocale(Astro.currentLocale);
 // We have to remove the locale if it's here. Otherwise, we get into
 // odd situations where the language switcher will try to take you to
 // /es/es/about
-const url = Astro.url.pathname.replace("/es", "");
+let url = Astro.url.pathname;
+for (const lang of LOCALES) {
+	url = url.replace(`/${lang}`, "");
+}
 ---
 
 <details
@@ -46,14 +50,14 @@ const url = Astro.url.pathname.replace("/es", "");
   >
     <ul class="flex flex-col items-center gap-2 py-2 text-center">
       <li class="w-full h-10 flex items-center justify-center relative">
-        <Link className="w-full" href={getRelativeLocaleUrl('en', url)}
-          >{translations[locale].localization.english}</Link
-        >
+        <Link className="w-full" href={getRelativeLocaleUrl('en', url)}>
+          {translations[locale].localization.english}
+        </Link>
       </li>
       <li class="w-full h-10 flex items-center justify-center relative">
-        <Link className="w-full" href={getRelativeLocaleUrl('es', url)}
-          >{translations[locale].localization.spanish}</Link
-        >
+        <Link className="w-full" href={getRelativeLocaleUrl('es', url)}>
+          {translations[locale].localization.spanish}
+        </Link>
       </li>
     </ul>
   </div>

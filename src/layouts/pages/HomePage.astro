@@ -3,18 +3,18 @@ import ArticleCard from "@components/ArticleCard.astro";
 import HoverUnderline from "@components/interaction/HoverUnderline.astro";
 import Link from "@components/interaction/Link.astro";
 import Layout from "@layouts/Layout.astro";
-import { getAvailableTranslations, getLocale } from "@utils/i18n/main";
+import { getLocale, getavailableLocalizations } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
 import { getArticles } from "@utils/md/readAndParse";
 
 const locale = getLocale(Astro.currentLocale);
-const availableTranslations = getAvailableTranslations(locale, "/");
+const availableLocalizations = getavailableLocalizations(locale, "/");
 
 let posts = await getArticles({ locale });
 posts = posts.slice(0, 3);
 ---
 
-<Layout title={translations[locale].meta.site} availableTranslations={availableTranslations}>
+<Layout title={translations[locale].meta.site} availableLocalizations={availableLocalizations}>
   <main
     class="container mx-auto max-w-[800px] flex flex-col items-center p-4 flex-grow gap-12"
   >

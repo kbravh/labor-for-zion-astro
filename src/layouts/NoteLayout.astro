@@ -42,10 +42,10 @@ const locale = getLocale(Astro.currentLocale);
 // this is because we don't want to show the current language in the list of translations
 delete translationMap[locale];
 // see if this article has translations
-const availableTranslations = Object.entries(translationMap) as [
-	Locale,
-	string,
-][];
+const availableTranslations = Object.entries(translationMap).map(
+	// Add 'notes/' prefix to each translation slug to create proper path
+	([locale, slug]) => [locale as Locale, `/notes/${slug}`] as [Locale, string],
+);
 
 const tags = frontmatter.tags?.map((tag) => ({
 	name: tag,

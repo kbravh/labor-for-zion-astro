@@ -3,19 +3,15 @@ import ArticleCard from "@components/ArticleCard.astro";
 import HoverUnderline from "@components/interaction/HoverUnderline.astro";
 import Link from "@components/interaction/Link.astro";
 import Layout from "@layouts/Layout.astro";
-import { getLocale } from "@utils/i18n/main";
+import { getAvailableTranslations, getLocale } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
 import { getArticles } from "@utils/md/readAndParse";
-import { LOCALES, type Locale } from "@validation/i18n";
 
 const locale = getLocale(Astro.currentLocale);
+const availableTranslations = getAvailableTranslations(locale, "/");
 
 let posts = await getArticles({ locale });
 posts = posts.slice(0, 3);
-
-const availableTranslations = LOCALES.filter(
-	(locale) => locale !== Astro.currentLocale,
-).map((locale) => [locale as Locale, "/notes"] as [Locale, string]);
 ---
 
 <Layout title={translations[locale].meta.site} availableTranslations={availableTranslations}>

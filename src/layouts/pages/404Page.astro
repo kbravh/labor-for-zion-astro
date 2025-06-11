@@ -1,14 +1,10 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import { getLocale } from "@utils/i18n/main";
+import { getAvailableTranslations, getLocale } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
-import { LOCALES, type Locale } from "@validation/i18n";
 
 const locale = getLocale(Astro.currentLocale);
-
-const availableTranslations = LOCALES.filter(
-	(locale) => locale !== Astro.currentLocale,
-).map((locale) => [locale as Locale, "/404"] as [Locale, string]);
+const availableTranslations = getAvailableTranslations(locale, "/404");
 ---
 
 <Layout title={translations[locale].route["404"]} availableTranslations={availableTranslations}>

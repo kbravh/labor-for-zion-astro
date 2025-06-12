@@ -5,12 +5,12 @@ import Main from "@components/layout/Main.astro";
 import PageWrapper from "@components/layout/PageWrapper.astro";
 import PageTitle from "@components/typography/PageTitle.astro";
 import Layout from "@layouts/Layout.astro";
-import { getLocale, getavailableLocalizations } from "@utils/i18n/main";
+import { getLocale, getAvailableLocalizations } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
 import type { PostListing } from "@utils/md/readAndParse";
 
 const locale = getLocale(Astro.currentLocale);
-const availableLocalizations = getavailableLocalizations(locale, "/notes");
+const availableLocalizations = getAvailableLocalizations(locale, "/notes");
 
 export interface Props {
 	posts: PostListing[];

@@ -23,7 +23,7 @@ export const getLocale = (locale: string | undefined): Locale => {
  * @param path - The path to generate translations for
  * @returns Array of [locale, path] tuples for available translations
  */
-export const getavailableLocalizations = (
+export const getAvailableLocalizations = (
 	currentLocale: Locale,
 	path: string,
 ): [Locale, string][] => {

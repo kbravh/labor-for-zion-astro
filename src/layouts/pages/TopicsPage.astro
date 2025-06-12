@@ -4,12 +4,12 @@ import HoverUnderline from "@components/interaction/HoverUnderline.astro";
 import MainWrapper from "@components/layout/Main.astro";
 import PageTitle from "@components/typography/PageTitle.astro";
 import Layout from "@layouts/Layout.astro";
-import { getLocale, getavailableLocalizations } from "@utils/i18n/main";
+import { getLocale, getAvailableLocalizations } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
 import { getNoteTopics } from "@utils/md/readAndParse";
 
 const locale = getLocale(Astro.currentLocale);
-const availableLocalizations = getavailableLocalizations(locale, "/topics");
+const availableLocalizations = getAvailableLocalizations(locale, "/topics");
 
 const { slugToTopic } = await getNoteTopics(locale);
 const topics = Object.entries(slugToTopic);

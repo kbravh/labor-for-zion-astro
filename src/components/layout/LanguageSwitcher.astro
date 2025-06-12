@@ -37,48 +37,98 @@ for (const lang of LOCALES) {
 
 <details
   class:list={[
-    'flex items-center rounded',
-    'text-slate-700 hover:text-slate-900 border border-slate-700 hover:border-slate-900',
-    'dark:text-slate-300 dark:hover:text-slate-100 border dark:border-slate-300 dark:hover:border-slate-100',
-    'select-none',
+    'relative inline-flex items-center rounded-md select-none',
+    'bg-white text-slate-700 ring-1 ring-slate-200 hover:ring-slate-300 shadow-sm',
+    'dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-700 dark:hover:ring-slate-600',
+    'transition-all duration-150 ease-in-out',
   ]}
 >
   <summary
     class:list={[
-      'px-3 py-2 flex gap-2',
+      'px-3 py-2 flex items-center gap-x-2 list-none cursor-pointer',
+      'hover:bg-slate-50 dark:hover:bg-slate-700',
       'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500',
+      'transition-colors duration-150',
     ]}
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width="20"
+      height="20"
       fill="currentColor"
       viewBox="0 0 256 256"
+      class="text-emerald-600 dark:text-emerald-400"
     >
       <title>{translations[locale].localization.change_language}</title><path
         d="M247.15,212.42l-56-112a8,8,0,0,0-14.31,0l-21.71,43.43A88,88,0,0,1,108,126.93,103.65,103.65,0,0,0,135.69,64H160a8,8,0,0,0,0-16H104V32a8,8,0,0,0-16,0V48H32a8,8,0,0,0,0,16h87.63A87.76,87.76,0,0,1,96,116.35a87.74,87.74,0,0,1-19-31,8,8,0,1,0-15.08,5.34A103.63,103.63,0,0,0,84,127a87.55,87.55,0,0,1-52,17,8,8,0,0,0,0,16,103.46,103.46,0,0,0,64-22.08,104.18,104.18,0,0,0,51.44,21.31l-26.6,53.19a8,8,0,0,0,14.31,7.16L148.94,192h70.11l13.79,27.58A8,8,0,0,0,240,224a8,8,0,0,0,7.15-11.58ZM156.94,176,184,121.89,211.05,176Z"
-      ></path></svg
-    >
+      ></path>
+    </svg>
+    <span class="sr-only">{translations[locale].localization.change_language}</span>
   </summary>
   <div
     class:list={[
-      'absolute w-48 right-8 mt-4 z-[1]',
-      'text-slate-700 border border-slate-700 list-none text-lg bg-white',
-      'dark:text-slate-300 border dark:border-slate-300 list-none text-lg dark:bg-slate-800',
+      'absolute w-48 right-0 mt-2 z-10 origin-top-right rounded-md overflow-hidden',
+      'bg-white shadow-lg ring-1 ring-black ring-opacity-5',
+      'dark:bg-slate-800 dark:ring-slate-700',
     ]}
   >
-    <ul class="flex flex-col items-center gap-2 py-2 text-center">
-      <li class="w-full h-10 px-4 flex items-center justify-center relative">
-        <Link className="w-full" href={getRelativeLocaleUrl('en', urlMap['en'])}
-          >{translations[locale].localization.english}</Link
+    <ul class="py-1">
+      <li>
+        <Link 
+          className="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-white" 
+          href={getRelativeLocaleUrl('en', urlMap['en'])}
         >
+          {translations[locale].localization.english}
+        </Link>
       </li>
-      <li class="w-full h-10 px-4 flex items-center justify-center relative">
-        <Link className="w-full" href={getRelativeLocaleUrl('es', urlMap['es'])}
-          >{translations[locale].localization.spanish}</Link
+      <li>
+        <Link 
+          className="block w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-white" 
+          href={getRelativeLocaleUrl('es', urlMap['es'])}
         >
+          {translations[locale].localization.spanish}
+        </Link>
       </li>
     </ul>
   </div>
 </details>
+
+<style>
+  /* Remove default disclosure triangle in Chrome, Safari, etc */
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  /* Remove default disclosure triangle in Firefox */
+  details > summary {
+    list-style: none;
+  }
+</style>
+
+<script>
+  // Progressive enhancement: close the details when clicking outside
+  document.addEventListener('astro:page-load', () => {
+    const languageSwitcher = document.querySelector('details') as HTMLDetailsElement;
+    
+    if (languageSwitcher) {
+      // Handle clicks outside the details element
+      document.addEventListener('click', (event) => {
+        // Check if the details is open and the click was outside it
+        if (
+          languageSwitcher.hasAttribute('open') && 
+          event.target instanceof Node &&
+          !languageSwitcher.contains(event.target)
+        ) {
+          languageSwitcher.removeAttribute('open');
+        }
+      });
+      
+      // Close on escape key press
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && languageSwitcher.hasAttribute('open')) {
+          languageSwitcher.removeAttribute('open');
+        }
+      });
+    }
+  });
+</script>

@@ -20,6 +20,7 @@ import {
 	processScriptureReference,
 } from "@utils/scriptures";
 import { Frontmatter, type Heading } from "@validation/md";
+import type { GetStaticPaths } from "astro";
 // @ts-ignore - untyped dependency
 import matter from "gray-matter";
 import MarkdownIt from "markdown-it";
@@ -32,14 +33,6 @@ if (!slug) {
 }
 
 const locale = getLocale(Astro.currentLocale);
-
-const md = new MarkdownIt({
-	html: true,
-	linkify: true,
-	typographer: true,
-})
-	.use(MarkdownItFootnote)
-	.use(MarkdownItAnchor);
 
 const slugToPathMap = await getSlugToPathMap(locale);
 const { titleToSlug, slugToTitle } = await getTitleAndSlugMaps(locale);
@@ -68,8 +61,29 @@ let noteData:
 	  }
 	| { title: string; slug: string; backlinks: Backlink[]; type: "empty" };
 
-// if we have a filepath, this is a real page and we can parse and prepare
-if (filePath) {
+// if we did not find this, let's check if it's an empty page referenced in other articles
+if (!filePath) {
+	const title = slugToTitle[slug];
+	if (!title) {
+		// This page doesn't exist as a note.
+		return Astro.redirect("/404");
+	}
+	noteData = {
+		slug,
+		backlinks: titlesWithBacklinks[title] ?? [],
+		type: "empty",
+		title,
+	};
+} else {
+	// if we have a filepath, this is a real page and we can parse and prepare
+	const md = new MarkdownIt({
+		html: true,
+		linkify: true,
+		typographer: true,
+	})
+		.use(MarkdownItFootnote)
+		.use(MarkdownItAnchor);
+
 	const source = readFileSync(filePath, "utf-8");
 	const markdown = matter(source);
 	const text = await addLinks(locale, titleToSlug, markdown.content);
@@ -92,58 +106,36 @@ if (filePath) {
 		backlinks: dedupeArray(backlinks, (backlink) => backlink.slug),
 		type: "note",
 	};
-	// otherwise, let's check if it's an empty page referenced in other articles
-} else {
-	const title = slugToTitle[slug];
-	if (!title) {
-		// This page doesn't exist as a note.
-		return Astro.redirect("/404");
-	}
-	noteData = {
-		slug,
-		backlinks: titlesWithBacklinks[title] ?? [],
-		type: "empty",
-		title,
-	};
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths = (async () => {
 	const { slugToTitle } = await getTitleAndSlugMaps("en");
 	const paths = Object.keys(slugToTitle).map((slug) => ({
 		params: { slug },
 	}));
 	return paths;
-}
+}) satisfies GetStaticPaths;
 
-let socialImage = "";
-if (noteData.type === "note") {
-	socialImage = generateSocialImage({
-		title: noteData.frontmatter.title,
-		tagline: noteData.frontmatter.tags
-			? createTaglineFromTags(noteData.frontmatter.tags)
-			: "",
-		cloudName: "drn1fmjus",
-		imagePublicID: "title_og_rgze3y",
-		titleFont: "futura",
-		taglineFont: "futura",
-		textColor: "F1F3F7",
-		titleColor: "F1F3F7",
-		taglineColor: "F1F3F7",
-		version: "v1719583369",
-	});
-} else {
-	socialImage = generateSocialImage({
-		title: noteData.title,
-		cloudName: "drn1fmjus",
-		imagePublicID: "title_og_rgze3y",
-		titleColor: "F1F3F7",
-		taglineColor: "F1F3F7",
-		titleFont: "futura",
-		taglineFont: "futura",
-		titleExtraConfig: "_line_spacing_-10",
-		taglineExtraConfig: "_line_spacing_10",
-	});
-}
+const socialImage = generateSocialImage({
+	...(noteData.type === "note"
+		? {
+				title: noteData.frontmatter.title,
+				tagline: createTaglineFromTags(noteData.frontmatter.tags),
+			}
+		: {
+				title: noteData.title,
+				titleExtraConfig: "_line_spacing_-10",
+				taglineExtraConfig: "_line_spacing_10",
+			}),
+	cloudName: "drn1fmjus",
+	imagePublicID: "title_og_rgze3y",
+	titleFont: "futura",
+	taglineFont: "futura",
+	textColor: "F1F3F7",
+	titleColor: "F1F3F7",
+	taglineColor: "F1F3F7",
+	version: "v1719583369",
+});
 ---
 
 {

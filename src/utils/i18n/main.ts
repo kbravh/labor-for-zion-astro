@@ -1,3 +1,4 @@
+import { getTranslationMap } from "@utils/md/readAndParse";
 import { LOCALES, Locale } from "@validation/i18n";
 
 /**
@@ -33,13 +34,4 @@ export const getavailableLocalizations = (
 	return LOCALES.filter((locale) => locale !== currentLocale).map(
 		(locale) => [locale, path] as [Locale, string],
 	);
-};
-
-export const getLocaleUrl = async (
-	locale: Locale,
-	path: string,
-): Promise<string> => {
-	if (!path.includes("notes")) {
-		return path;
-	}
 };

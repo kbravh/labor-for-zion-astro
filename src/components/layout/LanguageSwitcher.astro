@@ -3,15 +3,35 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import Link from "@components/interaction/Link.astro";
 import { getLocale } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
+import { getTranslationMap } from "@utils/md/readAndParse";
+import type { Locale } from "@validation/i18n";
 import { LOCALES } from "@validation/i18n";
 
 const locale = getLocale(Astro.currentLocale);
+const url = Astro.url.pathname;
 // We have to remove the locale if it's here. Otherwise, we get into
 // odd situations where the language switcher will try to take you to
 // /es/es/about
-let url = Astro.url.pathname;
+const urlWithoutLocale = url.replace(`/${locale}`, "");
+const urlMap: Record<Locale, string> = {
+	en: urlWithoutLocale,
+	es: urlWithoutLocale,
+};
 for (const lang of LOCALES) {
-	url = url.replace(`/${lang}`, "");
+	// get the slug of the page and check for it in the translation map
+	const translationMap = await getTranslationMap(lang);
+	const slug = urlWithoutLocale.split("/").filter(Boolean).pop();
+	if (!slug) {
+		continue;
+	}
+	// if there are translations available, replace the urls
+	const translations = translationMap[slug];
+	if (!translations) {
+		continue;
+	}
+	for (const [locale, slug] of Object.entries(translations)) {
+		urlMap[locale as Locale] = `/notes/${slug}`;
+	}
 }
 ---
 
@@ -49,15 +69,15 @@ for (const lang of LOCALES) {
     ]}
   >
     <ul class="flex flex-col items-center gap-2 py-2 text-center">
-      <li class="w-full h-10 flex items-center justify-center relative">
-        <Link className="w-full" href={getRelativeLocaleUrl('en', url)}>
-          {translations[locale].localization.english}
-        </Link>
+      <li class="w-full h-10 px-4 flex items-center justify-center relative">
+        <Link className="w-full" href={getRelativeLocaleUrl('en', urlMap['en'])}
+          >{translations[locale].localization.english}</Link
+        >
       </li>
-      <li class="w-full h-10 flex items-center justify-center relative">
-        <Link className="w-full" href={getRelativeLocaleUrl('es', url)}>
-          {translations[locale].localization.spanish}
-        </Link>
+      <li class="w-full h-10 px-4 flex items-center justify-center relative">
+        <Link className="w-full" href={getRelativeLocaleUrl('es', urlMap['es'])}
+          >{translations[locale].localization.spanish}</Link
+        >
       </li>
     </ul>
   </div>

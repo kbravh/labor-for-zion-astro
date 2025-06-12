@@ -534,8 +534,8 @@ describe("getTranslationMap", () => {
 	it("should return a map of article slugs to their translations for English locale", async () => {
 		const expected = {
 			"and-my-father-dwelt-in-a-tent": {
-				es: "y-mi-padre-vivía-en-una-tienda"
-			}
+				es: "y-mi-padre-vivía-en-una-tienda",
+			},
 		};
 		const result = await getTranslationMap("en");
 		expect(result).toEqual(expected);
@@ -544,8 +544,8 @@ describe("getTranslationMap", () => {
 	it("should return a map of article slugs to their translations for Spanish locale", async () => {
 		const expected = {
 			"y-mi-padre-vivía-en-una-tienda": {
-				en: "and-my-father-dwelt-in-a-tent"
-			}
+				en: "and-my-father-dwelt-in-a-tent",
+			},
 		};
 		const result = await getTranslationMap("es");
 		expect(result).toEqual(expected);

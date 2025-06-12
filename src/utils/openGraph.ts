@@ -197,8 +197,17 @@ export function generateSocialImage({
 	return validParts.join("/");
 }
 
-export const createTaglineFromTags = (tags: string[]): string =>
+/**
+ * Converts an array of tags into a space-separated string of hashtags.
+ * Each tag is slugified (converted to lowercase, special characters removed) and prefixed with '#'.
+ *
+ * @param {string[]} [tags] - Optional array of tag strings
+ * @returns {string} A space-separated string of hashtags (e.g., "#tag1 #tag2") or an empty string if no tags provided
+ */
+export const createTaglineFromTags = (tags?: string[]): string =>
 	tags
-		.map((tag) => slugify(tag, { lower: true }))
-		.map((tag) => `#${tag}`)
-		.join(" ");
+		? tags
+				.map((tag) => slugify(tag, { lower: true }))
+				.map((tag) => `#${tag}`)
+				.join(" ")
+		: "";

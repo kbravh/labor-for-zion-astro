@@ -1,4 +1,4 @@
-import { getLocale, getAvailableLocalizations } from "@utils/i18n/main";
+import { getAvailableLocalizations, getLocale } from "@utils/i18n/main";
 import type { Locale } from "@validation/i18n";
 import { describe, expect, expectTypeOf, it } from "vitest";
 

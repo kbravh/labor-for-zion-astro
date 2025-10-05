@@ -19,7 +19,7 @@ export type ProjectMap = {
 export const projectMap: ProjectMap = {
 	en: {
 		scriptly: {
-			title: "Scriptly",
+			title: "Scripture Page",
 			description:
 				"Style your patriarchal blessing to look like a page right out of the scriptures.",
 		},
@@ -31,7 +31,7 @@ export const projectMap: ProjectMap = {
 	},
 	es: {
 		scriptly: {
-			title: "Scriptly",
+			title: "Página de escrituras",
 			description:
 				"Da a tu bendición patriarcal un estilo como si fuera una página sacada de las mismísimas escrituras.",
 		},

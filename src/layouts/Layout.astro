@@ -31,6 +31,17 @@ const hreflangTags = generateHreflangTags(availableLocalizations ?? []);
 <!doctype html>
 <html lang={locale} class="h-full dark:bg-slate-900 dark:text-slate-200">
   <head>
+    <script is:inline>
+      // Initialize theme before page renders to avoid flash
+      const shouldUseDarkMode = () => {
+        return (
+          localStorage.theme === 'dark' ||
+          (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        );
+      };
+      // second param forces this to be a one-way operation: true to add, false to remove
+      document.documentElement.classList.toggle('dark', shouldUseDarkMode());
+    </script>
     <link rel="canonical" href={canonicalURL} />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />

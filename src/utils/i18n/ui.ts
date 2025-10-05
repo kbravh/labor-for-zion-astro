@@ -20,7 +20,9 @@ export type UI =
 	| "rss"
 	| "toc"
 	| "views"
-	| "404";
+	| "404"
+	| "switch_to_light_mode"
+	| "switch_to_dark_mode";
 
 export type UIMap = {
 	[k in Locale]: {
@@ -51,6 +53,8 @@ export const uiMap: UIMap = {
 		toc: "Table of Contents",
 		views: "Page views",
 		"404": "Oops! That page doesn't exist.",
+		switch_to_light_mode: "Switch to light mode",
+		switch_to_dark_mode: "Switch to dark mode",
 	},
 	es: {
 		backlinks: "Páginas que mencionan esta nota:",
@@ -74,5 +78,7 @@ export const uiMap: UIMap = {
 		toc: "Índice",
 		views: "Vistas de página",
 		"404": "¡Vaya! Esa página no existe.",
+		switch_to_light_mode: "Cambiar a modo claro",
+		switch_to_dark_mode: "Cambiar a modo oscuro",
 	},
 } as const;

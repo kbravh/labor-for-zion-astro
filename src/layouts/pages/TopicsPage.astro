@@ -18,10 +18,10 @@ const topics = Object.entries(slugToTopic);
 const articles = await getArticles({ locale });
 const topicCounts = new Map<string, number>();
 for (const article of articles) {
-  for (const tag of article.frontmatter.tags ?? []) {
-    const count = topicCounts.get(tag) ?? 0;
-    topicCounts.set(tag, count + 1);
-  }
+	for (const tag of article.frontmatter.tags ?? []) {
+		const count = topicCounts.get(tag) ?? 0;
+		topicCounts.set(tag, count + 1);
+	}
 }
 
 // Sort topics alphabetically

@@ -2,10 +2,13 @@ import type { Locale } from "@validation/i18n";
 
 export type UI =
 	| "backlinks"
+	| "browse_by_topic"
 	| "empty"
 	| "menu"
 	| "next"
+	| "note"
 	| "note_about"
+	| "notes"
 	| "notes_about"
 	| "page"
 	| "previous"
@@ -27,11 +30,14 @@ export type UIMap = {
 export const uiMap: UIMap = {
 	en: {
 		backlinks: "Pages that reference this note:",
+		browse_by_topic: "Browse by topic",
 		empty:
 			"This page hasn't been created yet! But if it has been mentioned somewhere else, you can see those references below.",
 		menu: "Menu",
 		next: "Next page",
+		note: "note",
 		note_about: "A note about",
+		notes: "notes",
 		notes_about: "Notes about: ",
 		page: "Page",
 		previous: "Previous page",
@@ -46,11 +52,14 @@ export const uiMap: UIMap = {
 	},
 	es: {
 		backlinks: "Páginas que mencionan esta nota:",
+		browse_by_topic: "Explorar por tema",
 		empty:
 			"Esta página aún no se ha creado! Pero si ha sido mencionado en otro lado, podrás ver esas referencias aquí.",
 		menu: "Menú",
 		next: "Siguiente",
+		note: "nota",
 		note_about: "Una nota sobre",
+		notes: "notas",
 		notes_about: "Notas sobre: ",
 		page: "Página",
 		previous: "Anterior",

@@ -1,4 +1,5 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
 import ArticleCard from "@components/ArticleCard.astro";
 import RSSLink from "@components/interaction/RSSLink.astro";
 import Main from "@components/layout/Main.astro";
@@ -23,8 +24,32 @@ const { posts } = Astro.props;
   <PageWrapper>
     <PageTitle>{translations[locale].route['/notes']}</PageTitle>
     <Main>
-      <div class="max-w-4xl w-full">
+      <div class="max-w-4xl w-full flex gap-6 flex-wrap">
         <RSSLink>{translations[locale].ui.rss}</RSSLink>
+        <a
+          href={getRelativeLocaleUrl(locale, "/topics")}
+          class="flex gap-2 items-center text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-200"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            height="24"
+            width="24"
+            style="width: 24px; height: 24px;"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z"
+            ></path>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z"></path>
+          </svg>
+          {translations[locale].ui.browse_by_topic}
+        </a>
       </div>
 
       <div class="flex flex-col gap-4 mt-4">

@@ -1,25 +1,43 @@
 ---
+import ArticleCard from "@components/ArticleCard.astro";
+import HoverUnderline from "@components/interaction/HoverUnderline.astro";
+import Link from "@components/interaction/Link.astro";
+import Main from "@components/layout/Main.astro";
+import PageWrapper from "@components/layout/PageWrapper.astro";
+import PageTitle from "@components/typography/PageTitle.astro";
 import Layout from "@layouts/Layout.astro";
 import { getAvailableLocalizations, getLocale } from "@utils/i18n/main";
 import { translations } from "@utils/i18n/translations";
+import { getArticles } from "@utils/md/readAndParse";
 
 const locale = getLocale(Astro.currentLocale);
 const availableLocalizations = getAvailableLocalizations(locale, "/404");
+
+let posts = await getArticles({ locale });
+posts = posts.slice(0, 3);
 ---
 
 <Layout title={translations[locale].route["404"]} availableLocalizations={availableLocalizations}>
-  <main
-    class="container mx-auto max-w-[800px] flex flex-col items-center p-4 flex-grow gap-12"
-  >
-    <div>
-      <h1
-        class="text-5xl md:text-[5rem] leading-normal font-extrabold text-slate-700 dark:text-slate-200/90 text-balance"
-      >
-        {translations[locale].route["404"]}
-      </h1>
-      <p>
+  <PageWrapper>
+    <PageTitle>{translations[locale].route["404"]}</PageTitle>
+    <Main>
+      <p class="text-lg text-slate-700 dark:text-slate-300 max-w-4xl w-full">
         {translations[locale].ui["404"]}
       </p>
-    </div>
-  </main>
+
+      <section class="max-w-4xl w-full flex flex-col mt-8">
+        <h2 class="text-slate-600 dark:text-slate-300 font-bold text-3xl">
+          {translations[locale].ui.recent_notes_404}
+        </h2>
+        <div class="flex flex-col align-start gap-4 mt-2">
+          {posts.map((post) => <ArticleCard post={post} />)}
+        </div>
+        <HoverUnderline className="self-end">
+          <Link href="/notes/">
+            <span style="margin-block-start: calc(1ex - 1cap);">{translations[locale].ui.see_more}</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-right-dash-icon lucide-arrow-big-right-dash"><path d="M5 9v6"/><path d="M9 9h3V5l7 7-7 7v-4H9V9z"/></svg>
+          </Link>
+        </HoverUnderline>
+      </section>
+    </Main>
+  </PageWrapper>
 </Layout>

@@ -39,12 +39,21 @@ const hreflangTags = generateHreflangTags(availableLocalizations ?? []);
           (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
         );
       };
-      // second param forces this to be a one-way operation: true to add, false to remove
-      document.documentElement.classList.toggle('dark', shouldUseDarkMode());
+
+      const initializeTheme = () => {
+        // second param forces this to be a one-way operation: true to add, false to remove
+        document.documentElement.classList.toggle('dark', shouldUseDarkMode());
+      };
+
+      // Run on initial page load
+      initializeTheme();
+
+      // Run on view transitions (Astro's client-side navigation)
+      document.addEventListener('astro:page-load', initializeTheme);
     </script>
     <noscript>
       <style>
-        #theme-toggle { display: none !important; }
+        theme-toggle { display: none !important; }
       </style>
     </noscript>
     <link rel="canonical" href={canonicalURL} />

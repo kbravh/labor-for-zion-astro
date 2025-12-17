@@ -151,11 +151,15 @@ const hreflangTags = generateHreflangTags(availableLocalizations ?? []);
 
       /* https://developer.mozilla.org/en-US/docs/Web/CSS/::target-text */
       ::target-text {
-        /* background-color: var(--bg-emerald-900);
-        color: var(--emerald-50); */
+        background-color: var(--color-emerald-900);
+        color: var(--color-emerald-50);
+      }
 
-        @apply bg-emerald-900 text-emerald-50;
-        @apply dark:text-emerald-900 dark:bg-emerald-50;
+      @media (prefers-color-scheme: dark) {
+        ::target-text {
+          background-color: var(--color-emerald-50);
+          color: var(--color-emerald-900);
+        }
       }
 
       h2,

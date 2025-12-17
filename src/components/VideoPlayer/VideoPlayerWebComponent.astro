@@ -3,10 +3,6 @@
 ---
 
 <script>
-  import 'media-chrome';
-  import 'hls-video-element';
-  import 'media-chrome/menu';
-
   class VideoPlayer extends HTMLElement {
     static get observedAttributes() {
       return ['aspectratio'];
@@ -117,7 +113,14 @@
       this.shadowRoot?.append(style, playerDiv);
     }
 
-    connectedCallback() {
+    async connectedCallback() {
+      // Lazy load media dependencies only when component is used
+      await Promise.all([
+        import('media-chrome'),
+        import('hls-video-element'),
+        import('media-chrome/menu'),
+      ]);
+
       this.updateAspectRatio();
       this.updateSource();
 

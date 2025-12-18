@@ -64,6 +64,6 @@ export const generateRssFeed = async ({
 		site: site ?? "https://laborforzion.com",
 		items: posts.filter(isPostFeedItem),
 		customData: `<language>${locale}</language>`,
-		// stylesheet: "/pretty-feed-v3.xsl",
+		stylesheet: locale === "es" ? "/rss-feed-es.xsl" : "/rss-feed.xsl",
 	});
 };

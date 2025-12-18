@@ -1,5 +1,13 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { getLocale } from "@utils/i18n/main";
+
+const locale = getLocale(Astro.currentLocale);
+const rssUrl = getRelativeLocaleUrl(locale, "/rss.xml");
+---
+
 <a
-  href="/rss.xml"
+  href={rssUrl}
   target="_blank"
   rel="noopener noreferer"
   class="flex gap-2 items-center text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-200"

@@ -33,7 +33,9 @@ export default defineConfig({
 
 	integrations: [
 		sitemap({
-			filter: (page) => page !== "https://laborforzion.com/quiz",
+			filter: (page) =>
+				page !== "https://laborforzion.com/quiz" &&
+				page !== "https://laborforzion.com/analytics",
 			serialize: async (item) => {
 				//Fetch the last modified date for articles
 				if (/.*notes\/.+/.test(item.url)) {

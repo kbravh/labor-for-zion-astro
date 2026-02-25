@@ -1,0 +1,417 @@
+---
+import Layout from "@layouts/Layout.astro";
+import {
+	getDateRange,
+	getPageViewsBySlug,
+	getRecentViews,
+	getReferrerBreakdown,
+	getTotalViews,
+	getUniquePageCount,
+	getUtmSourceBreakdown,
+} from "@utils/analyticsQueries";
+
+export const prerender = false;
+
+const [
+	totalViews,
+	uniquePages,
+	pageViews,
+	referrers,
+	utmSources,
+	recentActivity,
+	dateRange,
+] = await Promise.all([
+	getTotalViews(),
+	getUniquePageCount(),
+	getPageViewsBySlug(),
+	getReferrerBreakdown(),
+	getUtmSourceBreakdown(),
+	getRecentViews(),
+	getDateRange(),
+]);
+
+const hasUtmData = utmSources.some((s) => s.utmSource != null);
+
+function getPageUrl(slug: string, locale: string): string {
+	return locale === "en" ? `/notes/${slug}` : `/${locale}/notes/${slug}`;
+}
+
+function formatDate(date: Date | string | null): string {
+	if (!date) return "—";
+	const d = typeof date === "string" ? new Date(date) : date;
+	return d.toLocaleDateString("en-US", {
+		month: "short",
+		day: "numeric",
+		year: "numeric",
+	});
+}
+
+function formatTimestamp(date: Date | string | null): string {
+	if (!date) return "—";
+	const d = typeof date === "string" ? new Date(date) : date;
+	return d.toLocaleString("en-US", {
+		month: "short",
+		day: "numeric",
+		hour: "numeric",
+		minute: "2-digit",
+	});
+}
+
+function toIso(date: Date | string | null): string {
+	if (!date) return "";
+	const d = typeof date === "string" ? new Date(date) : date;
+	return d.toISOString();
+}
+---
+
+<Layout title="Analytics">
+  <div class="flex flex-col items-center w-full">
+    <div class="max-w-6xl w-full px-8">
+      <h1 class="text-5xl md:text-[5rem] leading-normal font-extrabold text-slate-700 dark:text-slate-300 text-balance text-center mb-4">
+        Analytics
+      </h1>
+      <p class="text-slate-500 text-center mb-8">Dashboard</p>
+
+      <!-- Summary cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+        <div class="rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 p-6 text-center">
+          <p class="text-sm text-slate-500 dark:text-slate-400">Total Views</p>
+          <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">{totalViews}</p>
+        </div>
+        <div class="rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 p-6 text-center">
+          <p class="text-sm text-slate-500 dark:text-slate-400">Unique Pages</p>
+          <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">{uniquePages}</p>
+        </div>
+        <div class="rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 p-6 text-center">
+          <p class="text-sm text-slate-500 dark:text-slate-400">Date Range</p>
+          <p class="text-lg font-semibold text-slate-700 dark:text-slate-300 mt-1">
+            {formatDate(dateRange.earliest)} — {formatDate(dateRange.latest)}
+          </p>
+        </div>
+      </div>
+
+      <!-- Page Views table -->
+      <section class="mb-10">
+        <h2 class="text-2xl text-slate-700 dark:text-slate-300 font-semibold mb-4">Page Views</h2>
+        <div class="overflow-x-auto rounded-lg border border-slate-300 dark:border-slate-700">
+          <table class="min-w-full divide-y divide-slate-300 dark:divide-slate-700" data-sortable>
+            <thead class="bg-slate-100 dark:bg-slate-800">
+              <tr>
+                <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="slug">
+                  <a href="#" class="group inline-flex items-center gap-1">
+                    Page
+                    <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                      <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th scope="col" class="px-4 py-3 text-center text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="locale">
+                  <a href="#" class="group inline-flex items-center gap-1">
+                    Locale
+                    <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                      <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th scope="col" class="px-4 py-3 text-right text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="views">
+                  <a href="#" class="group inline-flex items-center gap-1">
+                    Views
+                    <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                      <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th scope="col" class="px-4 py-3 text-right text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="lastVisit">
+                  <a href="#" class="group inline-flex items-center gap-1">
+                    Last Visit
+                    <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                      <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-900">
+              {pageViews.map((row) => (
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                  <td class="px-4 py-3 text-sm" data-column="slug" data-value={row.slug}>
+                    <a href={getPageUrl(row.slug, row.locale)} class="text-emerald-600 dark:text-emerald-400 hover:underline">{row.slug}</a>
+                  </td>
+                  <td class="px-4 py-3 text-sm text-center" data-column="locale" data-value={row.locale}>
+                    <span class="inline-block rounded bg-slate-200 dark:bg-slate-700 px-2 py-0.5 text-xs font-semibold text-slate-700 dark:text-slate-300">{row.locale.toUpperCase()}</span>
+                  </td>
+                  <td class="px-4 py-3 text-sm text-right text-slate-700 dark:text-slate-300" data-column="views" data-value={row.views}>
+                    {row.views}
+                  </td>
+                  <td class="px-4 py-3 text-sm text-right text-slate-500 dark:text-slate-400" data-column="lastVisit" data-value={toIso(row.lastVisit)}>
+                    {formatDate(row.lastVisit)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Referrers table -->
+      <section class="mb-10">
+        <h2 class="text-2xl text-slate-700 dark:text-slate-300 font-semibold mb-4">Referrers</h2>
+        <div class="overflow-x-auto rounded-lg border border-slate-300 dark:border-slate-700">
+          <table class="min-w-full divide-y divide-slate-300 dark:divide-slate-700" data-sortable>
+            <thead class="bg-slate-100 dark:bg-slate-800">
+              <tr>
+                <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="referrer">
+                  <a href="#" class="group inline-flex items-center gap-1">
+                    Referrer
+                    <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                      <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th scope="col" class="px-4 py-3 text-right text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="views">
+                  <a href="#" class="group inline-flex items-center gap-1">
+                    Views
+                    <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                      <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-900">
+              {referrers.map((row) => (
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                  <td class="px-4 py-3 text-sm text-slate-700 dark:text-slate-300" data-column="referrer" data-value={row.referrer ?? ""}>
+                    {row.referrer ?? <span class="text-slate-400 dark:text-slate-500 italic">Direct / None</span>}
+                  </td>
+                  <td class="px-4 py-3 text-sm text-right text-slate-700 dark:text-slate-300" data-column="views" data-value={row.views}>
+                    {row.views}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- UTM Sources table (hidden if no data) -->
+      {hasUtmData && (
+        <section class="mb-10">
+          <h2 class="text-2xl text-slate-700 dark:text-slate-300 font-semibold mb-4">UTM Sources</h2>
+          <div class="overflow-x-auto rounded-lg border border-slate-300 dark:border-slate-700">
+            <table class="min-w-full divide-y divide-slate-300 dark:divide-slate-700" data-sortable>
+              <thead class="bg-slate-100 dark:bg-slate-800">
+                <tr>
+                  <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="source">
+                    <a href="#" class="group inline-flex items-center gap-1">
+                      Source
+                      <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                        <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                      </span>
+                    </a>
+                  </th>
+                  <th scope="col" class="px-4 py-3 text-right text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="views">
+                    <a href="#" class="group inline-flex items-center gap-1">
+                      Views
+                      <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                        <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                      </span>
+                    </a>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-900">
+                {utmSources.filter((s) => s.utmSource != null).map((row) => (
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="px-4 py-3 text-sm text-slate-700 dark:text-slate-300" data-column="source" data-value={row.utmSource ?? ""}>
+                      {row.utmSource}
+                    </td>
+                    <td class="px-4 py-3 text-sm text-right text-slate-700 dark:text-slate-300" data-column="views" data-value={row.views}>
+                      {row.views}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      <!-- Recent Activity table -->
+      <section class="mb-10">
+        <h2 class="text-2xl text-slate-700 dark:text-slate-300 font-semibold mb-4">Recent Activity</h2>
+        <div class="overflow-x-auto rounded-lg border border-slate-300 dark:border-slate-700">
+          <table class="min-w-full divide-y divide-slate-300 dark:divide-slate-700" data-sortable>
+            <thead class="bg-slate-100 dark:bg-slate-800">
+              <tr>
+                <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="slug">
+                  <a href="#" class="group inline-flex items-center gap-1">
+                    Page
+                    <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                      <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th scope="col" class="px-4 py-3 text-center text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="locale">
+                  <a href="#" class="group inline-flex items-center gap-1">
+                    Locale
+                    <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                      <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="referrer">
+                  <a href="#" class="group inline-flex items-center gap-1">
+                    Referrer
+                    <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                      <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th scope="col" class="px-4 py-3 text-left text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="resolution">
+                  <a href="#" class="group inline-flex items-center gap-1">
+                    Resolution
+                    <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                      <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th scope="col" class="px-4 py-3 text-right text-sm font-semibold text-slate-700 dark:text-slate-300" data-sort="timestamp">
+                  <a href="#" class="group inline-flex items-center gap-1">
+                    Time
+                    <span class="inline-flex rounded text-slate-400 dark:text-slate-500 invisible group-hover:visible group-focus:visible" data-sort-icon>
+                      <svg class="h-4 w-4 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-900">
+              {recentActivity.map((row) => (
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                  <td class="px-4 py-3 text-sm" data-column="slug" data-value={row.slug}>
+                    <a href={getPageUrl(row.slug, row.locale)} class="text-emerald-600 dark:text-emerald-400 hover:underline">{row.slug}</a>
+                  </td>
+                  <td class="px-4 py-3 text-sm text-center" data-column="locale" data-value={row.locale}>
+                    <span class="inline-block rounded bg-slate-200 dark:bg-slate-700 px-2 py-0.5 text-xs font-semibold text-slate-700 dark:text-slate-300">{row.locale.toUpperCase()}</span>
+                  </td>
+                  <td class="px-4 py-3 text-sm text-slate-700 dark:text-slate-300" data-column="referrer" data-value={row.referrer ?? ""}>
+                    {row.referrer ?? <span class="text-slate-400 dark:text-slate-500 italic">—</span>}
+                  </td>
+                  <td class="px-4 py-3 text-sm text-slate-500 dark:text-slate-400" data-column="resolution" data-value={row.screenResolution ?? ""}>
+                    {row.screenResolution ?? <span class="text-slate-400 dark:text-slate-500 italic">—</span>}
+                  </td>
+                  <td class="px-4 py-3 text-sm text-right text-slate-500 dark:text-slate-400" data-column="timestamp" data-value={toIso(row.timestamp)}>
+                    {formatTimestamp(row.timestamp)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const tables = document.querySelectorAll<HTMLTableElement>("table[data-sortable]");
+
+    for (const table of tables) {
+      const headers = table.querySelectorAll<HTMLTableCellElement>("th[data-sort]");
+      let activeHeader: HTMLTableCellElement | null = null;
+      let ascending = false;
+
+      for (const th of headers) {
+        const link = th.querySelector("a");
+        if (!link) continue;
+
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const column = th.dataset.sort!;
+
+          if (activeHeader === th) {
+            ascending = !ascending;
+          } else {
+            // Reset previous active header
+            if (activeHeader) {
+              const prevIcon = activeHeader.querySelector("[data-sort-icon]");
+              if (prevIcon) {
+                prevIcon.classList.remove("visible", "bg-slate-700", "text-slate-200");
+                prevIcon.classList.add("invisible", "text-slate-500");
+                const prevSvg = prevIcon.querySelector("svg");
+                if (prevSvg) prevSvg.style.transform = "";
+              }
+            }
+            activeHeader = th;
+            ascending = false;
+          }
+
+          // Update active header icon
+          const icon = th.querySelector("[data-sort-icon]");
+          if (icon) {
+            icon.classList.remove("invisible", "text-slate-500");
+            icon.classList.add("visible", "bg-slate-700", "text-slate-200");
+            const svg = icon.querySelector("svg");
+            if (svg) svg.style.transform = ascending ? "rotate(180deg)" : "";
+          }
+
+          // Sort the table body
+          const tbody = table.querySelector("tbody");
+          if (!tbody) return;
+
+          const rows = Array.from(tbody.querySelectorAll("tr"));
+          rows.sort((a, b) => {
+            const aCell = a.querySelector<HTMLTableCellElement>(`td[data-column="${column}"]`);
+            const bCell = b.querySelector<HTMLTableCellElement>(`td[data-column="${column}"]`);
+            const aVal = aCell?.dataset.value ?? "";
+            const bVal = bCell?.dataset.value ?? "";
+
+            // Try numeric comparison
+            const aNum = Number(aVal);
+            const bNum = Number(bVal);
+            if (!Number.isNaN(aNum) && !Number.isNaN(bNum) && aVal !== "" && bVal !== "") {
+              return ascending ? aNum - bNum : bNum - aNum;
+            }
+
+            // String comparison
+            return ascending
+              ? aVal.localeCompare(bVal)
+              : bVal.localeCompare(aVal);
+          });
+
+          for (const row of rows) {
+            tbody.appendChild(row);
+          }
+        });
+      }
+    }
+  });
+</script>

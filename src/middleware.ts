@@ -8,7 +8,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	if (!context.url.pathname.startsWith("/es/")) {
 		return response;
 	}
-	if (context.url.pathname === "/es/404" || context.url.pathname === "/es/404/") {
+	if (
+		context.url.pathname === "/es/404" ||
+		context.url.pathname === "/es/404/"
+	) {
 		return response;
 	}
 	const rewritten = await context.rewrite("/es/404");

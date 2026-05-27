@@ -11,4 +11,5 @@ export default {
 	],
 	astroAllowShorthand: true,
 	printWidth: 80,
+	useTabs: true,
 };

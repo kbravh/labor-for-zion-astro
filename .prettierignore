@@ -1,0 +1,9 @@
+dist
+coverage
+node_modules
+public
+.astro
+data
+src/data
+out
+package-lock.json

@@ -35,32 +35,35 @@ const projects: ProjectListing[] = [
 ];
 ---
 
-<Layout title={translations[locale].route['/projects']} availableLocalizations={availableLocalizations}>
-  <PageWrapper>
-    <PageTitle>{translations[locale].route['/projects']}</PageTitle>
-    <Main>
-      <Grid>
-        {
-          projects.map(({ href, name }) => (
-            <Link
-              href={
-                href.startsWith('https') ? href : (
-                  getRelativeLocaleUrl(locale, href)
-                )
-              }
-            >
-              <article class="text-balance flex flex-col">
-                <div>
-                  <H3>{translations[locale].project[name].title}</H3>
-                  <Description>
-                    {translations[locale].project[name].description}
-                  </Description>
-                </div>
-              </article>
-            </Link>
-          ))
-        }
-      </Grid>
-    </Main>
-  </PageWrapper>
+<Layout
+	title={translations[locale].route["/projects"]}
+	{availableLocalizations}
+>
+	<PageWrapper>
+		<PageTitle>{translations[locale].route["/projects"]}</PageTitle>
+		<Main>
+			<Grid>
+				{
+					projects.map(({ href, name }) => (
+						<Link
+							href={
+								href.startsWith("https")
+									? href
+									: getRelativeLocaleUrl(locale, href)
+							}
+						>
+							<article class="text-balance flex flex-col">
+								<div>
+									<H3>{translations[locale].project[name].title}</H3>
+									<Description>
+										{translations[locale].project[name].description}
+									</Description>
+								</div>
+							</article>
+						</Link>
+					))
+				}
+			</Grid>
+		</Main>
+	</PageWrapper>
 </Layout>

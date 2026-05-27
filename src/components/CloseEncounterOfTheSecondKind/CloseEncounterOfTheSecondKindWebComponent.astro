@@ -4,83 +4,83 @@
 ---
 
 <script>
-  import { actions } from 'astro:actions';
+	import { actions } from "astro:actions";
 
-  class CloseEncounterOfTheSecondKind extends HTMLElement {
-    displayText: string | null | undefined;
-    locale: string | null | undefined;
-    slug: string | null | undefined;
+	class CloseEncounterOfTheSecondKind extends HTMLElement {
+		displayText: string | null | undefined;
+		locale: string | null | undefined;
+		slug: string | null | undefined;
 
-    // This gets called when the element is inserted into the DOM.
-    connectedCallback() {
-      this.displayText = this.getAttribute('data-display-text');
-      if (!this.displayText) throw new Error('data-display-text is missing');
+		// This gets called when the element is inserted into the DOM.
+		connectedCallback() {
+			this.displayText = this.getAttribute("data-display-text");
+			if (!this.displayText) throw new Error("data-display-text is missing");
 
-      this.locale = this.getAttribute('data-locale');
-      if (!this.locale) throw new Error('data-locale is missing');
+			this.locale = this.getAttribute("data-locale");
+			if (!this.locale) throw new Error("data-locale is missing");
 
-      this.slug = this.getAttribute('data-slug');
-      if (!this.slug) throw new Error('data-slug is missing');
+			this.slug = this.getAttribute("data-slug");
+			if (!this.slug) throw new Error("data-slug is missing");
 
-      this.fetchAndDisplayCount();
-    }
+			this.fetchAndDisplayCount();
+		}
 
-    async fetchAndDisplayCount() {
-      if (!this.slug || !this.locale) {
-        console.error('Hit counter: missing data attributes');
-        return;
-      }
+		async fetchAndDisplayCount() {
+			if (!this.slug || !this.locale) {
+				console.error("Hit counter: missing data attributes");
+				return;
+			}
 
-      if (process.env.NODE_ENV === 'development') {
-        console.info(`Hit counter: ${this.slug} - ${this.locale}`);
-      }
+			if (process.env.NODE_ENV === "development") {
+				console.info(`Hit counter: ${this.slug} - ${this.locale}`);
+			}
 
-      const logResponse = await actions.logPageView({
-        slug: this.slug,
-        locale: this.locale,
-        ...this.getUTMTags(),
-        ...this.getViewerInfo(),
-      });
-      if (logResponse.error) {
-        console.error(logResponse.error);
-        return;
-      }
-      this.displayCount(logResponse.data.count);
-    }
+			const logResponse = await actions.logPageView({
+				slug: this.slug,
+				locale: this.locale,
+				...this.getUTMTags(),
+				...this.getViewerInfo(),
+			});
+			if (logResponse.error) {
+				console.error(logResponse.error);
+				return;
+			}
+			this.displayCount(logResponse.data.count);
+		}
 
-    displayCount(count: number) {
-      this.textContent = `${this.displayText}: ${count}`;
-    }
+		displayCount(count: number) {
+			this.textContent = `${this.displayText}: ${count}`;
+		}
 
-    getUTMTags() {
-      const url = new URL(window.location.href);
-      const utmSource = url.searchParams.get('utm_source');
-      const source = url.searchParams.get('source');
-      const ref = url.searchParams.get('ref');
-      const utmMedium = url.searchParams.get('utm_medium');
-      const medium = url.searchParams.get('medium');
-      const utmCampaign = url.searchParams.get('utm_campaign');
-      const campaign = url.searchParams.get('campaign');
-      const utmContent = url.searchParams.get('utm_content');
-      const content = url.searchParams.get('content');
-      const utmTerm = url.searchParams.get('utm_term');
-      const term = url.searchParams.get('term');
-      return {
-        utmSource: utmSource ?? source ?? ref,
-        utmMedium: utmMedium ?? medium,
-        utmCampaign: utmCampaign ?? campaign,
-        utmContent: utmContent ?? content,
-        utmTerm: utmTerm ?? term,
-      };
-    }
+		getUTMTags() {
+			const url = new URL(window.location.href);
+			const utmSource = url.searchParams.get("utm_source");
+			const source = url.searchParams.get("source");
+			const ref = url.searchParams.get("ref");
+			const utmMedium = url.searchParams.get("utm_medium");
+			const medium = url.searchParams.get("medium");
+			const utmCampaign = url.searchParams.get("utm_campaign");
+			const campaign = url.searchParams.get("campaign");
+			const utmContent = url.searchParams.get("utm_content");
+			const content = url.searchParams.get("content");
+			const utmTerm = url.searchParams.get("utm_term");
+			const term = url.searchParams.get("term");
+			return {
+				utmSource: utmSource ?? source ?? ref,
+				utmMedium: utmMedium ?? medium,
+				utmCampaign: utmCampaign ?? campaign,
+				utmContent: utmContent ?? content,
+				utmTerm: utmTerm ?? term,
+			};
+		}
 
-    getViewerInfo() {
-      return {
-        referrer: document.referrer,
-        screen_resolution: `${window.screen.width}x${window.screen.height}`,
-      };
-    }
-  }
+		getViewerInfo() {
+			return {
+				referrer: document.referrer,
+				screen_resolution: `${window.screen.width}x${window.screen.height}`,
+			};
+		}
+	}
 
-  customElements.define('close-encounter', CloseEncounterOfTheSecondKind);
+	customElements.define("close-encounter", CloseEncounterOfTheSecondKind);
 </script>

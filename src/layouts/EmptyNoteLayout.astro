@@ -19,20 +19,24 @@ const { title, backlinks, slug, socialImage } = Astro.props;
 const locale = getLocale(Astro.currentLocale);
 ---
 
-<Layout {title} description={`${translations[locale].ui.note_about} ${title}.`} {socialImage}>
-  <main class="flex-grow max-w-3xl">
-    <NoteHeader>
-      <NoteTitle>{title}</NoteTitle>
-    </NoteHeader>
-    <Prose>
-      <slot />
+<Layout
+	{title}
+	description={`${translations[locale].ui.note_about} ${title}.`}
+	{socialImage}
+>
+	<main class="flex-grow max-w-3xl">
+		<NoteHeader>
+			<NoteTitle>{title}</NoteTitle>
+		</NoteHeader>
+		<Prose>
+			<slot />
 
-      <p>{translations[locale].ui.empty}</p>
-      {!!backlinks.length && <Backlinks backlinks={backlinks} />}
-      <close-encounter
-        data-display-text={translations[locale].ui.views}
-        data-locale={locale}
-        data-slug={slug}></close-encounter>
-    </Prose>
-  </main>
+			<p>{translations[locale].ui.empty}</p>
+			{!!backlinks.length && <Backlinks backlinks={backlinks} />}
+			<close-encounter
+				data-display-text={translations[locale].ui.views}
+				data-locale={locale}
+				data-slug={slug}></close-encounter>
+		</Prose>
+	</main>
 </Layout>

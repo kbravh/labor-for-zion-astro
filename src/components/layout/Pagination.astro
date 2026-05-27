@@ -14,15 +14,15 @@ const locale = getLocale(Astro.currentLocale);
 ---
 
 <nav class="w-full grid grid-cols-3 text-center mt-8">
-  <span
-    >{
-      prevUrl && <a href={prevUrl}>&larr; {translations[locale].ui.previous}</a>
-    }</span
-  >
-  <span>{translations[locale].ui.page} {current}</span>
-  <span
-    >{
-      nextUrl && <a href={nextUrl}>{translations[locale].ui.next} &rarr;</a>
-    }</span
-  >
+	<span
+		>{
+			prevUrl && <a href={prevUrl}>&larr; {translations[locale].ui.previous}</a>
+		}</span
+	>
+	<span>{translations[locale].ui.page} {current}</span>
+	<span
+		>{
+			nextUrl && <a href={nextUrl}>{translations[locale].ui.next} &rarr;</a>
+		}</span
+	>
 </nav>

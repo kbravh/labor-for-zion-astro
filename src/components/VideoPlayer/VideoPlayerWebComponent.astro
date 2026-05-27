@@ -3,20 +3,20 @@
 ---
 
 <script>
-  class VideoPlayer extends HTMLElement {
-    static get observedAttributes() {
-      return ['aspectratio'];
-    }
+	class VideoPlayer extends HTMLElement {
+		static get observedAttributes() {
+			return ["aspectratio"];
+		}
 
-    playerDiv: HTMLDivElement;
-    hlsVideo: HTMLElement;
+		playerDiv: HTMLDivElement;
+		hlsVideo: HTMLElement;
 
-    constructor() {
-      super();
-      this.attachShadow({ mode: 'open' });
+		constructor() {
+			super();
+			this.attachShadow({ mode: "open" });
 
-      const style = document.createElement('style');
-      style.textContent = `
+			const style = document.createElement("style");
+			style.textContent = `
       .player {
         width: 100%;
       }
@@ -65,32 +65,32 @@
       }
     `;
 
-      const playerDiv = document.createElement('div');
-      this.playerDiv = playerDiv;
-      playerDiv.classList.add('player');
+			const playerDiv = document.createElement("div");
+			this.playerDiv = playerDiv;
+			playerDiv.classList.add("player");
 
-      const mediaController = document.createElement('media-controller');
+			const mediaController = document.createElement("media-controller");
 
-      const hlsVideo = document.createElement('hls-video');
-      this.hlsVideo = hlsVideo;
-      hlsVideo.setAttribute('slot', 'media');
-      hlsVideo.setAttribute('crossorigin', '');
+			const hlsVideo = document.createElement("hls-video");
+			this.hlsVideo = hlsVideo;
+			hlsVideo.setAttribute("slot", "media");
+			hlsVideo.setAttribute("crossorigin", "");
 
-      const renditionMenu = document.createElement('media-rendition-menu');
-      renditionMenu.setAttribute('hidden', '');
-      renditionMenu.setAttribute('anchor', 'auto');
+			const renditionMenu = document.createElement("media-rendition-menu");
+			renditionMenu.setAttribute("hidden", "");
+			renditionMenu.setAttribute("anchor", "auto");
 
-      const mobileControls = document.createElement('div');
-      mobileControls.setAttribute('slot', 'centered-chrome');
-      mobileControls.classList.add('mobile-only');
-      mobileControls.innerHTML = `
+			const mobileControls = document.createElement("div");
+			mobileControls.setAttribute("slot", "centered-chrome");
+			mobileControls.classList.add("mobile-only");
+			mobileControls.innerHTML = `
       <media-seek-backward-button></media-seek-backward-button>
       <media-play-button></media-play-button>
       <media-seek-forward-button></media-seek-forward-button>
       `;
 
-      const controlBar = document.createElement('media-control-bar');
-      controlBar.innerHTML = `
+			const controlBar = document.createElement("media-control-bar");
+			controlBar.innerHTML = `
       <media-play-button class="desktop-only"></media-play-button>
       <media-seek-backward-button class="desktop-only"></media-seek-backward-button>
       <media-seek-forward-button class="desktop-only"></media-seek-forward-button>
@@ -103,51 +103,51 @@
       <media-airplay-button></media-airplay-button>
     `;
 
-      mediaController.appendChild(hlsVideo);
-      mediaController.appendChild(renditionMenu);
-      mediaController.appendChild(mobileControls);
-      mediaController.appendChild(controlBar);
+			mediaController.appendChild(hlsVideo);
+			mediaController.appendChild(renditionMenu);
+			mediaController.appendChild(mobileControls);
+			mediaController.appendChild(controlBar);
 
-      playerDiv.appendChild(mediaController);
+			playerDiv.appendChild(mediaController);
 
-      this.shadowRoot?.append(style, playerDiv);
-    }
+			this.shadowRoot?.append(style, playerDiv);
+		}
 
-    async connectedCallback() {
-      // Lazy load media dependencies only when component is used
-      await Promise.all([
-        import('media-chrome'),
-        import('hls-video-element'),
-        import('media-chrome/menu'),
-      ]);
+		async connectedCallback() {
+			// Lazy load media dependencies only when component is used
+			await Promise.all([
+				import("media-chrome"),
+				import("hls-video-element"),
+				import("media-chrome/menu"),
+			]);
 
-      this.updateAspectRatio();
-      this.updateSource();
+			this.updateAspectRatio();
+			this.updateSource();
 
-      // Observe changes to child nodes to update the source if needed
-      const observer = new MutationObserver(() => this.updateSource());
-      observer.observe(this, { childList: true, subtree: true });
-    }
+			// Observe changes to child nodes to update the source if needed
+			const observer = new MutationObserver(() => this.updateSource());
+			observer.observe(this, { childList: true, subtree: true });
+		}
 
-    attributeChangedCallback(name: string) {
-      if (name === 'aspectratio') {
-        this.updateAspectRatio();
-      }
-    }
+		attributeChangedCallback(name: string) {
+			if (name === "aspectratio") {
+				this.updateAspectRatio();
+			}
+		}
 
-    updateAspectRatio() {
-      const aspectRatio = this.getAttribute('aspectratio') || '16 / 9';
-      this.playerDiv.style.aspectRatio = aspectRatio;
-    }
+		updateAspectRatio() {
+			const aspectRatio = this.getAttribute("aspectratio") || "16 / 9";
+			this.playerDiv.style.aspectRatio = aspectRatio;
+		}
 
-    updateSource() {
-      const source = this.querySelector('source');
-      if (source) {
-        const src = source.getAttribute('src');
-        if (src) this.hlsVideo.setAttribute('src', src);
-      }
-    }
-  }
+		updateSource() {
+			const source = this.querySelector("source");
+			if (source) {
+				const src = source.getAttribute("src");
+				if (src) this.hlsVideo.setAttribute("src", src);
+			}
+		}
+	}
 
-  customElements.define('video-player', VideoPlayer);
+	customElements.define("video-player", VideoPlayer);
 </script>

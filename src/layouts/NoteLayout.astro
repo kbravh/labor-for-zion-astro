@@ -31,9 +31,10 @@ const { slug, frontmatter, backlinks, content, headings, socialImage } =
 // dynamically load video player component since it is large
 let VideoPlayer: ((_props: Record<string, unknown>) => unknown) | undefined;
 if (content.includes("<video-player>")) {
-	VideoPlayer = await import(
-		"@components/VideoPlayer/VideoPlayerWebComponent.astro"
-	).then((mod) => mod.default);
+	VideoPlayer =
+		await import("@components/VideoPlayer/VideoPlayerWebComponent.astro").then(
+			(mod) => mod.default,
+		);
 }
 
 const translationMap = frontmatter?.translations ?? {};
@@ -54,116 +55,116 @@ const tags = frontmatter.tags?.map((tag) => ({
 ---
 
 <Layout
-  title={frontmatter.title}
-  description={frontmatter.description}
-  availableLocalizations={availableLocalizations}
-  {socialImage}
+	title={frontmatter.title}
+	description={frontmatter.description}
+	{availableLocalizations}
+	{socialImage}
 >
-  <main class="mb-10">
-    <article class="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-x-14">
-      <NoteHeader>
-        <NoteTitle>{frontmatter.title}</NoteTitle>
-        {
-          frontmatter.description && (
-            <p class="text-[clamp(1rem,_5vw,_1.5rem)] font-(--body-font)">
-              {frontmatter.description}
-            </p>
-          )
-        }
-      </NoteHeader>
+	<main class="mb-10">
+		<article class="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-x-14">
+			<NoteHeader>
+				<NoteTitle>{frontmatter.title}</NoteTitle>
+				{
+					frontmatter.description && (
+						<p class="text-[clamp(1rem,_5vw,_1.5rem)] font-(--body-font)">
+							{frontmatter.description}
+						</p>
+					)
+				}
+			</NoteHeader>
 
-      <!-- empty spot to take up the top right corner on desktop -->
-      <div></div>
+			<!-- empty spot to take up the top right corner on desktop -->
+			<div></div>
 
-      <section class="max-w-3xl">
-        <div class="flex justify-between gap-4 p-4 flex-wrap">
-          <time datetime={frontmatter.date.toISOString()}>
-            {
-              frontmatter.date.toLocaleDateString(locale, {
-                dateStyle: 'medium',
-              })
-            }
-          </time>
-          {
-            !!tags?.length && (
-              <div class="flex gap-2">
-                Tags:
-                <ul>
-                  {tags.map(({ name, slug }) => (
-                    <li
-                      class:list={[
-                        'inline-block rounded-md px-2 py-1 text-xs font-bold mr-2',
-                        'bg-slate-300 dark:bg-slate-800 text-slate-900 dark:text-slate-100',
-                      ]}
-                    >
-                      <a href={getRelativeLocaleUrl(locale, `/topics/${slug}`)}>
-                        {name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )
-          }
-        </div>
-        {
-          availableLocalizations.length > 0 ? (
-            <div class="p-4">
-              <ul class="flex gap-2">
-                {availableLocalizations.map(([lang, slug]) => (
-                  <li>
-                    <HoverUnderline>
-                      <Link
-                        href={getRelativeLocaleUrl(lang, slug)}
-                        className="flex items-center gap-1"
-                      >
-                        {translations[locale].ui.translation}{' '}
-                        {translations[locale].locale[lang as Locale]}{' '}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="currentColor"
-                          viewBox="0 0 256 256"
-                        >
-                          <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm45.66-93.66a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32-11.32L148.69,136H88a8,8,0,0,1,0-16h60.69l-18.35-18.34a8,8,0,0,1,11.32-11.32Z" />
-                        </svg>
-                      </Link>
-                    </HoverUnderline>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null
-        }
-        <aside class="p-4 block md:hidden">
-          <TableOfContents {headings} />
-        </aside>
-        <!-- used for scripture verses -->
-        <slot />
-        <Prose id="article-body" set:html={content} />
-      </section>
+			<section class="max-w-3xl">
+				<div class="flex justify-between gap-4 p-4 flex-wrap">
+					<time datetime={frontmatter.date.toISOString()}>
+						{
+							frontmatter.date.toLocaleDateString(locale, {
+								dateStyle: "medium",
+							})
+						}
+					</time>
+					{
+						!!tags?.length && (
+							<div class="flex gap-2">
+								Tags:
+								<ul>
+									{tags.map(({ name, slug }) => (
+										<li
+											class:list={[
+												"inline-block rounded-md px-2 py-1 text-xs font-bold mr-2",
+												"bg-slate-300 dark:bg-slate-800 text-slate-900 dark:text-slate-100",
+											]}
+										>
+											<a href={getRelativeLocaleUrl(locale, `/topics/${slug}`)}>
+												{name}
+											</a>
+										</li>
+									))}
+								</ul>
+							</div>
+						)
+					}
+				</div>
+				{
+					availableLocalizations.length > 0 ? (
+						<div class="p-4">
+							<ul class="flex gap-2">
+								{availableLocalizations.map(([lang, slug]) => (
+									<li>
+										<HoverUnderline>
+											<Link
+												href={getRelativeLocaleUrl(lang, slug)}
+												className="flex items-center gap-1"
+											>
+												{translations[locale].ui.translation}{" "}
+												{translations[locale].locale[lang as Locale]}{" "}
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="24"
+													height="24"
+													fill="currentColor"
+													viewBox="0 0 256 256"
+												>
+													<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm45.66-93.66a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32-11.32L148.69,136H88a8,8,0,0,1,0-16h60.69l-18.35-18.34a8,8,0,0,1,11.32-11.32Z" />
+												</svg>
+											</Link>
+										</HoverUnderline>
+									</li>
+								))}
+							</ul>
+						</div>
+					) : null
+				}
+				<aside class="p-4 block md:hidden">
+					<TableOfContents {headings} />
+				</aside>
+				<!-- used for scripture verses -->
+				<slot />
+				<Prose id="article-body" set:html={content} />
+			</section>
 
-      <section class="pr-4">
-        <div class="sticky top-4 flex flex-col gap-5">
-          <aside class="hidden md:block">
-            <TableOfContents {headings} />
-          </aside>
-          {
-            !!backlinks.length && (
-              <aside>
-                <Backlinks backlinks={backlinks} />
-              </aside>
-            )
-          }
-        </div>
-      </section>
-    </article>
-  </main>
-  <close-encounter
-    data-display-text={translations[locale].ui.views}
-    data-locale={locale}
-    data-slug={slug}></close-encounter>
-  {VideoPlayer && <VideoPlayer />}
-  <HeadingObserver />
+			<section class="pr-4">
+				<div class="sticky top-4 flex flex-col gap-5">
+					<aside class="hidden md:block">
+						<TableOfContents {headings} />
+					</aside>
+					{
+						!!backlinks.length && (
+							<aside>
+								<Backlinks backlinks={backlinks} />
+							</aside>
+						)
+					}
+				</div>
+			</section>
+		</article>
+	</main>
+	<close-encounter
+		data-display-text={translations[locale].ui.views}
+		data-locale={locale}
+		data-slug={slug}></close-encounter>
+	{VideoPlayer && <VideoPlayer />}
+	<HeadingObserver />
 </Layout>

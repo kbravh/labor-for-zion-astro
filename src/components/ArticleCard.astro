@@ -15,20 +15,23 @@ const locale = getLocale(Astro.currentLocale);
 const { post } = Astro.props;
 ---
 
-<a href={getRelativeLocaleUrl(locale, `/notes/${post.slug}`)} class="group w-full">
-  <article class="flex flex-col max-w-[65ch]">
-    <div>
-      <H3>{post.frontmatter.title}</H3>
-      <Description>{post.frontmatter.description}</Description>
-    </div>
-    <SupportText>
-      <time datetime={post.frontmatter.date.toISOString()}>
-      {
-        post.frontmatter.date.toLocaleDateString('en-US', {
-          dateStyle: 'medium',
-        })
-      }
-      </time>
-    </SupportText>
-  </article>
+<a
+	href={getRelativeLocaleUrl(locale, `/notes/${post.slug}`)}
+	class="group w-full"
+>
+	<article class="flex flex-col max-w-[65ch]">
+		<div>
+			<H3>{post.frontmatter.title}</H3>
+			<Description>{post.frontmatter.description}</Description>
+		</div>
+		<SupportText>
+			<time datetime={post.frontmatter.date.toISOString()}>
+				{
+					post.frontmatter.date.toLocaleDateString("en-US", {
+						dateStyle: "medium",
+					})
+				}
+			</time>
+		</SupportText>
+	</article>
 </a>

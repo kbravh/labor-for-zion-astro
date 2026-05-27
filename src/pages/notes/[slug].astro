@@ -139,18 +139,18 @@ const socialImage = generateSocialImage({
 ---
 
 {
-  noteData.type === "empty" && (
-    <EmptyNoteLayout {...noteData} socialImage={socialImage}>
-      {!!scripture.length &&
-        scripture.map((verse) => <blockquote>{verse}</blockquote>)}
-    </EmptyNoteLayout>
-  )
+	noteData.type === "empty" && (
+		<EmptyNoteLayout {...noteData} socialImage={socialImage}>
+			{!!scripture.length &&
+				scripture.map((verse) => <blockquote>{verse}</blockquote>)}
+		</EmptyNoteLayout>
+	)
 }
 {
-  noteData.type === "note" && (
-    <NoteLayout {...noteData} socialImage={socialImage}>
-      {!!scripture.length &&
-        scripture.map((verse) => <blockquote>{verse}</blockquote>)}
-    </NoteLayout>
-  )
+	noteData.type === "note" && (
+		<NoteLayout {...noteData} socialImage={socialImage}>
+			{!!scripture.length &&
+				scripture.map((verse) => <blockquote>{verse}</blockquote>)}
+		</NoteLayout>
+	)
 }

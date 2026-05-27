@@ -12,18 +12,18 @@ const locale = getLocale(Astro.currentLocale);
 const availableLocalizations = getAvailableLocalizations(locale, "/about");
 ---
 
-<Layout title={translations[locale].route['/about']} availableLocalizations={availableLocalizations}>
-  <PageWrapper>
-    <PageTitle>{translations[locale].route['/about']}</PageTitle>
-    <Main>
-      <div class="prose prose-lg prose-slate dark:prose-invert">
-        <p>{translations[locale].meta.about1}</p>
-        <p>{translations[locale].meta.about2}</p>
-        <p>
-          {translations[locale].meta.contact}{' '}
-          <Link href="mailto:hey@laborforzion.com">hey@laborforzion.com</Link>.
-        </p>
-      </div>
-    </Main>
-  </PageWrapper>
+<Layout title={translations[locale].route["/about"]} {availableLocalizations}>
+	<PageWrapper>
+		<PageTitle>{translations[locale].route["/about"]}</PageTitle>
+		<Main>
+			<div class="prose prose-lg prose-slate dark:prose-invert">
+				<p>{translations[locale].meta.about1}</p>
+				<p>{translations[locale].meta.about2}</p>
+				<p>
+					{translations[locale].meta.contact}{" "}
+					<Link href="mailto:hey@laborforzion.com">hey@laborforzion.com</Link>.
+				</p>
+			</div>
+		</Main>
+	</PageWrapper>
 </Layout>

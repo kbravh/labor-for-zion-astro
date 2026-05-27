@@ -30,152 +30,156 @@ const hreflangTags = generateHreflangTags(availableLocalizations ?? []);
 
 <!doctype html>
 <html lang={locale} class="h-full dark:bg-slate-900 dark:text-slate-200">
-  <head>
-    <script is:inline>
-      // Initialize theme before page renders to avoid flash
-      const shouldUseDarkMode = () => {
-        return (
-          localStorage.theme === 'dark' ||
-          (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        );
-      };
+	<head>
+		<script is:inline>
+			// Initialize theme before page renders to avoid flash
+			const shouldUseDarkMode = () => {
+				return (
+					localStorage.theme === "dark" ||
+					(!("theme" in localStorage) &&
+						window.matchMedia("(prefers-color-scheme: dark)").matches)
+				);
+			};
 
-      const initializeTheme = () => {
-        // second param forces this to be a one-way operation: true to add, false to remove
-        document.documentElement.classList.toggle('dark', shouldUseDarkMode());
-      };
+			const initializeTheme = () => {
+				// second param forces this to be a one-way operation: true to add, false to remove
+				document.documentElement.classList.toggle("dark", shouldUseDarkMode());
+			};
 
-      // Run on initial page load
-      initializeTheme();
+			// Run on initial page load
+			initializeTheme();
 
-      // Run on view transitions (Astro's client-side navigation)
-      document.addEventListener('astro:page-load', initializeTheme);
-    </script>
-    <noscript>
-      <style>
-        theme-toggle { display: none !important; }
-      </style>
-    </noscript>
-    <link rel="canonical" href={canonicalURL} />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>
-      {title === strings.site ? title : `${title} | ${strings.site}`}
-    </title>
-    <meta
-      property="og:title"
-      content={title === strings.site ? title : `${title} | ${strings.site}`}
-    />
-    <meta name="description" content={description ?? strings.description} />
-    <meta
-      property="og:description"
-      content={description ?? strings.description}
-    />
-    {socialImage ? <meta property="og:image" content={socialImage} /> : ""}
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <Fragment set:html={hreflangTags.join("\n")} />
-    <ClientRouter />
-  </head>
-  <body
-    class:list={[
-      "h-full flex flex-col items-center scroll-smooth",
-      "selection:bg-emerald-900 selection:text-emerald-50",
-      "dark:selection:text-emerald-900 dark:selection:bg-emerald-50",
-    ]}
-  >
-    <Header />
-    <slot />
-    <Footer />
-    <style is:global>
-      @reference "../styles/global.css";
+			// Run on view transitions (Astro's client-side navigation)
+			document.addEventListener("astro:page-load", initializeTheme);
+		</script>
+		<noscript>
+			<style>
+				theme-toggle {
+					display: none !important;
+				}
+			</style>
+		</noscript>
+		<link rel="canonical" href={canonicalURL} />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>
+			{title === strings.site ? title : `${title} | ${strings.site}`}
+		</title>
+		<meta
+			property="og:title"
+			content={title === strings.site ? title : `${title} | ${strings.site}`}
+		/>
+		<meta name="description" content={description ?? strings.description} />
+		<meta
+			property="og:description"
+			content={description ?? strings.description}
+		/>
+		{socialImage ? <meta property="og:image" content={socialImage} /> : ""}
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<Fragment set:html={hreflangTags.join("\n")} />
+		<ClientRouter />
+	</head>
+	<body
+		class:list={[
+			"h-full flex flex-col items-center scroll-smooth",
+			"selection:bg-emerald-900 selection:text-emerald-50",
+			"dark:selection:text-emerald-900 dark:selection:bg-emerald-50",
+		]}
+	>
+		<Header />
+		<slot />
+		<Footer />
+		<style is:global>
+			@reference "../styles/global.css";
 
-      @font-face {
-        font-family: "Munken Sans";
-        src: url("https://assets.laborforzion.com/fonts/MunkenSans.woff2")
-          format("woff2");
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: "Atkinson Hyperlegible";
-        src: url("https://assets.laborforzion.com/fonts/AtkinsonRegular.woff2")
-          format("woff2");
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: "Atkinson Hyperlegible";
-        src: url("https://assets.laborforzion.com/fonts/AtkinsonBold.woff2")
-          format("woff2");
-        font-weight: bold;
-        font-style: normal;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: "Atkinson Hyperlegible";
-        src: url("https://assets.laborforzion.com/fonts/AtkinsonItalic.woff2")
-          format("woff2");
-        font-weight: normal;
-        font-style: italic;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: "Atkinson Hyperlegible";
-        src: url("https://assets.laborforzion.com/fonts/AtkinsonBoldItalic.woff2")
-          format("woff2");
-        font-weight: bold;
-        font-style: italic;
-        font-display: swap;
-      }
+			@font-face {
+				font-family: "Munken Sans";
+				src: url("https://assets.laborforzion.com/fonts/MunkenSans.woff2")
+					format("woff2");
+				font-weight: normal;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: "Atkinson Hyperlegible";
+				src: url("https://assets.laborforzion.com/fonts/AtkinsonRegular.woff2")
+					format("woff2");
+				font-weight: normal;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: "Atkinson Hyperlegible";
+				src: url("https://assets.laborforzion.com/fonts/AtkinsonBold.woff2")
+					format("woff2");
+				font-weight: bold;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: "Atkinson Hyperlegible";
+				src: url("https://assets.laborforzion.com/fonts/AtkinsonItalic.woff2")
+					format("woff2");
+				font-weight: normal;
+				font-style: italic;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: "Atkinson Hyperlegible";
+				src: url("https://assets.laborforzion.com/fonts/AtkinsonBoldItalic.woff2")
+					format("woff2");
+				font-weight: bold;
+				font-style: italic;
+				font-display: swap;
+			}
 
-      @font-face {
-        font-family: "Munken Sans";
-        src: url("https://assets.laborforzion.com/fonts/MunkenSansRegular.woff2")
-          format("woff2");
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: "Munken Sans";
-        src: url("https://assets.laborforzion.com/fonts/MunkenSansBold.woff2")
-          format("woff2");
-        font-weight: bold;
-        font-style: normal;
-        font-display: swap;
-      }
+			@font-face {
+				font-family: "Munken Sans";
+				src: url("https://assets.laborforzion.com/fonts/MunkenSansRegular.woff2")
+					format("woff2");
+				font-weight: normal;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: "Munken Sans";
+				src: url("https://assets.laborforzion.com/fonts/MunkenSansBold.woff2")
+					format("woff2");
+				font-weight: bold;
+				font-style: normal;
+				font-display: swap;
+			}
 
-      /* https://developer.mozilla.org/en-US/docs/Web/CSS/::target-text */
-      ::target-text {
-        background-color: var(--color-emerald-900);
-        color: var(--color-emerald-50);
-      }
+			/* https://developer.mozilla.org/en-US/docs/Web/CSS/::target-text */
+			::target-text {
+				background-color: var(--color-emerald-900);
+				color: var(--color-emerald-50);
+			}
 
-      @media (prefers-color-scheme: dark) {
-        ::target-text {
-          background-color: var(--color-emerald-50);
-          color: var(--color-emerald-900);
-        }
-      }
+			@media (prefers-color-scheme: dark) {
+				::target-text {
+					background-color: var(--color-emerald-50);
+					color: var(--color-emerald-900);
+				}
+			}
 
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-family: "Munken Sans", "Lucida Sans", "Lucida Sans Regular",
-          "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-      }
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				font-family:
+					"Munken Sans", "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+					"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+			}
 
-      p {
-        font-family: "Atkinson Hyperlegible", Georgia, "Times New Roman", Times,
-          serif;
-      }
-    </style>
-    <CloseEncounterOfTheSecondKindWebComponent />
-  </body>
+			p {
+				font-family:
+					"Atkinson Hyperlegible", Georgia, "Times New Roman", Times, serif;
+			}
+		</style>
+		<CloseEncounterOfTheSecondKindWebComponent />
+	</body>
 </html>

@@ -13,35 +13,33 @@ const locale = getLocale(Astro.currentLocale);
 ---
 
 <nav id="table-of-contents">
-  {
-    !!headings.length ? (
-      <>
-        <h2 class="font-bold text-lg">
-          {translations[locale].ui.toc}
-        </h2>
-        <ul class="flex flex-col">
-          {headings.map((heading) => (
-            <li
-              class:list={[
-                heading.level === 2 && 'ml-0 mt-3',
-                heading.level === 3 && 'ml-2 mt-1',
-                heading.level === 4 && 'ml-4 mt-1',
-                heading.level === 5 && 'ml-6 mt-1',
-                heading.level === 6 && 'ml-8 mt-1',
-              ]}
-            >
-              <Link
-                href={`#${heading.id}`}
-                className="text-slate-800 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300"
-              >
-                {heading.text}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </>
-    ) : (
-      <span />
-    )
-  }
+	{
+		!!headings.length ? (
+			<>
+				<h2 class="font-bold text-lg">{translations[locale].ui.toc}</h2>
+				<ul class="flex flex-col">
+					{headings.map((heading) => (
+						<li
+							class:list={[
+								heading.level === 2 && "ml-0 mt-3",
+								heading.level === 3 && "ml-2 mt-1",
+								heading.level === 4 && "ml-4 mt-1",
+								heading.level === 5 && "ml-6 mt-1",
+								heading.level === 6 && "ml-8 mt-1",
+							]}
+						>
+							<Link
+								href={`#${heading.id}`}
+								className="text-slate-800 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300"
+							>
+								{heading.text}
+							</Link>
+						</li>
+					))}
+				</ul>
+			</>
+		) : (
+			<span />
+		)
+	}
 </nav>

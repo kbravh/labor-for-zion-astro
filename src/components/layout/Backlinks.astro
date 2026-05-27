@@ -15,25 +15,25 @@ const locale = getLocale(Astro.currentLocale);
 ---
 
 <div>
-  <h3 class="font-bold text-lg">
-    {translations[locale].ui.backlinks}
-  </h3>
-  <ul class="flex flex-col gap-2 px-4 py-2">
-    {
-      backlinks.map(({ title, slug, excerpt }) => (
-        <li class="list-disc">
-          <article>
-            <HoverUnderline>
-              <Link href={`/notes/${slug}`}>
-                <span>
-                  <span class="font-semibold">{title}: </span>
-                  {excerpt ? `"...${excerpt}..."` : ""}
-                </span>
-              </Link>
-            </HoverUnderline>
-          </article>
-        </li>
-      ))
-    }
-  </ul>
+	<h3 class="font-bold text-lg">
+		{translations[locale].ui.backlinks}
+	</h3>
+	<ul class="flex flex-col gap-2 px-4 py-2">
+		{
+			backlinks.map(({ title, slug, excerpt }) => (
+				<li class="list-disc">
+					<article>
+						<HoverUnderline>
+							<Link href={`/notes/${slug}`}>
+								<span>
+									<span class="font-semibold">{title}: </span>
+									{excerpt ? `"...${excerpt}..."` : ""}
+								</span>
+							</Link>
+						</HoverUnderline>
+					</article>
+				</li>
+			))
+		}
+	</ul>
 </div>

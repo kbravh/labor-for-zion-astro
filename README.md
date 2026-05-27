@@ -11,7 +11,7 @@ Static assets (like fonts) are stored in S3 (`laborforzion-assets`) and served b
 ### Videos
 
 The exception to this is videos for streaming. These are split into parts and have an m3u8 manifest generated.
+
 1. Place the video to transcode in `video_input`.
 2. Run `npm run video:transcode <video_name.mp4>`. The output will be placed into a folder called `video_output/video_name`.
 3. Upload those files to Cloudflare by running `npm run video:upload <video_name>`.
-

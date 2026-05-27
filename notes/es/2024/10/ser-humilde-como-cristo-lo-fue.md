@@ -14,13 +14,16 @@ translations:
 Uno de los atributos de Cristo es la humildad. Vemos este atributo encarnado por los Santos en las escrituras, y también por el Salvador mismo. Para mejor entender cómo desarrollar la humildad, primero aprenderemos qué es la humildad. Luego, veremos una herramienta que podemos utilizar para poner la humildad en práctica.
 
 ## Humildad de los Santos
+
 Para aprender a ser humilde como Cristo lo fue, primero tenemos que entender qué significa ser humilde en el sentido escritural. Un gran ejemplo y explicación se puede encontrar en [[Alma 32]], cuando Alma enseña a los pobres en el cerro de Onida. Este grupo había sido echado de sus sinagogas por su pobreza. Alma dice que sus cargas físicas los había preparado a escuchar la palabra de Dios porque:
+
 - están listos para aprender del Señor ([[Alma 32.12]])
 - están listos para cambiar, o sea, arrepentir ([[Alma 32.13]])
 
 Asi vemos que dos elementos importantes de la humildad espiritual son estar listos para aprender del Señor y estar dispuestos a cambiar debido a lo que aprendemos. Ahora, veamos ejemplos del comportamiento de Cristo para ver otras lecciones sobre la humildad.
 
 ## La humildad de Cristo
+
 Una de los primeros ejemplos de la humildad de Cristo toma lugar en la existencia pre-terrenal, en el [Concilio de los cielos](https://www.churchofjesuschrist.org/study/manual/gospel-topics/council-in-heaven?lang=spa), cuando Dios presenta su plan de salvación. Cristo se pone como voluntario como nuestro Salvador ([[Moisés 4.2]]), y también Lucifer lo hace. Pero lo que hace que el Salvador destaque es que Él dirige toda la gloria a Dios a pesar de su papel central. Lucifer quería gloria y poder, y para "levantar [su] trono por encima de las estrellas de Dios" ([[Isaías 14.13]]), pero Cristo evita la vanidad y el orgullo, tomando sobre sí esta carga tan esencial con una actitud mansa. Esta mansedumbre es clave para ser humilde.
 
 Luego vemos a Cristo en la tierra, en la carne, preparándose para su ministerio. Él va con Juan el Bautista y pide ser bautizado. Juan dice que Cristo no tiene necesidad de entrar en las aguas del bautismo, ya que Él nunca ha pecado. Pero Cristo entiende que no solamente tiene que ser un ejemplo para nosotros, sino que Él también tiene que someterse a la voluntad y los mandamientos de nuestro Padre Celestial. Asi vemos que someternos a la voluntad de Dios es humildad.
@@ -45,6 +48,7 @@ Entonces, resumamos nuestros hallazgos. Para ser humildes, necesitamos:
 Ahora que sabemos cómo prepararnos, veamos una de las herramientas que Dios ha proporcionado y que puede servir como vehículo para nuestra humildad.
 
 ## Oración al estilo de Cristo
+
 Al observar el ministerio de Cristo, un hilo constante fue la oración. Cristo se alineó con el Padre Celestial a través de la oración en todo lo que hizo. Pero, ¿cómo nos ayuda la oración a ser humildes? O, ¿qué hace que una oración sea una oración al estilo de Cristo?
 
 Podemos aprender del profeta Nefi mientras reflexiona sobre la muerte de su padre Lehi. Menciona algo interesante sobre la oración:
@@ -54,6 +58,7 @@ Podemos aprender del profeta Nefi mientras reflexiona sobre la muerte de su padr
 "Dios me dará, _si no pido impropiamente_". Aquí tenemos un consejo para buenas oraciones. Pedir mal simplemente significa pedir por cosas incorrectas. Entonces, ¿cómo podemos saber cómo pedir las cosas correctas? Podemos encontrar una respuesta a eso mucho más adelante en el Libro de Mormón, cuando Cristo visita a los nefitas después de su resurrección.
 
 ## No pedir impropiamente
+
 En el libro de 3 Nefi, Cristo y los nefitas están orando después de ser ministrados por ángeles. Cristo se aparta para orar en privado y luego regresa para orar nuevamente con los discípulos.
 
 > Y aconteció que cuando Jesús hubo orado así al Padre, volvió a sus discípulos, y he aquí, continuaban orando a él sin cesar; y no multiplicaban muchas palabras, porque les era manifestado lo que debían suplicar, y estaban llenos de anhelo. ([[3 Nefi 19.24]])

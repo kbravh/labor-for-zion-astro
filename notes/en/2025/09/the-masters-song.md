@@ -8,6 +8,7 @@ tags:
   - Poetry
   - Resurrection
 ---
+
 <div style="text-align: center;">
 He who sings creation's chords<br>
 Does call the stars of morning forward<br>
@@ -28,4 +29,5 @@ But soon another trumpet sounds<br>
 Whose call destroys death's dreadful bounds.<br>
 And all do rise and sing the hymn<br>
 Of life eternal without end.<br>
+
 </div>

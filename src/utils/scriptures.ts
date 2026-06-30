@@ -4,38 +4,38 @@ import NewTestament from "../data/New Testament.json";
 import OldTestament from "../data/Old Testament.json";
 import PearlOfGreatPrice from "../data/Pearl of Great Price.json";
 
-enum works {
-	"Old Testament" = "Old Testament",
-	"New Testament" = "New Testament",
-	"Book of Mormon" = "Book of Mormon",
-	"Doctrine and Covenants" = "Doctrine and Covenants",
-	"Official Declarations" = "Official Declarations",
-	"Pearl of Great Price" = "Pearl of Great Price",
-}
+const works = {
+	"Old Testament": "Old Testament",
+	"New Testament": "New Testament",
+	"Book of Mormon": "Book of Mormon",
+	"Doctrine and Covenants": "Doctrine and Covenants",
+	"Official Declarations": "Official Declarations",
+	"Pearl of Great Price": "Pearl of Great Price",
+} as const;
 
 type Work = keyof typeof works;
 
-type Verse = {
+interface Verse {
 	number: number;
 	text: string;
-};
+}
 
-type Chapter = {
+interface Chapter {
 	number: number;
 	summary: string;
 	verses: Verse[];
-};
+}
 
-type Book = {
+interface Book {
 	name: string;
 	chapters: Chapter[];
-};
+}
 
-type Scripture = {
+interface Scripture {
 	name: string;
 	link: string;
 	books: Book[];
-};
+}
 
 const books: Record<string, Work> = {
 	Genesis: "Old Testament",
@@ -130,20 +130,20 @@ const books: Record<string, Work> = {
 } as const;
 
 const SCRIPTURE_REGEX =
-	/(?<book>[\w\s]+)\s(?<chapter>\d{1,3})[.:](?<verses>[\d,\-]+)/;
+	/(?<book>[\w\s]+)\s(?<chapter>\d{1,3})[.:](?<verses>[\d,-]+)/;
 export const isScriptureReference = (title: string): boolean =>
 	SCRIPTURE_REGEX.test(title);
 
-export type RawScriptureReference = {
+export interface RawScriptureReference {
 	book: string;
 	chapter: string;
 	verses: string;
-};
+}
 export const parseScriptureReference = (
 	title: string,
 ): RawScriptureReference => {
-	const matches = title.match(SCRIPTURE_REGEX);
-	const { book, chapter, verses } = matches?.groups || {};
+	const matches = SCRIPTURE_REGEX.exec(title);
+	const { book, chapter, verses } = matches?.groups ?? {};
 	return {
 		book,
 		chapter,
@@ -151,18 +151,18 @@ export const parseScriptureReference = (
 	};
 };
 
-export type ScriptureReference = {
+export interface ScriptureReference {
 	work: string;
 	book: string;
 	chapter: number;
 	verses: number[];
-};
+}
 
 export const processScriptureReference = (
 	reference: RawScriptureReference,
 ): ScriptureReference | null => {
 	const { book } = reference;
-	const work = books[book];
+	const work = books[book] as string | undefined;
 	if (!work) {
 		return null;
 	}
@@ -201,13 +201,13 @@ export const expandScriptureReference = (
 			work = OldTestament as Scripture;
 			break;
 		case works["New Testament"]:
-			work = NewTestament as Scripture;
+			work = NewTestament;
 			break;
 		case works["Book of Mormon"]:
-			work = BookOfMormon as Scripture;
+			work = BookOfMormon;
 			break;
 		case works["Doctrine and Covenants"]:
-			work = DoctrineAndCovenants as Scripture;
+			work = DoctrineAndCovenants;
 			break;
 		case works["Pearl of Great Price"]:
 			work = PearlOfGreatPrice as Scripture;

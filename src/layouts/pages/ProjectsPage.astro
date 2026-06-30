@@ -15,12 +15,12 @@ import { translations } from "@utils/i18n/translations";
 const locale = getLocale(Astro.currentLocale);
 const availableLocalizations = getAvailableLocalizations(locale, "/projects");
 
-type ProjectListing = {
+interface ProjectListing {
 	// Link to project
 	href: string;
 	// Slug used for translations
 	name: Project;
-};
+}
 
 const projects: ProjectListing[] = [
 	...(locale === "en"

@@ -1,10 +1,6 @@
 import type { Locale } from "@validation/i18n";
 
-export type localeMap = {
-	[k in Locale]: {
-		[k in Locale]: string;
-	};
-};
+export type localeMap = Record<Locale, Record<Locale, string>>;
 
 export const localeMap: localeMap = {
 	en: {

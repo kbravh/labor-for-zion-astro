@@ -95,7 +95,7 @@ describe("topicGetStaticPaths", () => {
 		});
 		expect(bookOfMormonCall).toBeDefined();
 
-		const posts = bookOfMormonCall?.[0] as Array<{ slug: string }>;
+		const posts = bookOfMormonCall?.[0] as { slug: string }[];
 		expect(Array.isArray(posts)).toBe(true);
 		expect(posts.map((p) => p.slug)).toContain(
 			"and-my-father-dwelt-in-a-tent",
@@ -106,7 +106,7 @@ describe("topicGetStaticPaths", () => {
 			return opts.params.topic === "jewish-tradition";
 		});
 		expect(jewishCall).toBeDefined();
-		const jewishPosts = jewishCall?.[0] as Array<{ slug: string }>;
+		const jewishPosts = jewishCall?.[0] as { slug: string }[];
 		expect(jewishPosts.map((p) => p.slug)).toContain(
 			"and-my-father-dwelt-in-a-tent",
 		);

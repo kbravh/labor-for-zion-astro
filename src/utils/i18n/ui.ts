@@ -24,11 +24,7 @@ export type UI =
 	| "switch_to_light_mode"
 	| "switch_to_dark_mode";
 
-export type UIMap = {
-	[k in Locale]: {
-		[k in UI]: string;
-	};
-};
+export type UIMap = Record<Locale, Record<UI, string>>;
 
 export const uiMap: UIMap = {
 	en: {

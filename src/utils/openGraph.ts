@@ -13,7 +13,7 @@ type Gravity =
 	| "east"
 	| "center";
 
-type GetShareImageConfig = {
+interface GetShareImageConfig {
 	title: string;
 	tagline?: string;
 	cloudName: string;
@@ -97,7 +97,7 @@ type GetShareImageConfig = {
 	taglineFontSize?: number;
 
 	version?: string | null;
-};
+}
 
 /**
  * Encodes characters for Cloudinary URL
@@ -155,7 +155,7 @@ export function generateSocialImage({
 		"c_fit",
 		`co_rgb:${titleColor || textColor}`,
 		`g_${titleGravity}`,
-		`x_${titleLeftOffset || textLeftOffset}`,
+		`x_${titleLeftOffset ?? textLeftOffset}`,
 		`y_${titleBottomOffset}`,
 		`l_text:${titleFont}_${titleFontSize}${titleExtraConfig}:${cleanText(
 			title,
@@ -169,7 +169,7 @@ export function generateSocialImage({
 				"c_fit",
 				`co_rgb:${taglineColor || textColor}`,
 				`g_${taglineGravity}`,
-				`x_${taglineLeftOffset || textLeftOffset}`,
+				`x_${taglineLeftOffset ?? textLeftOffset}`,
 				`y_${taglineTopOffset}`,
 				`l_text:${taglineFont}_${taglineFontSize}${taglineExtraConfig}:${cleanText(
 					tagline,

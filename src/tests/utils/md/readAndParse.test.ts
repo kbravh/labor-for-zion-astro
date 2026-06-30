@@ -161,7 +161,7 @@ describe("getNotePaths", () => {
 
 	it("should throw an error if the directory does not exist", async () => {
 		vol.reset();
-		await expect(getNotePaths()).rejects.toThrowError();
+		await expect(getNotePaths()).rejects.toThrow();
 	});
 });
 
@@ -241,7 +241,7 @@ describe("addLinks", () => {
 });
 
 describe("getOutgoingLinks", () => {
-	it("should return an array of outgoing links", async () => {
+	it("should return an array of outgoing links", () => {
 		const text = `The most memorized Christian scripture is without a doubt "Jesus wept." ([[John 11.35]]). A very close second, at least among members of the Church, is "And my father dwelt in a tent" ([[1 Nephi 2.15]]). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
 		const expected = [
 			{
@@ -305,7 +305,7 @@ describe("getOutgoingLinks", () => {
 });
 
 describe("getEmbedLinks", () => {
-	it("should return an array of embed links", async () => {
+	it("should return an array of embed links", () => {
 		const text = `The most memorized Christian scripture is without a doubt "Jesus wept." (![[John 11.35]]). A very close second, at least among members of the Church, is "And my father dwelt in a tent" (![[1 Nephi 2.15]]). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
 		const expected = [
 			{
@@ -343,7 +343,7 @@ describe("getEmbedLinks", () => {
 		];
 		expect(getEmbedLinks(text)).toEqual(expected);
 	});
-	it("should not match regular bracket links", async () => {
+	it("should not match regular bracket links", () => {
 		const text = `The most memorized Christian scripture is without a doubt "Jesus wept." ([[John 11.35]]). A very close second, at least among members of the Church, is "And my father dwelt in a tent" ([[1 Nephi 2.15]]). While it's a convenient scripture to memorize, it raises an interesting question: why did Nephi feel the need to include this detail as he was looking back on his experiences and writing this record after so many years?`;
 		expect(getEmbedLinks(text)).toEqual([]);
 	});

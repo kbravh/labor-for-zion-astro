@@ -16,10 +16,10 @@ import { Frontmatter } from "@validation/md";
 import matter from "gray-matter";
 import { translations } from "./i18n/translations";
 
-type GenerateRSSFeedArgs = {
+interface GenerateRSSFeedArgs {
 	locale: Locale;
 	site: URL | undefined;
-};
+}
 
 const md = new MarkdownIt({
 	html: true,

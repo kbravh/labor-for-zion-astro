@@ -1,8 +1,9 @@
 import eslint from "@eslint/js";
+import { defineConfig } from "eslint/config";
 import eslintPluginAstro from "eslint-plugin-astro";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config(
+export default defineConfig(
 	{
 		ignores: [
 			"dist/**",
@@ -13,6 +14,7 @@ export default tseslint.config(
 			"data/**",
 			"src/data/**",
 			"out/**",
+			"src/env.d.ts",
 		],
 	},
 	eslint.configs.recommended,
@@ -25,6 +27,12 @@ export default tseslint.config(
 				projectService: true,
 				tsconfigRootDir: import.meta.dirname,
 			},
+		},
+		rules: {
+			"@typescript-eslint/restrict-template-expressions": [
+				"error",
+				{ allowNumber: true },
+			],
 		},
 	},
 	{

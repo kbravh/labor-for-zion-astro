@@ -6,11 +6,7 @@ export type Localization =
 	| "spanish"
 	| "change_language";
 
-export type LocalizationMap = {
-	[k in Locale]: {
-		[k in Localization]: string;
-	};
-};
+export type LocalizationMap = Record<Locale, Record<Localization, string>>;
 
 export const localizationMap: LocalizationMap = {
 	en: {

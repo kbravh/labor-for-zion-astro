@@ -11,12 +11,12 @@ describe("i18n utilities", () => {
 		});
 
 		it("throws an error when locale is undefined", () => {
-			expect(() => getLocale(undefined)).toThrowError("No locale found");
+			expect(() => getLocale(undefined)).toThrow("No locale found");
 		});
 
 		it("throws an error when locale is not supported", () => {
-			expect(() => getLocale("fr")).toThrowError("Locale fr not supported");
-			expect(() => getLocale("de")).toThrowError("Locale de not supported");
+			expect(() => getLocale("fr")).toThrow("Locale fr not supported");
+			expect(() => getLocale("de")).toThrow("Locale de not supported");
 		});
 
 		// Type tests
@@ -44,7 +44,6 @@ describe("i18n utilities", () => {
 		});
 
 		it("returns empty array if the current locale is invalid", () => {
-			// @ts-expect-error Testing with invalid locale
 			expect(getAvailableLocalizations(undefined, "/test-path")).toEqual([]);
 		});
 

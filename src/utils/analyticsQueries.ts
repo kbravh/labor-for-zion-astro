@@ -1,4 +1,4 @@
-import { Analytics, count, countDistinct, db, desc, max, sql } from "astro:db";
+import { Analytics, count, db, desc, max, sql } from "astro:db";
 
 export async function getTotalViews() {
 	const result = await db.select({ count: count() }).from(Analytics);

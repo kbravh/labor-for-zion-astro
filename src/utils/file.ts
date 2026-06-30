@@ -4,7 +4,7 @@ export const writeFile = (key: string | symbol, data: unknown) => {
 	// Handle serialization of Sets
 	const replacer = (_: string, value: unknown) => {
 		if (value instanceof Set) {
-			return [...value];
+			return [...(value as Set<unknown>)];
 		}
 		return value;
 	};

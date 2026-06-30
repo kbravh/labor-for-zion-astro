@@ -11,7 +11,7 @@ const strings = {
 
 <theme-toggle></theme-toggle>
 
-<script define:vars={{ strings }}>
+<script is:inline define:vars={{ strings }}>
 	class ThemeToggle extends HTMLElement {
 		connectedCallback() {
 			this.render();

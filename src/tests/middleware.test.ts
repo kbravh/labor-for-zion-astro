@@ -18,7 +18,7 @@ const importMiddleware = async (): Promise<MiddlewareFn> => {
 };
 
 const makeContext = (pathname: string, rewriteResponse?: Response) => {
-	const rewrite = vi.fn(async () => {
+	const rewrite = vi.fn(() => {
 		return (
 			rewriteResponse ??
 			new Response("rewritten body", {
@@ -42,7 +42,7 @@ describe("middleware onRequest", () => {
 		const onRequest = await importMiddleware();
 		const context = makeContext("/es/some-page");
 		const original = new Response("ok", { status: 200 });
-		const next = vi.fn(async () => original);
+		const next = vi.fn(() => original);
 
 		const result = await onRequest(context, next);
 
@@ -54,7 +54,7 @@ describe("middleware onRequest", () => {
 		const onRequest = await importMiddleware();
 		const context = makeContext("/missing");
 		const original = new Response("not found", { status: 404 });
-		const next = vi.fn(async () => original);
+		const next = vi.fn(() => original);
 
 		const result = await onRequest(context, next);
 
@@ -66,7 +66,7 @@ describe("middleware onRequest", () => {
 		const onRequest = await importMiddleware();
 		const context = makeContext("/es/404");
 		const original = new Response("not found", { status: 404 });
-		const next = vi.fn(async () => original);
+		const next = vi.fn(() => original);
 
 		const result = await onRequest(context, next);
 
@@ -78,7 +78,7 @@ describe("middleware onRequest", () => {
 		const onRequest = await importMiddleware();
 		const context = makeContext("/es/404/");
 		const original = new Response("not found", { status: 404 });
-		const next = vi.fn(async () => original);
+		const next = vi.fn(() => original);
 
 		const result = await onRequest(context, next);
 
@@ -94,7 +94,7 @@ describe("middleware onRequest", () => {
 		});
 		const context = makeContext("/es/unknown-page", rewritten);
 		const original = new Response("not found", { status: 404 });
-		const next = vi.fn(async () => original);
+		const next = vi.fn(() => original);
 
 		const result = await onRequest(context, next);
 
@@ -112,7 +112,7 @@ describe("middleware onRequest", () => {
 	it("rewrites 404 on nested /es/* path", async () => {
 		const onRequest = await importMiddleware();
 		const context = makeContext("/es/2022/09/some-note");
-		const next = vi.fn(async () => new Response("nf", { status: 404 }));
+		const next = vi.fn(() => new Response("nf", { status: 404 }));
 
 		const result = await onRequest(context, next);
 

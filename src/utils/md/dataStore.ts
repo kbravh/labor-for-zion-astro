@@ -2,7 +2,7 @@ import { LOCALES, Locale } from "../../validation/i18n";
 import { writeFile } from "../file";
 import type { Backlink } from "./readAndParse";
 
-type LocalizedData = {
+interface LocalizedData {
 	slugToTopic: Record<string, string> | undefined;
 	articleTopics: Set<string> | undefined;
 	titleToSlug: Record<string, string> | undefined;
@@ -10,7 +10,7 @@ type LocalizedData = {
 	slugToPath: Record<string, string> | undefined;
 	titlesWithBacklinks: Record<string, Backlink[]> | undefined;
 	translationMap: Record<string, Partial<Record<Locale, string>>> | undefined;
-};
+}
 
 type RawData = Record<Locale, LocalizedData>;
 
@@ -31,9 +31,9 @@ const proxyCache: Partial<Record<Locale, LocalizedData>> = {};
 
 const createLocaleProxy = (locale: Locale, data: LocalizedData) => {
 	return new Proxy(data, {
-		set: (target, key, value) => {
+		set: (target, key, value: unknown) => {
 			if (key in target) {
-				target[key as keyof LocalizedData] = value;
+				Reflect.set(target, key, value);
 				writeFile(`${locale}_${key.toString()}`, value);
 				return true;
 			}

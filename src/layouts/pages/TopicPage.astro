@@ -16,10 +16,10 @@ const availableLocalizations = getAvailableLocalizations(locale, "/notes");
 
 const { slugToTopic } = await getNoteTopics(locale);
 
-export type Props = {
+export interface Props {
 	page: Page<PostListing>;
 	topicSlug: string;
-};
+}
 
 const { page, topicSlug } = Astro.props;
 

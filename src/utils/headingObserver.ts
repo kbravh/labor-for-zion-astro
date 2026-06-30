@@ -9,7 +9,7 @@ export const headingObserver = () => {
 
 	if (!articleTitle) return;
 
-	const titleBoundingRect = articleTitle?.getBoundingClientRect();
+	const titleBoundingRect = articleTitle.getBoundingClientRect();
 
 	const titleDistance = Math.abs(titleBoundingRect.top);
 	if (titleDistance < closestHeadingDistance && titleDistance <= 300) {
@@ -29,7 +29,7 @@ export const headingObserver = () => {
 	if (closestHeading) {
 		for (const link of tocLinks) {
 			link.classList.remove("!text-emerald-500", "font-bold");
-			if (link.getAttribute("href") === `#${closestHeading?.id}`) {
+			if (link.getAttribute("href") === `#${closestHeading.id}`) {
 				link.classList.add("!text-emerald-500", "font-bold");
 			}
 		}

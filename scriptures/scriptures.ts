@@ -1,21 +1,21 @@
-export type Work = {
+export interface Work {
 	link: string;
 	name: string;
 	books: Book[];
-};
-export type Book = {
+}
+export interface Book {
 	name: string;
 	summary?: string;
 	chapters: Chapter[];
-};
+}
 
-export type Chapter = {
+export interface Chapter {
 	number?: number;
 	summary?: string;
 	verses: Verse[];
-};
+}
 
-export type Verse = {
+export interface Verse {
 	number: number;
 	text: string;
-};
+}

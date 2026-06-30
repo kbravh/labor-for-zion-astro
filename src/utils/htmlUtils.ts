@@ -11,7 +11,7 @@ export const getHeadings = (source: string): Heading[] => {
 		}
 		headings.push({
 			id,
-			text: heading.textContent ?? "",
+			text: heading.textContent,
 			level: Number.parseInt(heading.tagName[1]),
 		});
 	}

@@ -10,7 +10,7 @@ import { dataStore } from "./dataStore";
 
 export const removeMdxExtension = (path: string) => path.replace(/\.mdx?$/, "");
 
-export type Backlink = { title: string; slug: string; excerpt: string | null };
+export interface Backlink { title: string; slug: string; excerpt: string | null }
 
 /**
  * Walks down a path and recursively collects all of the filepaths
@@ -253,7 +253,10 @@ const getBracketLinks =
 			const content = match[1]; // Content inside the brackets
 
 			// Split content into title and alias
-			const [title, alias] = content.split("|");
+			const [title, alias] = content.split("|") as [
+				string,
+				string | undefined,
+			];
 
 			// Get context around the bracket link
 			const startIndex = match.index;
@@ -413,7 +416,7 @@ export const getLastUpdatedDateFromSlug = async (
 
 	const source = readFileSync(path, "utf-8");
 	const { date, updated } = Frontmatter.parse(matter(source).data);
-	const lastUpdated = updated || date;
+	const lastUpdated = updated ?? date;
 	return lastUpdated;
 };
 

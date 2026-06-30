@@ -5,11 +5,7 @@ export type Route = "/" | "/about" | "/notes" | "/topics" | "/projects" | "404";
 // these routes are used to populate the nav
 export const routes: Route[] = ["/", "/notes", "/projects", "/about"];
 
-type RouteMap = {
-	[k in Locale]: {
-		[k in Route]: string;
-	};
-};
+type RouteMap = Record<Locale, Record<Route, string>>;
 
 export const routeMap: RouteMap = {
 	en: {

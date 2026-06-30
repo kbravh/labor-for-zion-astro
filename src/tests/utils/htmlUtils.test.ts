@@ -1,5 +1,4 @@
 import { getHeadings } from "@utils/htmlUtils";
-import { Heading } from "@validation/md";
 import { describe, expect, it } from "vitest";
 
 describe("HTML Utilities", () => {

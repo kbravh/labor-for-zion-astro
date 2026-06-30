@@ -1,4 +1,3 @@
-import { getTranslationMap } from "@utils/md/readAndParse";
 import { LOCALES, Locale } from "@validation/i18n";
 
 /**
@@ -24,7 +23,7 @@ export const getLocale = (locale: string | undefined): Locale => {
  * @returns Array of [locale, path] tuples for available translations
  */
 export const getAvailableLocalizations = (
-	currentLocale: Locale,
+	currentLocale: Locale | undefined,
 	path: string,
 ): [Locale, string][] => {
 	if (!currentLocale) {

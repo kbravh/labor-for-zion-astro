@@ -1,20 +1,11 @@
 import type { Locale } from "@validation/i18n";
 
-enum Projects {
-	scriptly = "scriptly",
-	vault = "vault",
-}
+export type Project = "scriptly" | "vault";
 
-export type Project = keyof typeof Projects;
-
-export type ProjectMap = {
-	[k in Locale]: {
-		[k in Project]: {
+export type ProjectMap = Record<Locale, Record<Project, {
 			title: string;
 			description: string;
-		};
-	};
-};
+		}>>;
 
 export const projectMap: ProjectMap = {
 	en: {

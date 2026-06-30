@@ -14,7 +14,7 @@ const getBoundingClientRectValues = {
 	width: 0,
 	x: 0,
 	y: 0,
-	toJSON: () => {},
+	toJSON: () => ({}),
 };
 
 describe("headingObserver", () => {
@@ -68,6 +68,8 @@ describe("headingObserver", () => {
 		const articleTitle = document.querySelector("#article-title");
 		articleTitle?.remove();
 
-		expect(headingObserver()).toEqual(undefined);
+		expect(() => {
+			headingObserver();
+		}).not.toThrow();
 	});
 });

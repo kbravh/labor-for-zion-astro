@@ -3,10 +3,10 @@ import { basename, extname } from "node:path";
 import ffmpeg from "fluent-ffmpeg";
 import { getResolution } from "./util";
 
-type Preset = {
+interface Preset {
 	resolution: number;
 	bitrate: number;
-};
+}
 
 const presets: Preset[] = [
 	// { resolution: 2160, bitrate: 15000 },
@@ -17,7 +17,7 @@ const presets: Preset[] = [
 	{ resolution: 360, bitrate: 1000 },
 ];
 
-async function generate_playlist(transcode_results: TranscodeResult[]) {
+function generate_playlist(transcode_results: TranscodeResult[]) {
 	const playlist = ["#EXTM3U", "#EXT-X-VERSION:3"];
 	for (const result of transcode_results) {
 		console.log(
@@ -30,13 +30,13 @@ async function generate_playlist(transcode_results: TranscodeResult[]) {
 	}
 	return playlist.join("\n");
 }
-type TranscodeResult = {
+interface TranscodeResult {
 	width: number;
 	height: number;
 	m3u8_path: string;
 	m3u8_filename: string;
 	bitrate: number;
-};
+}
 
 async function transcode(input: URL, preset: Preset): Promise<TranscodeResult> {
 	const input_extension = extname(input.pathname);
@@ -76,27 +76,28 @@ async function transcode(input: URL, preset: Preset): Promise<TranscodeResult> {
 			`${output_folder}/${input_filename}_${preset.resolution}_%03d.ts`,
 		])
 		.output(m3u8_path)
-		.on("start", (cmdline) => {
+		.on("start", () => {
 			console.log(`${preset.resolution}p start`);
-			// console.log(cmdline)
 		})
 		.on("codecData", (data) => {
 			console.log(`Input is ${data.audio} audio with ${data.video} video`);
 		})
-		.on("end", async () => {
-			console.log(`${preset.resolution}p done`);
-			const [width, height] = await getResolution(m3u8_path);
-			// Get just the filename from the path
-			const m3u8_filename = basename(m3u8_path);
-			resolve({
-				width,
-				height,
-				m3u8_path,
-				m3u8_filename,
-				bitrate: preset.bitrate,
-			});
+		.on("end", () => {
+			void (async () => {
+				console.log(`${preset.resolution}p done`);
+				const [width, height] = await getResolution(m3u8_path);
+				// Get just the filename from the path
+				const m3u8_filename = basename(m3u8_path);
+				resolve({
+					width,
+					height,
+					m3u8_path,
+					m3u8_filename,
+					bitrate: preset.bitrate,
+				});
+			})();
 		})
-		.on("error", (err, stdout, stderr) => {
+		.on("error", (err, _stdout, stderr) => {
 			console.error(`${preset.resolution}p error`);
 			console.error(err);
 			// console.error(stdout);
@@ -119,7 +120,7 @@ async function process_presets(input: URL) {
 		console.log(transcode_result);
 		results.push(transcode_result);
 	}
-	const playlist = await generate_playlist(results);
+	const playlist = generate_playlist(results);
 	await writeFile(`./video_output/${input_filename}/master.m3u8`, playlist);
 	console.timeEnd("process_presets");
 }
@@ -130,4 +131,4 @@ if (!filename) {
 	console.error("No filename provided");
 	process.exit(1);
 }
-process_presets(new URL(`./video_input/${filename}`, import.meta.url));
+void process_presets(new URL(`./video_input/${filename}`, import.meta.url));

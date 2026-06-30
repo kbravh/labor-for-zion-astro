@@ -38,9 +38,9 @@ describe("dataStore", () => {
 		const data = { testSlug: "testTopic" };
 
 		expect(() => {
-			// @ts-expect-error
+			// @ts-expect-error testing invalid key assignment
 			dataStore[locale][key] = data;
-		}).toThrowError(`Invalid data key: ${key}`);
+		}).toThrow(`Invalid data key: ${key}`);
 	});
 
 	it("should read data from a file when getting a key", () => {
@@ -58,17 +58,17 @@ describe("dataStore", () => {
 		const key = "invalidKey";
 
 		expect(() => {
-			// @ts-expect-error
-			const _ = dataStore[locale][key];
-		}).toThrowError(`Invalid data key: ${key}`);
+			// @ts-expect-error testing invalid key access
+			void dataStore[locale][key];
+		}).toThrow(`Invalid data key: ${key}`);
 	});
 
 	it("should throw an error when getting an invalid locale", () => {
 		const invalidLocale = "invalidLocale";
 
 		expect(() => {
-			// @ts-expect-error
-			const _ = dataStore[invalidLocale];
-		}).toThrowError(`Invalid locale: ${invalidLocale}`);
+			// @ts-expect-error testing invalid locale access
+			void dataStore[invalidLocale];
+		}).toThrow(`Invalid locale: ${invalidLocale}`);
 	});
 });

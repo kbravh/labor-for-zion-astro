@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 describe("Array", () => {
 	describe("splitArray", () => {
 		it("throws on an invalid group", () => {
-			expect(() => splitArray(0, [1, 2, 3])).toThrowError(
+			expect(() => splitArray(0, [1, 2, 3])).toThrow(
 				"Group must be 1 or greater",
 			);
 		});

@@ -12,7 +12,7 @@ describe("actions", () => {
 					slug: "test",
 					locale: "en",
 				}),
-			).rejects.toThrowError(ActionError);
+			).rejects.toThrow(ActionError);
 		});
 		it("throws an ActionError if the locale is not valid", async () => {
 			const { slugToTitle } = await getTitleAndSlugMaps("en");
@@ -21,7 +21,7 @@ describe("actions", () => {
 					slug: Object.keys(slugToTitle)[0],
 					locale: "invalid",
 				}),
-			).rejects.toThrowError(ActionError);
+			).rejects.toThrow(ActionError);
 		});
 		it("returns the page view count", async () => {
 			const { slugToTitle } = await getTitleAndSlugMaps("en");

@@ -103,7 +103,7 @@ export default async function seed() {
 	// Get available locales from localeMap
 	const locales = Object.keys(localeMap) as Locale[];
 	// Define type for analytics entries based on table structure
-	type AnalyticsEntry = {
+	interface AnalyticsEntry {
 		id: string;
 		slug: string;
 		locale: string;
@@ -115,7 +115,7 @@ export default async function seed() {
 		referrer?: string | null;
 		screen_resolution?: string;
 		timestamp: Date;
-	};
+	}
 
 	const analyticsEntries: AnalyticsEntry[] = [];
 

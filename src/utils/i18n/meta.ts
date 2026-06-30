@@ -10,11 +10,7 @@ export type Meta =
 	| "about2"
 	| "contact";
 
-export type MetaMap = {
-	[k in Locale]: {
-		[k in Meta]: string;
-	};
-};
+export type MetaMap = Record<Locale, Record<Meta, string>>;
 
 export const metaMap: MetaMap = {
 	en: {

@@ -9,12 +9,12 @@ const execPromise = promisify(exec);
 
 async function runCommand(command: string): Promise<void> {
 	try {
-		const { stdout, stderr } = await execPromise(command);
+		const { stderr } = await execPromise(command);
 		if (stderr) {
 			throw new Error(stderr);
 		}
 	} catch (error) {
-		console.error(`Execution failed: ${error}`);
+		console.error(`Execution failed: ${String(error)}`);
 	}
 }
 
@@ -40,7 +40,7 @@ const upload = async (pathToDir: string) => {
 			);
 		} catch (error) {
 			console.error(error);
-			throw new Error("Error uploading file");
+			throw new Error("Error uploading file", { cause: error });
 		}
 	}
 };

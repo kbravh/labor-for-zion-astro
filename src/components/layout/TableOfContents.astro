@@ -14,7 +14,7 @@ const locale = getLocale(Astro.currentLocale);
 
 <nav id="table-of-contents">
 	{
-		!!headings.length ? (
+		headings.length ? (
 			<>
 				<h2 class="font-bold text-lg">{translations[locale].ui.toc}</h2>
 				<ul class="flex flex-col">

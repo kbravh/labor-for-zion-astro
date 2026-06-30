@@ -6,16 +6,14 @@ import { projectMap } from "./projects";
 import { routeMap } from "./routes";
 import { uiMap } from "./ui";
 
-type Translations = {
-	[k in Locale]: {
+type Translations = Record<Locale, {
 		locale: (typeof localeMap)[Locale];
 		localization: (typeof localizationMap)[Locale];
 		meta: (typeof metaMap)[Locale];
 		project: (typeof projectMap)[Locale];
 		route: (typeof routeMap)[Locale];
 		ui: (typeof uiMap)[Locale];
-	};
-};
+	}>;
 
 export const translations: Translations = {
 	en: {

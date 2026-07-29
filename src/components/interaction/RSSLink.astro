@@ -3,7 +3,9 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { getLocale } from "@utils/i18n/main";
 
 const locale = getLocale(Astro.currentLocale);
-const rssUrl = getRelativeLocaleUrl(locale, "/rss.xml");
+// getRelativeLocaleUrl appends a trailing slash (build.format is "directory"),
+// which 404s for a file endpoint like rss.xml
+const rssUrl = getRelativeLocaleUrl(locale, "/rss.xml").replace(/\/$/, "");
 ---
 
 <a
